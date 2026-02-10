@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npm run build:*)",
+      "Bash(ls:*)",
+      "Bash(npm run dev:*)",
+      "Bash(taskkill:*)",
+      "Bash(powershell:*)",
+      "Bash(tasklist:*)",
+      "Bash(findstr:*)",
+      "Bash(del \"e:\\\\Trabajo\\\\Freelance\\\\Muni Gral Paz\\\\municipalidad-general-paz\\\\app\\\\favicon.ico\")",
+      "WebFetch(domain:www.jesusmaria.gov.ar)",
+      "WebFetch(domain:juarezcelman.gob.ar)",
+      "WebFetch(domain:jesusmaria.gov.ar)",
+      "Bash(npx tsc:*)",
+      "Bash(npx next build:*)",
+      "WebFetch(domain:supabase.com)",
+      "Bash(node -e:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(npm view:*)",
+      "Bash(cd:*)",
+      "Bash(cat:*)",
+      "Bash(find state/redux -name \"api.ts\" -exec sh -c 'echo \"\"===== $1 =====\"\"; cat \"\"$1\"\"' _ {} ;)",
+      "Bash(find:*)"
+    ]
+  }
+}

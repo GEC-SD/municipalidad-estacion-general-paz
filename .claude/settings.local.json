@@ -22,7 +22,8 @@
       "Bash(cd:*)",
       "Bash(cat:*)",
       "Bash(find state/redux -name \"api.ts\" -exec sh -c 'echo \"\"===== $1 =====\"\"; cat \"\"$1\"\"' _ {} ;)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(npm ls:*)"
     ]
   }
 }

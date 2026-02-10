@@ -1,4 +1,5 @@
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { createBrowserClient } from '@supabase/ssr';
+import { SupabaseClient } from '@supabase/supabase-js';
 
 // Configurar desde variables de entorno
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -15,21 +16,12 @@ if (!isSupabaseConfigured && typeof window !== 'undefined') {
   );
 }
 
-// Crear cliente de Supabase solo si está configurado
-// Si no está configurado, crear un cliente dummy que no hará llamadas reales
+// Crear cliente de Supabase con @supabase/ssr
+// Esto almacena la sesión en cookies (accesible desde middleware)
+// además de localStorage (accesible desde el cliente)
 export const supabase: SupabaseClient = isSupabaseConfigured
-  ? createClient(supabaseUrl, supabaseAnonKey, {
-      auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-      },
-    })
-  : createClient('https://placeholder.supabase.co', 'placeholder-key', {
-      auth: {
-        persistSession: false,
-        autoRefreshToken: false,
-      },
-    });
+  ? createBrowserClient(supabaseUrl, supabaseAnonKey)
+  : createBrowserClient('https://placeholder.supabase.co', 'placeholder-key');
 
 // Exportar flag para verificar si Supabase está configurado
 export const isSupabaseReady = isSupabaseConfigured;

@@ -16,6 +16,7 @@
     "@mui/icons-material": "^7.3.7",
     "@mui/material": "^7.3.7",
     "@reduxjs/toolkit": "^2.11.2",
+    "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.93.2",
     "axios": "^1.13.4",
     "dompurify": "^3.3.1",

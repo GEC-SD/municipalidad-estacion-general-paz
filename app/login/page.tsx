@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import {
   Box,
@@ -43,8 +43,11 @@ const schema = yup.object({
 
 const LoginPage = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
   const { isAuthenticated, status } = useAppSelector((state) => state.auth);
+
+  const redirectTo = searchParams.get('redirect') || ADMIN_ROUTES.ADMIN_DASHBOARD;
 
   const [showPassword, setShowPassword] = useState(false);
   const { isLocked, remainingSeconds, attemptsLeft, registerAttempt, reset } = useRateLimit();
@@ -64,9 +67,9 @@ const LoginPage = () => {
   useEffect(() => {
     if (isAuthenticated) {
       reset();
-      router.push(ADMIN_ROUTES.ADMIN_DASHBOARD);
+      router.push(redirectTo);
     }
-  }, [isAuthenticated, router, reset]);
+  }, [isAuthenticated, router, reset, redirectTo]);
 
   useEffect(() => {
     return () => {

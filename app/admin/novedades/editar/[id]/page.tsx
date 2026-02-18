@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -206,18 +206,6 @@ const EditarNovedadPage = () => {
                 fullWidth
                 error={!!errors.title}
                 helperText={errors.title?.message}
-                disabled={loadingUpdate}
-              />
-            </Box>
-
-            {/* Slug */}
-            <Box>
-              <TextField
-                {...register('slug')}
-                label="Slug (URL)"
-                fullWidth
-                error={!!errors.slug}
-                helperText={errors.slug?.message || 'URL amigable para la novedad'}
                 disabled={loadingUpdate}
               />
             </Box>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import {
   Box,
@@ -13,6 +13,7 @@ import {
   Alert,
   CircularProgress,
   Breadcrumbs,
+  Skeleton,
 } from '@mui/material';
 import {
   ArrowBack as ArrowBackIcon,
@@ -22,14 +23,22 @@ import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useAppDispatch, useAppSelector } from '@/state/redux/store';
-import { createRegulationAsync, clearRegulationsStatus } from '@/state/redux/regulations';
-import { ADMIN_ROUTES, REGULATION_CATEGORIES, STORAGE_BUCKETS, FILE_SIZE_LIMITS, ALLOWED_FILE_TYPES } from '@/constants';
+import {
+  getRegulationByIdAsync,
+  updateRegulationAsync,
+  clearRegulationsStatus,
+} from '@/state/redux/regulations';
+import { ADMIN_ROUTES, REGULATION_CATEGORIES, REGULATION_TYPES, STORAGE_BUCKETS, FILE_SIZE_LIMITS, ALLOWED_FILE_TYPES } from '@/constants';
 import { RegulationFormData } from '@/types';
-import FileUpload from '../../components/FileUpload';
+import FileUpload from '../../../components/FileUpload';
 
 const schema = yup.object({
   title: yup.string().required('El título es requerido'),
-  regulation_number: yup.string().required('El número de ordenanza es requerido'),
+  regulation_number: yup.string().required('El número es requerido'),
+  type: yup
+    .string()
+    .oneOf(['ordenanza', 'decreto'] as const, 'Seleccioná un tipo válido')
+    .required('El tipo es requerido'),
   year: yup
     .number()
     .required('El año es requerido')
@@ -40,47 +49,90 @@ const schema = yup.object({
   category: yup.string().optional(),
 }) as yup.ObjectSchema<RegulationFormData>;
 
-const NuevaNormativaPage = () => {
+const EditarNormativaPage = () => {
   const router = useRouter();
+  const params = useParams();
   const dispatch = useAppDispatch();
-  const { status } = useAppSelector((state) => state.regulations);
+  const { regulations, status } = useAppSelector((state) => state.regulations);
+
+  const id = params.id as string;
+  const currentRegulation = regulations.find((r) => r.id === id);
 
   const {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm<RegulationFormData>({
     resolver: yupResolver(schema),
-    defaultValues: {
-      title: '',
-      regulation_number: '',
-      year: new Date().getFullYear(),
-      description: '',
-      pdf_url: '',
-      category: undefined,
-    },
   });
 
   useEffect(() => {
-    if (status.createRegulationAsync?.response === 'fulfilled') {
-      router.push(ADMIN_ROUTES.ADMIN_NORMATIVA);
+    if (id) {
+      dispatch(getRegulationByIdAsync(id));
     }
-  }, [status.createRegulationAsync?.response, router]);
+    return () => {
+      dispatch(clearRegulationsStatus());
+    };
+  }, [dispatch, id]);
 
   useEffect(() => {
-    return () => {
-      dispatch(clearRegulationsStatus('createRegulationAsync'));
-    };
-  }, [dispatch]);
+    if (currentRegulation) {
+      reset({
+        title: currentRegulation.title,
+        regulation_number: currentRegulation.regulation_number,
+        type: currentRegulation.type,
+        year: currentRegulation.year,
+        description: currentRegulation.description || '',
+        pdf_url: currentRegulation.pdf_url,
+        category: currentRegulation.category,
+      });
+    }
+  }, [currentRegulation, reset]);
+
+  useEffect(() => {
+    if (status.updateRegulationAsync?.response === 'fulfilled') {
+      router.push(ADMIN_ROUTES.ADMIN_TRANSPARENCIA);
+    }
+  }, [status.updateRegulationAsync?.response, router]);
 
   const onSubmit = (data: RegulationFormData) => {
-    dispatch(createRegulationAsync(data));
+    dispatch(updateRegulationAsync({ id, data }));
   };
 
-  const loading = status.createRegulationAsync?.loading;
-  const error = status.createRegulationAsync?.response === 'rejected';
-  const errorMessage = status.createRegulationAsync?.message;
+  const loadingGet = status.getRegulationByIdAsync?.loading;
+  const loadingUpdate = status.updateRegulationAsync?.loading;
+  const error = status.updateRegulationAsync?.response === 'rejected';
+  const errorMessage = status.updateRegulationAsync?.message;
+
+  if (loadingGet) {
+    return (
+      <Box>
+        <Skeleton variant="text" width={200} height={40} sx={{ mb: 3 }} />
+        <Paper sx={{ p: 3 }}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: '1fr', gap: 3 }}>
+            {Array.from(new Array(5)).map((_, index) => (
+              <Skeleton key={index} variant="rectangular" height={56} />
+            ))}
+          </Box>
+        </Paper>
+      </Box>
+    );
+  }
+
+  if (!currentRegulation && !loadingGet) {
+    return (
+      <Box>
+        <Alert severity="error" sx={{ mb: 3 }}>
+          No se encontró la normativa
+        </Alert>
+        <Button startIcon={<ArrowBackIcon />} component={Link} href={ADMIN_ROUTES.ADMIN_TRANSPARENCIA}>
+          Volver a Transparencia
+        </Button>
+      </Box>
+    );
+  }
 
   return (
     <Box>
@@ -88,24 +140,24 @@ const NuevaNormativaPage = () => {
         <Link href={ADMIN_ROUTES.ADMIN_DASHBOARD} style={{ textDecoration: 'none', color: 'inherit' }}>
           Dashboard
         </Link>
-        <Link href={ADMIN_ROUTES.ADMIN_NORMATIVA} style={{ textDecoration: 'none', color: 'inherit' }}>
-          Normativa
+        <Link href={ADMIN_ROUTES.ADMIN_TRANSPARENCIA} style={{ textDecoration: 'none', color: 'inherit' }}>
+          Transparencia
         </Link>
-        <Typography color="text.primary">Nueva</Typography>
+        <Typography color="text.primary">Editar</Typography>
       </Breadcrumbs>
 
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
-        <Button startIcon={<ArrowBackIcon />} component={Link} href={ADMIN_ROUTES.ADMIN_NORMATIVA}>
+        <Button startIcon={<ArrowBackIcon />} component={Link} href={ADMIN_ROUTES.ADMIN_TRANSPARENCIA}>
           Volver
         </Button>
         <Typography variant="h4" sx={{ fontWeight: 700 }}>
-          Nueva Ordenanza
+          Editar Normativa
         </Typography>
       </Box>
 
       {error && (
         <Alert severity="error" sx={{ mb: 3 }}>
-          {errorMessage || 'Error al crear la ordenanza'}
+          {errorMessage || 'Error al actualizar la normativa'}
         </Alert>
       )}
 
@@ -115,23 +167,46 @@ const NuevaNormativaPage = () => {
             <Box>
               <TextField
                 {...register('title')}
-                label="Título de la ordenanza"
+                label="Título"
                 fullWidth
                 error={!!errors.title}
                 helperText={errors.title?.message}
-                disabled={loading}
+                disabled={loadingUpdate}
               />
             </Box>
 
-            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' }, gap: 3 }}>
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(4, 1fr)' }, gap: 3 }}>
+              <Box>
+                <Controller
+                  name="type"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      select
+                      label="Tipo"
+                      fullWidth
+                      error={!!errors.type}
+                      helperText={errors.type?.message}
+                      disabled={loadingUpdate}
+                    >
+                      {REGULATION_TYPES.map((t) => (
+                        <MenuItem key={t.value} value={t.value}>
+                          {t.label}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  )}
+                />
+              </Box>
               <Box>
                 <TextField
                   {...register('regulation_number')}
-                  label="Número de ordenanza"
+                  label="Número"
                   fullWidth
                   error={!!errors.regulation_number}
                   helperText={errors.regulation_number?.message}
-                  disabled={loading}
+                  disabled={loadingUpdate}
                 />
               </Box>
               <Box>
@@ -142,7 +217,7 @@ const NuevaNormativaPage = () => {
                   type="number"
                   error={!!errors.year}
                   helperText={errors.year?.message}
-                  disabled={loading}
+                  disabled={loadingUpdate}
                 />
               </Box>
               <Box>
@@ -157,7 +232,7 @@ const NuevaNormativaPage = () => {
                       fullWidth
                       error={!!errors.category}
                       helperText={errors.category?.message}
-                      disabled={loading}
+                      disabled={loadingUpdate}
                     >
                       <MenuItem value="">Sin categoría</MenuItem>
                       {REGULATION_CATEGORIES.map((cat) => (
@@ -180,7 +255,7 @@ const NuevaNormativaPage = () => {
                 rows={3}
                 error={!!errors.description}
                 helperText={errors.description?.message}
-                disabled={loading}
+                disabled={loadingUpdate}
               />
             </Box>
 
@@ -194,11 +269,11 @@ const NuevaNormativaPage = () => {
                     maxSize={FILE_SIZE_LIMITS.REGULATION_PDF_MAX_SIZE}
                     allowedTypes={[...ALLOWED_FILE_TYPES.PDFS]}
                     accept="application/pdf"
-                    label="Archivo PDF de la ordenanza"
+                    label="Archivo PDF"
                     helperText="Solo PDF. Máximo 5 MB."
                     value={field.value}
                     onChange={(url) => field.onChange(url || '')}
-                    disabled={loading}
+                    disabled={loadingUpdate}
                     variant="file"
                   />
                 )}
@@ -211,16 +286,16 @@ const NuevaNormativaPage = () => {
             </Box>
 
             <Box sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end' }}>
-              <Button variant="outlined" component={Link} href={ADMIN_ROUTES.ADMIN_NORMATIVA} disabled={loading}>
+              <Button variant="outlined" component={Link} href={ADMIN_ROUTES.ADMIN_TRANSPARENCIA} disabled={loadingUpdate}>
                 Cancelar
               </Button>
               <Button
                 type="submit"
                 variant="contained"
-                startIcon={loading ? <CircularProgress size={20} /> : <SaveIcon />}
-                disabled={loading}
+                startIcon={loadingUpdate ? <CircularProgress size={20} /> : <SaveIcon />}
+                disabled={loadingUpdate}
               >
-                {loading ? 'Guardando...' : 'Guardar Ordenanza'}
+                {loadingUpdate ? 'Guardando...' : 'Guardar Cambios'}
               </Button>
             </Box>
           </Box>
@@ -230,4 +305,4 @@ const NuevaNormativaPage = () => {
   );
 };
 
-export default NuevaNormativaPage;
+export default EditarNormativaPage;

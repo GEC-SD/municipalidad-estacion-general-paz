@@ -15,6 +15,9 @@ export const getRegulationsApi = async (
     .order('year', { ascending: false })
     .order('regulation_number', { ascending: false });
 
+  if (filters?.type) {
+    query = query.eq('type', filters.type);
+  }
   if (filters?.year) {
     query = query.eq('year', filters.year);
   }

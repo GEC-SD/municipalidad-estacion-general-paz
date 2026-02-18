@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -46,8 +46,6 @@ const NuevaNovedadPage = () => {
   const dispatch = useAppDispatch();
   const { status } = useAppSelector((state) => state.news);
 
-  const [autoSlug, setAutoSlug] = useState(true);
-
   const {
     register,
     handleSubmit,
@@ -73,11 +71,10 @@ const NuevaNovedadPage = () => {
 
   // Auto-generate slug from title
   useEffect(() => {
-    if (autoSlug && title) {
-      const generatedSlug = slugify(title, { lower: true, strict: true });
-      setValue('slug', generatedSlug);
+    if (title) {
+      setValue('slug', slugify(title, { lower: true, strict: true }));
     }
-  }, [title, autoSlug, setValue]);
+  }, [title, setValue]);
 
   // Handle success
   useEffect(() => {
@@ -158,37 +155,6 @@ const NuevaNovedadPage = () => {
                 helperText={errors.title?.message}
                 disabled={loading}
               />
-            </Box>
-
-            {/* Slug and Auto Slug Toggle */}
-            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '2fr 1fr' }, gap: 3 }}>
-              <Box>
-                <TextField
-                  {...register('slug')}
-                  label="Slug (URL)"
-                  fullWidth
-                  error={!!errors.slug}
-                  helperText={errors.slug?.message || 'URL amigable para la novedad'}
-                  disabled={loading}
-                  onChange={(e) => {
-                    setAutoSlug(false);
-                    setValue('slug', e.target.value);
-                  }}
-                />
-              </Box>
-
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={autoSlug}
-                      onChange={(e) => setAutoSlug(e.target.checked)}
-                      disabled={loading}
-                    />
-                  }
-                  label="Generar slug automáticamente"
-                />
-              </Box>
             </Box>
 
             {/* Excerpt */}

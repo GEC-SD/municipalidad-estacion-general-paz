@@ -10,6 +10,8 @@ export const STORAGE_BUCKETS = {
   AUTHORITY_PHOTOS: 'authority-photos',
   SERVICE_IMAGES: 'service-images',
   REGULATIONS_PDFS: 'regulations-pdfs',
+  PUBLIC_WORKS_IMAGES: 'public-works-images',
+  TRAMITES_PDFS: 'tramites-pdfs',
 } as const;
 
 // Límites de tamaño de archivos (en MB)
@@ -20,6 +22,8 @@ export const FILE_SIZE_LIMITS = {
   SERVICE_IMAGE_MAX_SIZE: 2, // 2 MB - imágenes de servicios
   REGULATION_PDF_MAX_SIZE: 5, // 5 MB - PDFs de normativa
   ATTACHMENT_MAX_SIZE: 10, // 10 MB - adjuntos de novedades
+  PUBLIC_WORK_IMAGE_MAX_SIZE: 2, // 2 MB - imágenes de obras públicas
+  TRAMITE_PDF_MAX_SIZE: 5, // 5 MB - PDFs de trámites
 } as const;
 
 // Tipos MIME permitidos por categoría

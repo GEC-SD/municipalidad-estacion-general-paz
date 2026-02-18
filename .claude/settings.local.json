@@ -24,7 +24,11 @@
       "Bash(find state/redux -name \"api.ts\" -exec sh -c 'echo \"\"===== $1 =====\"\"; cat \"\"$1\"\"' _ {} ;)",
       "Bash(find:*)",
       "Bash(npm ls:*)",
-      "Bash(cmd /c \"rename \"\"app\\\\\\(public\\)\\\\municipalidad\"\" gobierno\")"
+      "Bash(cmd /c \"rename \"\"app\\\\\\(public\\)\\\\municipalidad\"\" gobierno\")",
+      "WebFetch(domain:images.unsplash.com)",
+      "WebFetch(domain:unsplash.com)",
+      "Bash(git mv:*)",
+      "Bash(echo:*)"
     ]
   }
 }

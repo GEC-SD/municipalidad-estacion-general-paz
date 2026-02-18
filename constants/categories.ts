@@ -7,13 +7,14 @@ import {
   ServiceCategory,
   ContactCategory,
   RegulationCategory,
+  RegulationType,
   EventCategory,
 } from '@/types';
 
 // Categorías de noticias
 export const NEWS_CATEGORIES: Array<{ value: NewsCategory; label: string }> = [
   { value: 'institucional', label: 'Institucional' },
-  { value: 'obras', label: 'Obras Públicas' },
+  // { value: 'obras', label: 'Obras Públicas' },
   { value: 'cultura', label: 'Cultura' },
   { value: 'deporte', label: 'Deporte' },
   { value: 'salud', label: 'Salud' },
@@ -74,13 +75,22 @@ export const CONTACT_CATEGORIES: Array<{ value: ContactCategory; label: string }
   { value: 'servicios', label: 'Servicios' },
 ] as const;
 
+// Tipos de normativa (Ordenanzas / Decretos)
+export const REGULATION_TYPES: Array<{
+  value: RegulationType;
+  label: string;
+}> = [
+  { value: 'ordenanza', label: 'Ordenanza' },
+  { value: 'decreto', label: 'Decreto' },
+] as const;
+
 // Categorías de normativa
 export const REGULATION_CATEGORIES: Array<{
   value: RegulationCategory;
   label: string;
 }> = [
   { value: 'tributaria', label: 'Tributaria' },
-  { value: 'obras', label: 'Obras y Servicios Públicos' },
+  // { value: 'obras', label: 'Obras y Servicios Públicos' },
   { value: 'administrativa', label: 'Administrativa' },
   { value: 'urbanismo', label: 'Urbanismo y Zonificación' },
   { value: 'ambiental', label: 'Ambiental' },

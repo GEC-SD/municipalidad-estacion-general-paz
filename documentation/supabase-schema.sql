@@ -105,6 +105,7 @@ CREATE TABLE regulations (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   title VARCHAR(255) NOT NULL,
   regulation_number VARCHAR(100) NOT NULL,
+  type VARCHAR(20) NOT NULL DEFAULT 'ordenanza' CHECK (type IN ('ordenanza', 'decreto')),
   year INTEGER NOT NULL,
   description TEXT,
   pdf_url TEXT NOT NULL,
@@ -118,8 +119,50 @@ CREATE TABLE regulations (
 -- Índices para regulations
 CREATE INDEX idx_regulations_number ON regulations(regulation_number);
 CREATE INDEX idx_regulations_year ON regulations(year DESC);
+CREATE INDEX idx_regulations_type ON regulations(type);
 CREATE INDEX idx_regulations_category ON regulations(category);
 CREATE INDEX idx_regulations_published_date ON regulations(published_date DESC);
+
+-- ============================================================================
+-- TABLA: tramites (Trámites Municipales)
+-- ============================================================================
+CREATE TABLE tramites (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  title VARCHAR(255) NOT NULL,
+  slug VARCHAR(255) UNIQUE NOT NULL,
+  description TEXT NOT NULL,
+  content_type VARCHAR(10) NOT NULL DEFAULT 'pdf' CHECK (content_type IN ('pdf', 'text')),
+  pdf_url TEXT,
+  rich_content TEXT,
+  requirements TEXT[],
+  contact_info JSONB DEFAULT '{}'::jsonb,
+  is_active BOOLEAN DEFAULT true,
+  order_position INTEGER DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Índices para tramites
+CREATE INDEX idx_tramites_slug ON tramites(slug);
+CREATE INDEX idx_tramites_is_active ON tramites(is_active);
+CREATE INDEX idx_tramites_order_position ON tramites(order_position);
+
+-- RLS para tramites
+ALTER TABLE tramites ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Tramites visibles publicamente"
+  ON tramites FOR SELECT
+  USING (is_active = true);
+
+CREATE POLICY "Admin puede gestionar tramites"
+  ON tramites FOR ALL
+  USING (auth.role() = 'authenticated');
+
+-- Trigger para updated_at
+CREATE TRIGGER update_tramites_updated_at
+  BEFORE UPDATE ON tramites
+  FOR EACH ROW
+  EXECUTE FUNCTION update_updated_at_column();
 
 -- ============================================================================
 -- TABLA: contact_info (Números útiles / Información de contacto)
@@ -162,6 +205,29 @@ INSERT INTO site_settings (key, value, description) VALUES
   ('valores', '{"items": ["Transparencia", "Compromiso", "Servicio"]}', 'Valores institucionales');
 
 -- ============================================================================
+-- TABLA: public_works (Obras Públicas)
+-- ============================================================================
+CREATE TABLE public_works (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  title VARCHAR(255) NOT NULL,
+  slug VARCHAR(255) UNIQUE NOT NULL,
+  description TEXT NOT NULL,
+  image_url TEXT,
+  latitude DOUBLE PRECISION,
+  longitude DOUBLE PRECISION,
+  address TEXT,
+  is_active BOOLEAN DEFAULT true,
+  order_position INTEGER,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Índices para public_works
+CREATE INDEX idx_public_works_slug ON public_works(slug);
+CREATE INDEX idx_public_works_is_active ON public_works(is_active);
+CREATE INDEX idx_public_works_order ON public_works(order_position);
+
+-- ============================================================================
 -- ROW LEVEL SECURITY (RLS) - POLÍTICAS DE SEGURIDAD
 -- ============================================================================
 
@@ -173,6 +239,7 @@ ALTER TABLE services ENABLE ROW LEVEL SECURITY;
 ALTER TABLE regulations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE contact_info ENABLE ROW LEVEL SECURITY;
 ALTER TABLE site_settings ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public_works ENABLE ROW LEVEL SECURITY;
 
 -- ============================================================================
 -- POLÍTICAS PARA NEWS
@@ -324,6 +391,28 @@ CREATE POLICY "Usuarios autenticados pueden gestionar contactos"
   WITH CHECK (true);
 
 -- ============================================================================
+-- POLÍTICAS PARA PUBLIC_WORKS
+-- ============================================================================
+
+-- Lectura pública de obras activas
+CREATE POLICY "Lectura pública de obras activas"
+  ON public_works FOR SELECT
+  USING (is_active = true);
+
+-- Usuarios autenticados ven todas las obras
+CREATE POLICY "Usuarios autenticados ven todas las obras"
+  ON public_works FOR SELECT
+  TO authenticated
+  USING (true);
+
+-- Solo usuarios autenticados pueden gestionar obras
+CREATE POLICY "Usuarios autenticados pueden gestionar obras"
+  ON public_works FOR ALL
+  TO authenticated
+  USING (true)
+  WITH CHECK (true);
+
+-- ============================================================================
 -- POLÍTICAS PARA SITE_SETTINGS
 -- ============================================================================
 
@@ -378,6 +467,11 @@ CREATE TRIGGER update_site_settings_updated_at
     FOR EACH ROW
     EXECUTE FUNCTION update_updated_at_column();
 
+CREATE TRIGGER update_public_works_updated_at
+    BEFORE UPDATE ON public_works
+    FOR EACH ROW
+    EXECUTE FUNCTION update_updated_at_column();
+
 -- ============================================================================
 -- DATOS DE PRUEBA (OPCIONAL - Comentar si no se desea)
 -- ============================================================================
@@ -386,12 +480,49 @@ CREATE TRIGGER update_site_settings_updated_at
 INSERT INTO authorities (full_name, position, department, bio, category, order_position, is_active) VALUES
   ('Dr. Juan Pérez', 'Intendente Municipal', 'Ejecutivo', 'Intendente de la Municipalidad de Estación General Paz, comprometido con el desarrollo de nuestra comunidad.', 'intendente', 1, true);
 
--- Datos de prueba para contact_info (Emergencias)
+-- Datos reales de contacto
 INSERT INTO contact_info (department, description, phone, category, order_position, is_active) VALUES
-  ('Emergencias Médicas', 'SAME - Servicio de Atención Médica de Emergencias', '107', 'emergencia', 1, true),
-  ('Bomberos', 'Cuerpo de Bomberos Voluntarios', '100', 'emergencia', 2, true),
-  ('Policía', 'Comisaría de Estación General Paz', '911', 'emergencia', 3, true),
-  ('Municipalidad - Mesa de Entrada', 'Atención al público', '(0341) 123-4567', 'administrativo', 1, true);
+  ('Municipalidad - Mesa de Entrada', 'Atención al público', '3525312959', 'administrativo', 1, true),
+  ('Ambulancia', 'Servicio de Ambulancia', '3525565152', 'emergencia', 1, true),
+  ('Guardia Urbana', 'Guardia Urbana Municipal', '3525642505', 'emergencia', 2, true),
+  ('Policía', 'Comisaría de Estación General Paz', '3525622509', 'emergencia', 3, true),
+  ('Centro de Salud', 'Centro de Salud Municipal', '3525565156', 'emergencia', 4, true);
+
+-- ============================================================================
+-- STORAGE BUCKETS
+-- ============================================================================
+-- Ejecutar en el SQL Editor de Supabase para crear los buckets de storage
+
+INSERT INTO storage.buckets (id, name, public) VALUES
+  ('news-images', 'news-images', true),
+  ('news-attachments', 'news-attachments', true),
+  ('authority-photos', 'authority-photos', true),
+  ('service-images', 'service-images', true),
+  ('regulations-pdfs', 'regulations-pdfs', true),
+  ('public-works-images', 'public-works-images', true),
+  ('tramites-pdfs', 'tramites-pdfs', true)
+ON CONFLICT (id) DO NOTHING;
+
+-- Políticas de storage: lectura pública para todos los buckets
+CREATE POLICY "Lectura pública de archivos"
+  ON storage.objects FOR SELECT
+  USING (bucket_id IN ('news-images', 'news-attachments', 'authority-photos', 'service-images', 'regulations-pdfs', 'public-works-images', 'tramites-pdfs'));
+
+-- Políticas de storage: usuarios autenticados pueden subir/eliminar
+CREATE POLICY "Usuarios autenticados pueden subir archivos"
+  ON storage.objects FOR INSERT
+  TO authenticated
+  WITH CHECK (bucket_id IN ('news-images', 'news-attachments', 'authority-photos', 'service-images', 'regulations-pdfs', 'public-works-images', 'tramites-pdfs'));
+
+CREATE POLICY "Usuarios autenticados pueden actualizar archivos"
+  ON storage.objects FOR UPDATE
+  TO authenticated
+  USING (bucket_id IN ('news-images', 'news-attachments', 'authority-photos', 'service-images', 'regulations-pdfs', 'public-works-images', 'tramites-pdfs'));
+
+CREATE POLICY "Usuarios autenticados pueden eliminar archivos"
+  ON storage.objects FOR DELETE
+  TO authenticated
+  USING (bucket_id IN ('news-images', 'news-attachments', 'authority-photos', 'service-images', 'regulations-pdfs', 'public-works-images', 'tramites-pdfs'));
 
 -- ============================================================================
 -- FIN DEL SCRIPT

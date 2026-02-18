@@ -13,9 +13,10 @@ import authoritiesReducer from './authorities';
 import servicesReducer from './services';
 import regulationsReducer from './regulations';
 import contactReducer from './contact';
-import settingsReducer from './settings';
 import adminReducer from './admin';
 import eventsReducer from './events';
+import publicWorksReducer from './publicWorks';
+import tramitesReducer from './tramites';
 
 // Configuración de Redux Persist
 // SEGURIDAD: NO persistir auth (se maneja via cookies httpOnly de Supabase)
@@ -23,7 +24,7 @@ import eventsReducer from './events';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['app', 'services', 'authorities', 'settings', 'contact'],
+  whitelist: ['app', 'services', 'authorities', 'contact', 'publicWorks', 'tramites'],
   transforms: [stripTransientFields],
 };
 
@@ -36,9 +37,10 @@ const rootReducer = combineReducers({
   services: servicesReducer,
   regulations: regulationsReducer,
   contact: contactReducer,
-  settings: settingsReducer,
   admin: adminReducer,
   events: eventsReducer,
+  publicWorks: publicWorksReducer,
+  tramites: tramitesReducer,
 });
 
 // Tipo base del estado (sin wrappers de persist)

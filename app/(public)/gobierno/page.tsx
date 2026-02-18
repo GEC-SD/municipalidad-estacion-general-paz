@@ -11,12 +11,11 @@ import {
   Paper,
 } from '@mui/material';
 import {
-  Person as PersonIcon,
-  Group as GroupIcon,
   Gavel as GavelIcon,
   AccountBalance as AccountBalanceIcon,
   HistoryEdu as HistoryEduIcon,
   Policy as PolicyIcon,
+  Apartment as ApartmentIcon,
 } from '@mui/icons-material';
 import { PUBLIC_ROUTES } from '@/constants';
 import PageHero from '../components/PageHero';
@@ -25,16 +24,10 @@ import AnimatedSection from '../components/AnimatedSection';
 const MunicipalidadPage = () => {
   const sections = [
     {
-      title: 'Intendente',
-      description: 'Conoce al Intendente de nuestra ciudad',
-      icon: <PersonIcon sx={{ fontSize: 64, color: 'primary.main' }} />,
-      href: PUBLIC_ROUTES.MUNICIPALIDAD_INTENDENTE,
-    },
-    {
-      title: 'Gabinete Municipal',
-      description: 'Secretarías y áreas del gobierno municipal',
-      icon: <GroupIcon sx={{ fontSize: 64, color: 'primary.main' }} />,
-      href: PUBLIC_ROUTES.MUNICIPALIDAD_GABINETE,
+      title: 'Departamento Ejecutivo',
+      description: 'Intendente y Gabinete Municipal del gobierno local',
+      icon: <ApartmentIcon sx={{ fontSize: 64, color: 'primary.main' }} />,
+      href: PUBLIC_ROUTES.MUNICIPALIDAD_DEPARTAMENTO_EJECUTIVO,
     },
     {
       title: 'Honorable Concejo Deliberante',
@@ -58,7 +51,7 @@ const MunicipalidadPage = () => {
       title: 'Transparencia',
       description: 'Ordenanzas y regulaciones municipales',
       icon: <PolicyIcon sx={{ fontSize: 64, color: 'primary.main' }} />,
-      href: PUBLIC_ROUTES.NORMATIVA,
+      href: PUBLIC_ROUTES.TRANSPARENCIA,
     },
   ];
 

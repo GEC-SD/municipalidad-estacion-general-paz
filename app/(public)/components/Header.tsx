@@ -26,8 +26,7 @@ import {
   KeyboardArrowDown as KeyboardArrowDownIcon,
   Facebook as FacebookIcon,
   Instagram as InstagramIcon,
-  Twitter as TwitterIcon,
-  YouTube as YouTubeIcon,
+  WhatsApp as WhatsAppIcon,
 } from '@mui/icons-material';
 import { MAIN_MENU, PUBLIC_ROUTES } from '@/constants';
 import classes from './classes';
@@ -54,7 +53,7 @@ const Header = () => {
   const drawer = (
     <Box sx={classes.drawer}>
       <Link
-        href={PUBLIC_ROUTES.MUNICIPALIDAD_INTENDENTE}
+        href={PUBLIC_ROUTES.MUNICIPALIDAD_DEPARTAMENTO_EJECUTIVO}
       >
         <Box
           sx={{
@@ -145,10 +144,9 @@ const Header = () => {
 
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around', width: '100%', mt: 2 }}>
         {[
-          { icon: <FacebookIcon />, label: 'Facebook', href: 'https://facebook.com' },
-          { icon: <InstagramIcon />, label: 'Instagram', href: 'https://instagram.com' },
-          { icon: <TwitterIcon />, label: 'Twitter', href: 'https://twitter.com' },
-          { icon: <YouTubeIcon />, label: 'YouTube', href: 'https://youtube.com' },
+          { icon: <FacebookIcon />, label: 'Facebook', href: 'https://www.facebook.com/share/16x2wrVwxV/?mibextid=wwXIfr' },
+          { icon: <InstagramIcon />, label: 'Instagram', href: 'https://www.instagram.com/municipalidadgralpaz?igsh=aDN4NTI2OGR4Mjlj' },
+          { icon: <WhatsAppIcon />, label: 'WhatsApp', href: 'https://whatsapp.com/channel/0029VbBA769DZ4LTG98htH0p' },
         ].map((social) => (
           <IconButton
             key={social.label}
@@ -301,7 +299,7 @@ const Header = () => {
 
               <Box sx={{ justifySelf: 'end', display: 'flex', alignItems: 'center' }}>
                 <Link
-                  href={PUBLIC_ROUTES.MUNICIPALIDAD_INTENDENTE}
+                  href={PUBLIC_ROUTES.MUNICIPALIDAD_DEPARTAMENTO_EJECUTIVO}
                   style={{ display: 'flex' }}
                 >
                   <Box

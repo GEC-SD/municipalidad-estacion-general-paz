@@ -40,7 +40,7 @@ export async function GET(request: Request) {
     const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
     const { count, error } = await supabase
-      .from('site_settings')
+      .from('news')
       .select('*', { count: 'exact', head: true });
 
     if (error) throw error;

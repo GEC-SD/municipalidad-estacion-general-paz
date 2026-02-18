@@ -55,6 +55,7 @@ export default eventsSlice.reducer;
 // Re-export thunks
 export {
   getEventsAsync,
+  getMonthEventsAsync,
   getUpcomingEventsAsync,
   getEventByIdAsync,
   getEventBySlugAsync,

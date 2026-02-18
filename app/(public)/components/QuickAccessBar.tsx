@@ -39,9 +39,9 @@ const quickAccessItems = [
     color: '#1A5F8B',
   },
   {
-    label: 'Normativa',
+    label: 'Transparencia',
     icon: <GavelIcon sx={{ fontSize: 28 }} />,
-    href: PUBLIC_ROUTES.NORMATIVA,
+    href: PUBLIC_ROUTES.TRANSPARENCIA,
     color: '#5DA9D9',
   },
   {

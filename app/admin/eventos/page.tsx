@@ -99,8 +99,9 @@ const EventosListPage = () => {
     });
   };
 
-  const isUpcoming = (date: string) => {
-    return new Date(date) >= new Date(new Date().toISOString().split('T')[0]);
+  const isUpcoming = (event: Event) => {
+    const endOrStart = event.end_date || event.event_date;
+    return new Date(endOrStart + 'T23:59:59') >= new Date();
   };
 
   const loading = status.getEventsAsync?.loading;
@@ -129,6 +130,7 @@ const EventosListPage = () => {
                 <TableCell sx={{ color: 'white', fontWeight: 600 }}>Título</TableCell>
                 <TableCell sx={{ color: 'white', fontWeight: 600 }}>Fecha</TableCell>
                 <TableCell sx={{ color: 'white', fontWeight: 600 }}>Categoría</TableCell>
+                <TableCell sx={{ color: 'white', fontWeight: 600 }}>Visible</TableCell>
                 <TableCell sx={{ color: 'white', fontWeight: 600 }}>Estado</TableCell>
                 <TableCell sx={{ color: 'white', fontWeight: 600 }} align="right">Acciones</TableCell>
               </TableRow>
@@ -140,6 +142,7 @@ const EventosListPage = () => {
                       <TableCell><Skeleton /></TableCell>
                       <TableCell><Skeleton width={100} /></TableCell>
                       <TableCell><Skeleton width={80} /></TableCell>
+                      <TableCell><Skeleton width={60} /></TableCell>
                       <TableCell><Skeleton width={80} /></TableCell>
                       <TableCell><Skeleton width={40} /></TableCell>
                     </TableRow>
@@ -159,10 +162,13 @@ const EventosListPage = () => {
                       <TableCell>
                         <Typography variant="body2">
                           {formatDate(ev.event_date)}
+                          {ev.end_date && ev.end_date !== ev.event_date && (
+                            <> — {formatDate(ev.end_date)}</>
+                          )}
                         </Typography>
                         {ev.event_time && (
                           <Typography variant="caption" color="text.secondary">
-                            {ev.event_time}
+                            {ev.event_time} hs
                           </Typography>
                         )}
                       </TableCell>
@@ -175,10 +181,18 @@ const EventosListPage = () => {
                         />
                       </TableCell>
                       <TableCell>
-                        {isUpcoming(ev.event_date) ? (
-                          <Chip label="Próximo" size="small" color="success" />
+                        <Chip
+                          label={ev.is_active ? 'Activo' : 'Inactivo'}
+                          size="small"
+                          color={ev.is_active ? 'success' : 'default'}
+                          variant={ev.is_active ? 'filled' : 'outlined'}
+                        />
+                      </TableCell>
+                      <TableCell>
+                        {isUpcoming(ev) ? (
+                          <Chip label="Próximo" size="small" color="info" variant="outlined" />
                         ) : (
-                          <Chip label="Pasado" size="small" color="default" />
+                          <Chip label="Finalizado" size="small" color="default" />
                         )}
                       </TableCell>
                       <TableCell align="right">

@@ -10,10 +10,13 @@ export type RegulationCategory =
   | 'habilitaciones'
   | 'otras';
 
+export type RegulationType = 'ordenanza' | 'decreto';
+
 export type Regulation = {
   id: string;
   title: string;
   regulation_number: string;
+  type: RegulationType;
   year: number;
   description?: string;
   pdf_url: string;
@@ -27,6 +30,7 @@ export type Regulation = {
 export type RegulationFormData = {
   title: string;
   regulation_number: string;
+  type: RegulationType;
   year: number;
   description?: string;
   pdf_url: string;
@@ -43,6 +47,7 @@ export type RegulationPagination = {
 };
 
 export type RegulationFilters = {
+  type?: RegulationType;
   year?: number;
   category?: RegulationCategory;
   search?: string;

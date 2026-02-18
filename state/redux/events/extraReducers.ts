@@ -2,6 +2,7 @@ import { ActionReducerMapBuilder } from '@reduxjs/toolkit';
 import { EventsSlice } from '@/types';
 import {
   getEventsAsync,
+  getMonthEventsAsync,
   getUpcomingEventsAsync,
   getEventByIdAsync,
   getEventBySlugAsync,
@@ -39,6 +40,32 @@ const extraReducersEvents = (builder: ActionReducerMapBuilder<EventsSlice>) => {
       state.status.getEventsAsync = {
         response: 'rejected',
         message: action.payload?.error || 'Error al obtener eventos',
+        loading: false,
+      };
+    });
+
+  // GET MONTH EVENTS (calendar)
+  builder
+    .addCase(getMonthEventsAsync.pending, (state) => {
+      state.status.getMonthEventsAsync = {
+        response: 'pending',
+        message: '',
+        loading: true,
+      };
+    })
+    .addCase(getMonthEventsAsync.fulfilled, (state, action) => {
+      state.monthEvents = action.payload;
+      state.lastFetched['monthEvents'] = Date.now();
+      state.status.getMonthEventsAsync = {
+        response: 'fulfilled',
+        message: '',
+        loading: false,
+      };
+    })
+    .addCase(getMonthEventsAsync.rejected, (state, action: any) => {
+      state.status.getMonthEventsAsync = {
+        response: 'rejected',
+        message: action.payload?.error || 'Error al obtener eventos del mes',
         loading: false,
       };
     });
@@ -132,6 +159,7 @@ const extraReducersEvents = (builder: ActionReducerMapBuilder<EventsSlice>) => {
     })
     .addCase(createEventAsync.fulfilled, (state, action) => {
       state.events.unshift(action.payload);
+      state.monthEvents = [];
       state.lastFetched = {};
       state.status.createEventAsync = {
         response: 'fulfilled',
@@ -164,6 +192,7 @@ const extraReducersEvents = (builder: ActionReducerMapBuilder<EventsSlice>) => {
       if (state.currentEvent?.id === action.payload.id) {
         state.currentEvent = action.payload;
       }
+      state.monthEvents = [];
       state.lastFetched = {};
       state.status.updateEventAsync = {
         response: 'fulfilled',
@@ -190,6 +219,7 @@ const extraReducersEvents = (builder: ActionReducerMapBuilder<EventsSlice>) => {
     })
     .addCase(deleteEventAsync.fulfilled, (state, action) => {
       state.events = state.events.filter((e) => e.id !== action.payload);
+      state.monthEvents = state.monthEvents.filter((e) => e.id !== action.payload);
       if (state.currentEvent?.id === action.payload) {
         state.currentEvent = null;
       }

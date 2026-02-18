@@ -6,8 +6,7 @@ import { Box, Container, Typography, IconButton } from '@mui/material';
 import {
   Facebook as FacebookIcon,
   Instagram as InstagramIcon,
-  Twitter as TwitterIcon,
-  YouTube as YouTubeIcon,
+  WhatsApp as WhatsAppIcon,
   Phone as PhoneIcon,
   Email as EmailIcon,
   LocationOn as LocationOnIcon,
@@ -37,10 +36,9 @@ const Footer = () => {
           </Typography>
           <Box sx={{ display: 'flex', gap: 1 }}>
             {[
-              { icon: <FacebookIcon />, label: 'Facebook', href: 'https://facebook.com' },
-              { icon: <InstagramIcon />, label: 'Instagram', href: 'https://instagram.com' },
-              { icon: <TwitterIcon />, label: 'Twitter', href: 'https://twitter.com' },
-              { icon: <YouTubeIcon />, label: 'YouTube', href: 'https://youtube.com' },
+              { icon: <FacebookIcon />, label: 'Facebook', href: 'https://www.facebook.com/share/16x2wrVwxV/?mibextid=wwXIfr' },
+              { icon: <InstagramIcon />, label: 'Instagram', href: 'https://www.instagram.com/municipalidadgralpaz?igsh=aDN4NTI2OGR4Mjlj' },
+              { icon: <WhatsAppIcon />, label: 'WhatsApp', href: 'https://whatsapp.com/channel/0029VbBA769DZ4LTG98htH0p' },
             ].map((social) => (
               <IconButton
                 key={social.label}
@@ -100,15 +98,13 @@ const Footer = () => {
               <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1, mb: 1.5 }}>
                 <LocationOnIcon fontSize="small" sx={{ mt: 0.3, opacity: 0.7 }} />
                 <Typography variant="body2" sx={{ opacity: 0.8 }}>
-                  Av. Principal 123
-                  <br />
                   Estación General Paz, Córdoba
                 </Typography>
               </Box>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                 <PhoneIcon fontSize="small" sx={{ opacity: 0.7 }} />
                 <Typography variant="body2" sx={{ opacity: 0.8 }}>
-                  (0341) 123-4567
+                  3525-312959
                 </Typography>
               </Box>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -132,7 +128,7 @@ const Footer = () => {
                   { label: 'Gobierno', href: PUBLIC_ROUTES.MUNICIPALIDAD },
                   { label: 'Areas', href: PUBLIC_ROUTES.SERVICIOS },
                   { label: 'Trámites', href: PUBLIC_ROUTES.SERVICIOS_TRAMITES },
-                  { label: 'Transparencia', href: PUBLIC_ROUTES.NORMATIVA },
+                  { label: 'Transparencia', href: PUBLIC_ROUTES.TRANSPARENCIA },
                   { label: 'Contacto', href: PUBLIC_ROUTES.CONTACTO },
                 ].map((link) => (
                   <Link key={link.label} href={link.href} style={classes.footerLink}>
@@ -174,6 +170,7 @@ const Footer = () => {
                   { label: 'Cultura', href: PUBLIC_ROUTES.SERVICIOS_CULTURA },
                   { label: 'Deporte', href: PUBLIC_ROUTES.SERVICIOS_DEPORTE },
                   { label: 'Educación', href: PUBLIC_ROUTES.SERVICIOS_EDUCACION },
+                  // { label: 'Obras Públicas', href: PUBLIC_ROUTES.OBRAS_PUBLICAS },
                 ].map((link) => (
                   <Link key={link.label} href={link.href} style={classes.footerLink}>
                     <Typography
@@ -219,10 +216,9 @@ const Footer = () => {
               </Typography>
               <Box sx={classes.footerSocialIcons}>
                 {[
-                  { icon: <FacebookIcon />, label: 'Facebook', href: 'https://facebook.com' },
-                  { icon: <InstagramIcon />, label: 'Instagram', href: 'https://instagram.com' },
-                  { icon: <TwitterIcon />, label: 'Twitter', href: 'https://twitter.com' },
-                  { icon: <YouTubeIcon />, label: 'YouTube', href: 'https://youtube.com' },
+                  { icon: <FacebookIcon />, label: 'Facebook', href: 'https://www.facebook.com/share/16x2wrVwxV/?mibextid=wwXIfr' },
+                  { icon: <InstagramIcon />, label: 'Instagram', href: 'https://www.instagram.com/municipalidadgralpaz?igsh=aDN4NTI2OGR4Mjlj' },
+                  { icon: <WhatsAppIcon />, label: 'WhatsApp', href: 'https://whatsapp.com/channel/0029VbBA769DZ4LTG98htH0p' },
                 ].map((social) => (
                   <IconButton
                     key={social.label}

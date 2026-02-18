@@ -5,108 +5,189 @@ import {
   Box,
   Container,
   Typography,
-  Card,
-  CardContent,
-  CardActionArea,
+  Paper,
 } from '@mui/material';
-import {
-  LocalHospital as LocalHospitalIcon,
-  TheaterComedy as TheaterComedyIcon,
-  SportsFootball as SportsFootballIcon,
-  School as SchoolIcon,
-} from '@mui/icons-material';
-import { PUBLIC_ROUTES } from '@/constants';
+import { ArrowForward as ArrowForwardIcon } from '@mui/icons-material';
+import { SERVICES } from '@/constants';
 import PageHero from '../components/PageHero';
 import AnimatedSection from '../components/AnimatedSection';
 
 const ServiciosPage = () => {
-  const services = [
-    {
-      title: 'Salud',
-      description:
-        'Centros de salud, atención médica y programas de prevención para toda la comunidad.',
-      icon: <LocalHospitalIcon sx={{ fontSize: 64 }} />,
-      href: PUBLIC_ROUTES.SERVICIOS_SALUD,
-      color: '#2E86C1',
-    },
-    {
-      title: 'Cultura',
-      description:
-        'Eventos culturales, talleres artísticos y actividades para el desarrollo cultural.',
-      icon: <TheaterComedyIcon sx={{ fontSize: 64 }} />,
-      href: PUBLIC_ROUTES.SERVICIOS_CULTURA,
-      color: '#B52A1C',
-    },
-    {
-      title: 'Deporte',
-      description:
-        'Polideportivos, clases de deporte y actividades recreativas para todas las edades.',
-      icon: <SportsFootballIcon sx={{ fontSize: 64 }} />,
-      href: PUBLIC_ROUTES.SERVICIOS_DEPORTE,
-      color: '#F5A623',
-    },
-    {
-      title: 'Educación',
-      description:
-        'Programas educativos y actividades de formación para la comunidad.',
-      icon: <SchoolIcon sx={{ fontSize: 64 }} />,
-      href: PUBLIC_ROUTES.SERVICIOS_EDUCACION,
-      color: '#1A5F8B',
-    },
-  ];
-
   return (
     <Box>
-      <PageHero title="Áreas Municipales" subtitle="Conoce todas las áreas que ofrecemos para la comunidad" backgroundImage="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=1600&q=80" overlayColor="rgba(67,160,71,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
+      <PageHero
+        title="Áreas Municipales"
+        subtitle="Conoce todas las áreas que ofrecemos para la comunidad"
+        backgroundImage="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=1600&q=80"
+        overlayColor="rgba(67,160,71,0.88)"
+        overlayColorEnd="rgba(46,134,193,0.72)"
+      />
 
       <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
         <AnimatedSection animation="fadeInUp">
-          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, gap: 4 }}>
-            {services.map((service) => (
-              <Box key={service.title}>
-                <Card
-                  sx={{
-                    height: '100%',
-                    transition: 'all 0.3s',
-                    '&:hover': {
-                      transform: 'translateY(-8px)',
-                      boxShadow: 4,
-                    },
-                  }}
-                >
-                  <CardActionArea
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' },
+              gap: 4,
+            }}
+          >
+            {SERVICES.map((service, index) => {
+              const ServiceIcon = service.icon;
+              return (
+                <AnimatedSection key={service.title} animation="fadeInUp" delay={index * 100}>
+                  <Paper
                     component={Link}
                     href={service.href}
                     sx={{
-                      height: '100%',
+                      position: 'relative',
+                      textDecoration: 'none',
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      p: 4,
+                      minHeight: 260,
+                      borderRadius: 3,
+                      overflow: 'hidden',
+                      border: '2px solid transparent',
+                      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                      cursor: 'pointer',
+                      '&:hover': {
+                        transform: 'translateY(-6px)',
+                        boxShadow: `0 16px 40px ${service.color}30`,
+                        borderColor: `${service.color}50`,
+                        '& .service-image': {
+                          opacity: 1,
+                          transform: 'scale(1)',
+                        },
+                        '& .service-overlay': {
+                          opacity: 1,
+                        },
+                        '& .service-content': {
+                          opacity: 0,
+                          transform: 'translateY(10px)',
+                        },
+                        '& .service-hover-content': {
+                          opacity: 1,
+                          transform: 'translateY(0)',
+                        },
+                      },
                     }}
                   >
-                    <Box sx={{ color: service.color, mb: 2 }}>
-                      {service.icon}
+                    {/* Background image (shown on hover) */}
+                    <Box
+                      className="service-image"
+                      sx={{
+                        position: 'absolute',
+                        inset: 0,
+                        backgroundImage: `url(${service.image})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        opacity: 0,
+                        transform: 'scale(1.1)',
+                        transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                      }}
+                    />
+                    {/* Gradient overlay */}
+                    <Box
+                      className="service-overlay"
+                      sx={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: `linear-gradient(180deg, ${service.color}99 0%, ${service.color}DD 100%)`,
+                        opacity: 0,
+                        transition: 'opacity 0.4s ease',
+                      }}
+                    />
+
+                    {/* Default content */}
+                    <Box
+                      className="service-content"
+                      sx={{
+                        position: 'relative',
+                        zIndex: 1,
+                        textAlign: 'center',
+                        p: 4,
+                        transition: 'all 0.3s ease',
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          width: 80,
+                          height: 80,
+                          borderRadius: '50%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          mb: 2,
+                          mx: 'auto',
+                          backgroundColor: `${service.color}12`,
+                          color: service.color,
+                        }}
+                      >
+                        <ServiceIcon sx={{ fontSize: 40 }} />
+                      </Box>
+                      <Typography variant="h5" gutterBottom sx={{ fontWeight: 700 }}>
+                        {service.title}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {service.description}
+                      </Typography>
                     </Box>
-                    <Typography
-                      variant="h5"
-                      gutterBottom
-                      sx={{ fontWeight: 600, textAlign: 'center' }}
+
+                    {/* Hover content */}
+                    <Box
+                      className="service-hover-content"
+                      sx={{
+                        position: 'absolute',
+                        inset: 0,
+                        zIndex: 2,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: 1.5,
+                        opacity: 0,
+                        transform: 'translateY(10px)',
+                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                        p: 3,
+                      }}
                     >
-                      {service.title}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      sx={{ textAlign: 'center' }}
-                    >
-                      {service.description}
-                    </Typography>
-                  </CardActionArea>
-                </Card>
-              </Box>
-            ))}
+                      <Box
+                        sx={{
+                          width: 56,
+                          height: 56,
+                          borderRadius: '50%',
+                          border: '2px solid rgba(255,255,255,0.8)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          mb: 0.5,
+                        }}
+                      >
+                        <ArrowForwardIcon sx={{ fontSize: 26, color: 'white' }} />
+                      </Box>
+                      <Typography
+                        variant="h6"
+                        sx={{ fontWeight: 700, color: 'white', textAlign: 'center' }}
+                      >
+                        {service.title}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: 'rgba(255,255,255,0.9)',
+                          textAlign: 'center',
+                          fontSize: '0.85rem',
+                        }}
+                      >
+                        {service.description}
+                      </Typography>
+                    </Box>
+                  </Paper>
+                </AnimatedSection>
+              );
+            })}
           </Box>
         </AnimatedSection>
       </Container>

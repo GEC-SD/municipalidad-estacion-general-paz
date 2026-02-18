@@ -60,6 +60,25 @@ export const getUpcomingEventsApi = async (limit: number = 6) => {
 };
 
 /**
+ * Obtener eventos de un mes específico (para calendario público)
+ */
+export const getMonthEventsApi = async (year: number, month: number) => {
+  const firstDay = `${year}-${String(month).padStart(2, '0')}-01`;
+  const lastDay = new Date(year, month, 0).getDate();
+  const lastDayStr = `${year}-${String(month).padStart(2, '0')}-${String(lastDay).padStart(2, '0')}`;
+
+  const { data, error } = await supabase
+    .from('events')
+    .select('*')
+    .eq('is_active', true)
+    .or(`and(event_date.gte.${firstDay},event_date.lte.${lastDayStr}),and(end_date.gte.${firstDay},end_date.lte.${lastDayStr}),and(event_date.lte.${firstDay},end_date.gte.${lastDayStr})`)
+    .order('event_date', { ascending: true });
+
+  if (error) throw error;
+  return data || [];
+};
+
+/**
  * Obtener evento por ID
  */
 export const getEventByIdApi = async (id: string) => {

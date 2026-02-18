@@ -16,12 +16,14 @@ import {
 import {
   ArrowForward as ArrowForwardIcon,
   InfoOutlined as InfoOutlinedIcon,
+  LocationOn as LocationOnIcon,
 } from '@mui/icons-material';
 import { useAppSelector } from '@/state/redux/store';
 import { getFeaturedNewsAsync } from '@/state/redux/news';
 import { useCachedFetch } from '@/hooks';
 import { CACHE_TTL } from '@/constants/cache';
 import { PUBLIC_ROUTES, SERVICES } from '@/constants';
+import { SAMPLE_OBRAS } from '@/constants/sampleObras';
 import HeroCarousel from './components/HeroCarousel';
 import AnimatedSection from './components/AnimatedSection';
 import SectionTitle from './components/SectionTitle';
@@ -54,7 +56,7 @@ const heroSlides = [
     title: 'Transparencia y Compromiso',
     subtitle: 'Consultá normativas, ordenanzas y toda la información institucional de nuestra ciudad.',
     ctaText: 'Ver Transparencia',
-    ctaHref: PUBLIC_ROUTES.NORMATIVA,
+    ctaHref: PUBLIC_ROUTES.TRANSPARENCIA,
     backgroundImage: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?w=1600&q=80',
     overlayColor: 'rgba(181, 42, 28, 0.82)',
     overlayColorEnd: 'rgba(245, 166, 35, 0.65)',
@@ -220,46 +222,258 @@ const HomePage = () => {
                     component={Link}
                     href={service.href}
                     sx={{
-                      p: 3,
-                      textAlign: 'center',
+                      position: 'relative',
                       textDecoration: 'none',
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      minHeight: 220,
+                      minHeight: 240,
                       borderRadius: 3,
+                      overflow: 'hidden',
                       border: '2px solid transparent',
-                      transition: 'all 0.3s ease',
+                      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                      cursor: 'pointer',
                       '&:hover': {
                         transform: 'translateY(-6px)',
-                        boxShadow: `0 12px 32px ${service.color}25`,
-                        borderColor: `${service.color}40`,
+                        boxShadow: `0 16px 40px ${service.color}30`,
+                        borderColor: `${service.color}50`,
+                        '& .service-image': {
+                          opacity: 1,
+                          transform: 'scale(1)',
+                        },
+                        '& .service-overlay': {
+                          opacity: 1,
+                        },
+                        '& .service-content': {
+                          opacity: 0,
+                          transform: 'translateY(10px)',
+                        },
+                        '& .service-hover-content': {
+                          opacity: 1,
+                          transform: 'translateY(0)',
+                        },
                       },
                     }}
                   >
+                    {/* Background image (hidden by default, shown on hover) */}
                     <Box
+                      className="service-image"
                       sx={{
-                        width: 72,
-                        height: 72,
-                        borderRadius: '50%',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        mb: 2,
-                        backgroundColor: `${service.color}12`,
-                        color: service.color,
+                        position: 'absolute',
+                        inset: 0,
+                        backgroundImage: `url(${service.image})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        opacity: 0,
+                        transform: 'scale(1.1)',
+                        transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                      }}
+                    />
+                    {/* Gradient overlay on image */}
+                    <Box
+                      className="service-overlay"
+                      sx={{
+                        position: 'absolute',
+                        inset: 0,
+                        background: `linear-gradient(180deg, ${service.color}99 0%, ${service.color}DD 100%)`,
+                        opacity: 0,
+                        transition: 'opacity 0.4s ease',
+                      }}
+                    />
+
+                    {/* Default content (visible, hidden on hover) */}
+                    <Box
+                      className="service-content"
+                      sx={{
+                        position: 'relative',
+                        zIndex: 1,
+                        textAlign: 'center',
+                        p: 3,
                         transition: 'all 0.3s ease',
                       }}
                     >
-                      <ServiceIcon sx={{ fontSize: 36 }} />
+                      <Box
+                        sx={{
+                          width: 72,
+                          height: 72,
+                          borderRadius: '50%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          mb: 2,
+                          mx: 'auto',
+                          backgroundColor: `${service.color}12`,
+                          color: service.color,
+                        }}
+                      >
+                        <ServiceIcon sx={{ fontSize: 36 }} />
+                      </Box>
+                      <Typography variant="h6" gutterBottom sx={{ fontWeight: 700 }}>
+                        {service.title}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{
+                          display: '-webkit-box',
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden',
+                        }}
+                      >
+                        {service.description}
+                      </Typography>
                     </Box>
+
+                    {/* Hover content (hidden, visible on hover) */}
+                    <Box
+                      className="service-hover-content"
+                      sx={{
+                        position: 'absolute',
+                        inset: 0,
+                        zIndex: 2,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: 1.5,
+                        opacity: 0,
+                        transform: 'translateY(10px)',
+                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                        p: 3,
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          width: 56,
+                          height: 56,
+                          borderRadius: '50%',
+                          border: '2px solid rgba(255,255,255,0.8)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          mb: 0.5,
+                        }}
+                      >
+                        <ArrowForwardIcon sx={{ fontSize: 26, color: 'white' }} />
+                      </Box>
+                      <Typography
+                        variant="h6"
+                        sx={{ fontWeight: 700, color: 'white', textAlign: 'center' }}
+                      >
+                        {service.title}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: 'rgba(255,255,255,0.9)',
+                          textAlign: 'center',
+                          fontSize: '0.8rem',
+                        }}
+                      >
+                        {service.description}
+                      </Typography>
+                    </Box>
+                  </Paper>
+                </AnimatedSection>
+              );
+            })}
+          </Box>
+        </Container>
+      </Box>
+
+      {/* ── Obras Públicas ──────────────────────────────── */}
+      <Box sx={{ py: { xs: 6, md: 8 } }}>
+        <Container maxWidth="lg">
+          <AnimatedSection animation="fadeInUp">
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'flex-start',
+                mb: 2,
+                flexWrap: 'wrap',
+                gap: 2,
+              }}
+            >
+              <SectionTitle
+                title="Obras e Infraestructura"
+                subtitle="Construimos una ciudad más conectada y accesible para todos"
+                align="left"
+              />
+              <Button
+                component={Link}
+                href={PUBLIC_ROUTES.OBRAS_PUBLICAS}
+                endIcon={<ArrowForwardIcon />}
+                sx={{ mt: 1, flexShrink: 0 }}
+              >
+                Ver todas
+              </Button>
+            </Box>
+          </AnimatedSection>
+
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: {
+                xs: '1fr',
+                sm: 'repeat(2, 1fr)',
+                md: 'repeat(3, 1fr)',
+              },
+              gap: 3,
+            }}
+          >
+            {SAMPLE_OBRAS.slice(0, 3).map((obra, index) => (
+              <AnimatedSection
+                key={obra.id}
+                animation="fadeInUp"
+                delay={index * 100}
+              >
+                <Card
+                  sx={{
+                    borderRadius: 3,
+                    overflow: 'hidden',
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    transition: 'all 0.3s ease',
+                    border: '2px solid transparent',
+                    cursor: 'default',
+                    '&:hover': {
+                      transform: 'translateY(-6px)',
+                      boxShadow: '0 12px 32px rgba(67, 160, 71, 0.15)',
+                      borderColor: 'rgba(67, 160, 71, 0.3)',
+                    },
+                  }}
+                >
+                  <Box sx={{ position: 'relative', overflow: 'hidden' }}>
+                    <Box
+                      component="img"
+                      src={obra.image_url}
+                      alt={obra.title}
+                      sx={{
+                        width: '100%',
+                        height: 200,
+                        objectFit: 'cover',
+                        display: 'block',
+                        transition: 'transform 0.5s ease',
+                        '&:hover': { transform: 'scale(1.05)' },
+                      }}
+                    />
+                  </Box>
+                  <CardContent sx={{ flex: 1, p: 2.5 }}>
                     <Typography
                       variant="h6"
-                      gutterBottom
-                      sx={{ fontWeight: 700 }}
+                      sx={{
+                        fontWeight: 700,
+                        color: '#43A047',
+                        mb: 1,
+                        fontSize: '1rem',
+                        lineHeight: 1.3,
+                      }}
                     >
-                      {service.title}
+                      {obra.title}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -269,14 +483,15 @@ const HomePage = () => {
                         WebkitLineClamp: 2,
                         WebkitBoxOrient: 'vertical',
                         overflow: 'hidden',
+                        lineHeight: 1.6,
                       }}
                     >
-                      {service.description}
+                      {obra.description}
                     </Typography>
-                  </Paper>
-                </AnimatedSection>
-              );
-            })}
+                  </CardContent>
+                </Card>
+              </AnimatedSection>
+            ))}
           </Box>
         </Container>
       </Box>

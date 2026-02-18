@@ -3,6 +3,7 @@ import { EventsSlice } from '@/types';
 const initialState: EventsSlice = {
   events: [],
   upcomingEvents: [],
+  monthEvents: [],
   currentEvent: null,
   pagination: {
     page: 1,

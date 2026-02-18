@@ -22,12 +22,8 @@ export const MAIN_MENU: MenuItem[] = [
     href: PUBLIC_ROUTES.MUNICIPALIDAD,
     children: [
       {
-        label: 'Intendente',
-        href: PUBLIC_ROUTES.MUNICIPALIDAD_INTENDENTE,
-      },
-      {
-        label: 'Gabinete Municipal',
-        href: PUBLIC_ROUTES.MUNICIPALIDAD_GABINETE,
+        label: 'Departamento Ejecutivo',
+        href: PUBLIC_ROUTES.MUNICIPALIDAD_DEPARTAMENTO_EJECUTIVO,
       },
       {
         label: 'Honorable Concejo Deliberante',
@@ -43,7 +39,7 @@ export const MAIN_MENU: MenuItem[] = [
       },
       {
         label: 'Transparencia',
-        href: PUBLIC_ROUTES.NORMATIVA,
+        href: PUBLIC_ROUTES.TRANSPARENCIA,
       },
     ],
   },
@@ -67,6 +63,10 @@ export const MAIN_MENU: MenuItem[] = [
         label: 'Educación',
         href: PUBLIC_ROUTES.SERVICIOS_EDUCACION,
       },
+      // {
+      //   label: 'Obras Públicas',
+      //   href: PUBLIC_ROUTES.OBRAS_PUBLICAS,
+      // },
     ],
   },
   {
@@ -106,8 +106,8 @@ export const ADMIN_MENU: MenuItem[] = [
     icon: 'People',
   },
   {
-    label: 'Normativa',
-    href: ADMIN_ROUTES.ADMIN_NORMATIVA,
+    label: 'Transparencia',
+    href: ADMIN_ROUTES.ADMIN_TRANSPARENCIA,
     icon: 'Gavel',
   },
   {
@@ -116,10 +116,15 @@ export const ADMIN_MENU: MenuItem[] = [
     icon: 'Event',
   },
   {
-    label: 'Configuración',
-    href: ADMIN_ROUTES.ADMIN_CONFIGURACION,
-    icon: 'Settings',
+    label: 'Trámites',
+    href: ADMIN_ROUTES.ADMIN_TRAMITES,
+    icon: 'Description',
   },
+  // {
+  //   label: 'Obras Públicas',
+  //   href: ADMIN_ROUTES.ADMIN_OBRAS,
+  //   icon: 'Construction',
+  // },
 ];
 
 // Breadcrumbs labels
@@ -128,6 +133,7 @@ export const BREADCRUMB_LABELS: Record<string, string> = {
   '/gobierno': 'Gobierno',
   '/gobierno/intendente': 'Intendente',
   '/gobierno/gabinete': 'Gabinete Municipal',
+  '/gobierno/departamento-ejecutivo': 'Departamento Ejecutivo',
   '/gobierno/concejo': 'Honorable Concejo Deliberante',
   '/gobierno/tribunal-de-cuentas': 'Honorable Tribunal de Cuentas',
   '/gobierno/historia': 'Historia',
@@ -138,7 +144,8 @@ export const BREADCRUMB_LABELS: Record<string, string> = {
   '/areas/deporte': 'Deporte',
   '/tramites': 'Trámites',
   '/areas/educacion': 'Educación',
-  '/normativa': 'Transparencia',
+  // '/areas/obras-publicas': 'Obras Públicas',
+  '/transparencia': 'Transparencia',
   '/contacto': 'Contacto',
   '/admin': 'Dashboard',
   '/admin/novedades': 'Novedades',
@@ -147,10 +154,13 @@ export const BREADCRUMB_LABELS: Record<string, string> = {
   '/admin/servicios/nuevo': 'Nuevo Servicio',
   '/admin/autoridades': 'Autoridades',
   '/admin/autoridades/nueva': 'Nueva Autoridad',
-  '/admin/normativa': 'Normativa',
-  '/admin/normativa/nueva': 'Nueva Ordenanza',
+  '/admin/transparencia': 'Transparencia',
+  '/admin/transparencia/nueva': 'Nueva Normativa',
   '/admin/eventos': 'Eventos',
   '/admin/eventos/nuevo': 'Nuevo Evento',
   '/agenda': 'Agenda',
-  '/admin/configuracion': 'Configuración',
+  // '/admin/obras-publicas': 'Obras Públicas',
+  // '/admin/obras-publicas/nueva': 'Nueva Obra',
+  '/admin/tramites': 'Trámites',
+  '/admin/tramites/nuevo': 'Nuevo Trámite',
 };

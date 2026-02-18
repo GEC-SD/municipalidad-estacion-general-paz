@@ -11,6 +11,7 @@ export const PUBLIC_ROUTES = {
   MUNICIPALIDAD: '/gobierno',
   MUNICIPALIDAD_INTENDENTE: '/gobierno/intendente',
   MUNICIPALIDAD_GABINETE: '/gobierno/gabinete',
+  MUNICIPALIDAD_DEPARTAMENTO_EJECUTIVO: '/gobierno/departamento-ejecutivo',
   MUNICIPALIDAD_CONCEJO: '/gobierno/concejo',
   MUNICIPALIDAD_TRIBUNAL: '/gobierno/tribunal-de-cuentas',
   MUNICIPALIDAD_HISTORIA: '/gobierno/historia',
@@ -26,9 +27,10 @@ export const PUBLIC_ROUTES = {
   SERVICIOS_DEPORTE: '/areas/deporte',
   SERVICIOS_TRAMITES: '/tramites',
   SERVICIOS_EDUCACION: '/areas/educacion',
+  OBRAS_PUBLICAS: '/areas/obras-publicas',
 
-  // Normativa
-  NORMATIVA: '/normativa',
+  // Transparencia
+  TRANSPARENCIA: '/transparencia',
 
   // Agenda de eventos
   AGENDA: '/agenda',
@@ -68,10 +70,10 @@ export const ADMIN_ROUTES = {
   ADMIN_AUTORIDADES_NUEVA: '/admin/autoridades/nueva',
   ADMIN_AUTORIDADES_EDITAR: (id: string) => `/admin/autoridades/editar/${id}`,
 
-  // Normativa
-  ADMIN_NORMATIVA: '/admin/normativa',
-  ADMIN_NORMATIVA_NUEVA: '/admin/normativa/nueva',
-  ADMIN_NORMATIVA_EDITAR: (id: string) => `/admin/normativa/editar/${id}`,
+  // Transparencia
+  ADMIN_TRANSPARENCIA: '/admin/transparencia',
+  ADMIN_TRANSPARENCIA_NUEVA: '/admin/transparencia/nueva',
+  ADMIN_TRANSPARENCIA_EDITAR: (id: string) => `/admin/transparencia/editar/${id}`,
 
   // Eventos
   ADMIN_EVENTOS: '/admin/eventos',
@@ -83,8 +85,15 @@ export const ADMIN_ROUTES = {
   ADMIN_CONTACTO_NUEVO: '/admin/contacto/nuevo',
   ADMIN_CONTACTO_EDITAR: (id: string) => `/admin/contacto/editar/${id}`,
 
-  // Configuración
-  ADMIN_CONFIGURACION: '/admin/configuracion',
+  // Obras Públicas
+  ADMIN_OBRAS: '/admin/obras-publicas',
+  ADMIN_OBRAS_NUEVA: '/admin/obras-publicas/nueva',
+  ADMIN_OBRAS_EDITAR: (id: string) => `/admin/obras-publicas/editar/${id}`,
+
+  // Trámites
+  ADMIN_TRAMITES: '/admin/tramites',
+  ADMIN_TRAMITES_NUEVO: '/admin/tramites/nuevo',
+  ADMIN_TRAMITES_EDITAR: (id: string) => `/admin/tramites/editar/${id}`,
 } as const;
 
 // Rutas API (para llamadas desde el cliente si es necesario)
@@ -108,9 +117,6 @@ export const API_ROUTES = {
 
   // Contact
   CONTACT: '/api/contact',
-
-  // Settings
-  SETTINGS: '/api/settings',
 
   // Upload
   UPLOAD: '/api/upload',

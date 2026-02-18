@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -51,8 +51,6 @@ const NuevoEventoPage = () => {
   const dispatch = useAppDispatch();
   const { status } = useAppSelector((state) => state.events);
 
-  const [autoSlug, setAutoSlug] = useState(true);
-
   const {
     register,
     handleSubmit,
@@ -82,11 +80,10 @@ const NuevoEventoPage = () => {
   const title = watch('title');
 
   useEffect(() => {
-    if (autoSlug && title) {
-      const generatedSlug = slugify(title, { lower: true, strict: true });
-      setValue('slug', generatedSlug);
+    if (title) {
+      setValue('slug', slugify(title, { lower: true, strict: true }));
     }
-  }, [title, autoSlug, setValue]);
+  }, [title, setValue]);
 
   useEffect(() => {
     if (status.createEventAsync?.response === 'fulfilled') {
@@ -147,35 +144,6 @@ const NuevoEventoPage = () => {
                 helperText={errors.title?.message}
                 disabled={loading}
               />
-            </Box>
-
-            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '2fr 1fr' }, gap: 3 }}>
-              <Box>
-                <TextField
-                  {...register('slug')}
-                  label="Slug (URL)"
-                  fullWidth
-                  error={!!errors.slug}
-                  helperText={errors.slug?.message}
-                  disabled={loading}
-                  onChange={(e) => {
-                    setAutoSlug(false);
-                    setValue('slug', e.target.value);
-                  }}
-                />
-              </Box>
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={autoSlug}
-                      onChange={(e) => setAutoSlug(e.target.checked)}
-                      disabled={loading}
-                    />
-                  }
-                  label="Slug automático"
-                />
-              </Box>
             </Box>
 
             <Box>
@@ -280,11 +248,12 @@ const NuevoEventoPage = () => {
               <Box>
                 <TextField
                   {...register('contact_info')}
-                  label="Información de contacto"
+                  label="Link de red social o contacto"
                   fullWidth
                   error={!!errors.contact_info}
-                  helperText={errors.contact_info?.message || 'Teléfono o email de contacto'}
+                  helperText={errors.contact_info?.message || 'URL de publicación en redes sociales (ej: Instagram, Facebook)'}
                   disabled={loading}
+                  placeholder="https://www.instagram.com/p/..."
                 />
               </Box>
             </Box>

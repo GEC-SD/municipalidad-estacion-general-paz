@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { supabase } from '@/state/supabase/config';
 import { FILE_SIZE_LIMITS, FILE_UPLOAD_ERRORS } from '@/constants';
+import { compressImage } from '@/utils/compressImage';
 
 type UseFileUploadOptions = {
   bucket: string;
@@ -133,8 +134,11 @@ export const useFileUpload = (options: UseFileUploadOptions) => {
     setError(null);
 
     try {
+      // Comprimir imagen antes de subir (reduce peso en storage)
+      const processedFile = await compressImage(file);
+
       // Generar nombre de archivo seguro y único
-      const safeOriginalName = sanitizeFileName(file.name);
+      const safeOriginalName = sanitizeFileName(processedFile.name);
       const fileExt = safeOriginalName.split('.').pop()?.toLowerCase();
       const timestamp = Date.now();
       const randomString = crypto.getRandomValues(new Uint8Array(6))
@@ -147,13 +151,13 @@ export const useFileUpload = (options: UseFileUploadOptions) => {
       const safePath = options.path ? sanitizeFileName(options.path) : '';
       const fullPath = safePath ? `${safePath}/${fileName}` : fileName;
 
-      // Subir archivo
+      // Subir archivo (comprimido si es imagen)
       const { error: uploadError } = await supabase.storage
         .from(options.bucket)
-        .upload(fullPath, file, {
+        .upload(fullPath, processedFile, {
           cacheControl: '3600',
           upsert: false,
-          contentType: file.type,
+          contentType: processedFile.type,
         });
 
       if (uploadError) throw uploadError;
@@ -163,7 +167,7 @@ export const useFileUpload = (options: UseFileUploadOptions) => {
         .from(options.bucket)
         .getPublicUrl(fullPath);
 
-      setProgress({ loaded: file.size, total: file.size, percentage: 100 });
+      setProgress({ loaded: processedFile.size, total: processedFile.size, percentage: 100 });
       return urlData.publicUrl;
     } catch (err: any) {
       setError(err.message || FILE_UPLOAD_ERRORS.UPLOAD_FAILED);

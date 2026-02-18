@@ -185,17 +185,6 @@ const EditarEventoPage = () => {
 
             <Box>
               <TextField
-                {...register('slug')}
-                label="Slug (URL)"
-                fullWidth
-                error={!!errors.slug}
-                helperText={errors.slug?.message}
-                disabled={loadingUpdate}
-              />
-            </Box>
-
-            <Box>
-              <TextField
                 {...register('description')}
                 label="Descripción"
                 fullWidth
@@ -288,9 +277,11 @@ const EditarEventoPage = () => {
               <Box>
                 <TextField
                   {...register('contact_info')}
-                  label="Información de contacto"
+                  label="Link de red social o contacto"
                   fullWidth
                   disabled={loadingUpdate}
+                  helperText="URL de publicación en redes sociales (ej: Instagram, Facebook)"
+                  placeholder="https://www.instagram.com/p/..."
                 />
               </Box>
             </Box>

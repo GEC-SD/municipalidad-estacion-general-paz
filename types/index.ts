@@ -8,5 +8,6 @@ export * from './authorities';
 export * from './services';
 export * from './regulations';
 export * from './contact';
-export * from './settings';
 export * from './events';
+export * from './publicWorks';
+export * from './tramites';

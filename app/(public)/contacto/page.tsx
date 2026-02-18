@@ -204,7 +204,7 @@ const ContactoPage = () => {
                     Teléfono Central
                   </Typography>
                   <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                    (0341) 123-4567
+                    3525-312959
                   </Typography>
                 </Box>
               </Box>
@@ -230,7 +230,7 @@ const ContactoPage = () => {
                     Dirección
                   </Typography>
                   <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                    Av. Principal 123, Estación General Paz, Córdoba
+                    Estación General Paz, Córdoba
                   </Typography>
                 </Box>
               </Box>

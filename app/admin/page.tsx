@@ -59,12 +59,12 @@ const DashboardPage = () => {
       href: ADMIN_ROUTES.ADMIN_SERVICIOS,
     },
     {
-      title: 'Normativa',
+      title: 'Transparencia',
       value: stats?.totalRegulations || 0,
-      subtitle: 'Ordenanzas y regulaciones',
+      subtitle: 'Ordenanzas y decretos',
       icon: <GavelIcon sx={{ fontSize: 40 }} />,
       color: '#B52A1C',
-      href: ADMIN_ROUTES.ADMIN_NORMATIVA,
+      href: ADMIN_ROUTES.ADMIN_TRANSPARENCIA,
     },
   ];
 
@@ -86,7 +86,7 @@ const DashboardPage = () => {
     },
     {
       label: 'Nueva Normativa',
-      href: ADMIN_ROUTES.ADMIN_NORMATIVA_NUEVA,
+      href: ADMIN_ROUTES.ADMIN_TRANSPARENCIA_NUEVA,
       icon: <GavelIcon />,
     },
   ];

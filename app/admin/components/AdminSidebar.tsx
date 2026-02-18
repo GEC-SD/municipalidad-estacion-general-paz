@@ -23,7 +23,8 @@ import {
   Gavel as GavelIcon,
   Event as EventIcon,
   ContactPhone as ContactPhoneIcon,
-  Settings as SettingsIcon,
+  Construction as ConstructionIcon,
+  Description as DescriptionIcon,
 } from '@mui/icons-material';
 import Image from 'next/image';
 import { ADMIN_ROUTES } from '@/constants';
@@ -57,8 +58,8 @@ const menuItems = [
     icon: <ServicesIcon />,
   },
   {
-    label: 'Normativa',
-    href: ADMIN_ROUTES.ADMIN_NORMATIVA,
+    label: 'Transparencia',
+    href: ADMIN_ROUTES.ADMIN_TRANSPARENCIA,
     icon: <GavelIcon />,
   },
   {
@@ -72,10 +73,15 @@ const menuItems = [
     icon: <ContactPhoneIcon />,
   },
   {
-    label: 'Configuración',
-    href: ADMIN_ROUTES.ADMIN_CONFIGURACION,
-    icon: <SettingsIcon />,
+    label: 'Trámites',
+    href: ADMIN_ROUTES.ADMIN_TRAMITES,
+    icon: <DescriptionIcon />,
   },
+  // {
+  //   label: 'Obras Públicas',
+  //   href: ADMIN_ROUTES.ADMIN_OBRAS,
+  //   icon: <ConstructionIcon />,
+  // },
 ];
 
 const AdminSidebar = ({ mobileOpen, onClose }: AdminSidebarProps) => {

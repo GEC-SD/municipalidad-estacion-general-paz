@@ -3,6 +3,7 @@ import { EventFormData, EventFilters } from '@/types';
 import {
   getEventsApi,
   getUpcomingEventsApi,
+  getMonthEventsApi,
   getEventByIdApi,
   getEventBySlugApi,
   createEventApi,
@@ -28,6 +29,20 @@ export const getEventsAsync = createAsyncThunk(
     } catch (error: any) {
       return rejectWithValue({
         error: error?.message || 'Error al obtener eventos',
+      });
+    }
+  }
+);
+
+export const getMonthEventsAsync = createAsyncThunk(
+  'events/getMonthEvents',
+  async (params: { year: number; month: number }, { rejectWithValue }) => {
+    try {
+      const data = await getMonthEventsApi(params.year, params.month);
+      return data;
+    } catch (error: any) {
+      return rejectWithValue({
+        error: error?.message || 'Error al obtener eventos del mes',
       });
     }
   }

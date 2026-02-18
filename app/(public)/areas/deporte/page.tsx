@@ -27,6 +27,22 @@ import { useCachedFetch } from '@/hooks';
 import { CACHE_TTL } from '@/constants/cache';
 import PageHero from '../../components/PageHero';
 import AnimatedSection from '../../components/AnimatedSection';
+import AreaGallery, { GalleryPhoto } from '../../components/AreaGallery';
+
+const DEPORTE_PHOTOS: GalleryPhoto[] = [
+  { src: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=600&q=80', alt: 'Ciclismo', title: 'Ciclismo Recreativo' },
+  { src: 'https://images.unsplash.com/photo-1461896836934-bd45ba3a160c?w=600&q=80', alt: 'Atletismo', title: 'Atletismo Municipal' },
+  { src: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600&q=80', alt: 'Fútbol', title: 'Liga Municipal de Fútbol' },
+  { src: 'https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=600&q=80', alt: 'Básquet', title: 'Básquet Comunitario' },
+  { src: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=600&q=80', alt: 'Natación', title: 'Pileta Municipal' },
+  { src: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=600&q=80', alt: 'Running grupal', title: 'Running Grupal' },
+  { src: 'https://images.unsplash.com/photo-1434648957308-5e6a859697e8?w=600&q=80', alt: 'Artes marciales', title: 'Artes Marciales' },
+  { src: 'https://images.unsplash.com/photo-1551958219-acbc630e2914?w=600&q=80', alt: 'Vóley', title: 'Vóley Municipal' },
+  { src: 'https://images.unsplash.com/photo-1542066820-e4de2a85bedd?w=600&q=80', alt: 'Tenis', title: 'Canchas de Tenis' },
+  { src: 'https://images.unsplash.com/photo-1519311965067-36d3e5f33d39?w=600&q=80', alt: 'Gimnasia', title: 'Gimnasia Artística' },
+  { src: 'https://images.unsplash.com/photo-1580261450046-d0a30080dc9b?w=600&q=80', alt: 'Pádel', title: 'Canchas de Pádel' },
+  { src: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', alt: 'Fitness', title: 'Centro de Fitness' },
+];
 
 const DeportePage = () => {
   const { servicesByCategory, status } = useAppSelector(
@@ -160,6 +176,12 @@ const DeportePage = () => {
           </Box>
         )}
         </AnimatedSection>
+
+        <AreaGallery
+          photos={DEPORTE_PHOTOS}
+          accentColor="#F5A623"
+          sectionTitle="Galería Deportiva"
+        />
       </Container>
     </Box>
   );

@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import {
   Box,
   Container,
@@ -29,22 +30,15 @@ import PageHero from '../../components/PageHero';
 import AnimatedSection from '../../components/AnimatedSection';
 import AreaGallery, { GalleryPhoto } from '../../components/AreaGallery';
 
-const CULTURA_PHOTOS: GalleryPhoto[] = [
-  { src: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=600&q=80', alt: 'Taller de pintura', title: 'Taller de Pintura' },
-  { src: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=600&q=80', alt: 'Concierto', title: 'Concierto Municipal' },
-  { src: 'https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=600&q=80', alt: 'Exposición de arte', title: 'Exposición de Arte' },
-  { src: 'https://images.unsplash.com/photo-1504150558240-0b4fd8946624?w=600&q=80', alt: 'Teatro', title: 'Teatro Comunitario' },
-  { src: 'https://images.unsplash.com/photo-1524661135-423995f22d0b?w=600&q=80', alt: 'Arte urbano', title: 'Arte Urbano' },
-  { src: 'https://images.unsplash.com/photo-1518674660708-0e2c0473e68e?w=600&q=80', alt: 'Cerámica', title: 'Taller de Cerámica' },
-  { src: 'https://images.unsplash.com/photo-1536924940846-227afb31e2a5?w=600&q=80', alt: 'Feria artesanal', title: 'Feria Artesanal' },
-  { src: 'https://images.unsplash.com/photo-1544717684-1243da23b545?w=600&q=80', alt: 'Biblioteca', title: 'Biblioteca Popular' },
-  { src: 'https://images.unsplash.com/photo-1452802447250-470a88ac82bc?w=600&q=80', alt: 'Cine comunitario', title: 'Cine Comunitario' },
-  { src: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600&q=80', alt: 'Música', title: 'Bandas Locales' },
-  { src: 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&q=80', alt: 'Danza', title: 'Escuela de Danza' },
-  { src: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600&q=80', alt: 'Folklore', title: 'Festival de Folklore' },
-];
-
 const CulturaPage = () => {
+  const [galleryPhotos, setGalleryPhotos] = useState<GalleryPhoto[]>([]);
+
+  useEffect(() => {
+    fetch('/api/gallery/cultura')
+      .then((res) => res.json())
+      .then((photos: GalleryPhoto[]) => setGalleryPhotos(photos))
+      .catch(() => setGalleryPhotos([]));
+  }, []);
   const { servicesByCategory, status } = useAppSelector(
     (state) => state.services
   );
@@ -64,7 +58,7 @@ const CulturaPage = () => {
   if (error && !services.length) {
     return (
       <Box>
-        <PageHero title="Servicios de Cultura" subtitle="Eventos culturales, talleres artísticos y actividades para el desarrollo cultural" backgroundImage="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=1600&q=80" overlayColor="rgba(181,42,28,0.88)" overlayColorEnd="rgba(212,85,74,0.72)" />
+        <PageHero title="Servicios de Cultura" subtitle="Eventos culturales, talleres artísticos y actividades para el desarrollo cultural" backgroundImage="/cultura/Cultura5.webp" overlayColor="rgba(181,42,28,0.88)" overlayColorEnd="rgba(212,85,74,0.72)" />
         <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
           <Alert severity="error">
             No se pudo cargar la información. Intente nuevamente más tarde.
@@ -91,7 +85,7 @@ const CulturaPage = () => {
 
   return (
     <Box>
-      <PageHero title="Servicios de Cultura" subtitle="Eventos culturales, talleres artísticos y actividades para el desarrollo cultural" backgroundImage="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=1600&q=80" overlayColor="rgba(181,42,28,0.88)" overlayColorEnd="rgba(212,85,74,0.72)" />
+      <PageHero title="Servicios de Cultura" subtitle="Eventos culturales, talleres artísticos y actividades para el desarrollo cultural" backgroundImage="/cultura/Cultura5.webp" overlayColor="rgba(181,42,28,0.88)" overlayColorEnd="rgba(212,85,74,0.72)" />
 
       <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
         <AnimatedSection animation="fadeInUp">
@@ -178,7 +172,7 @@ const CulturaPage = () => {
         </AnimatedSection>
 
         <AreaGallery
-          photos={CULTURA_PHOTOS}
+          photos={galleryPhotos}
           accentColor="#B52A1C"
           sectionTitle="Galería Cultural"
         />

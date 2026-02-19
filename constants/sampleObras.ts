@@ -10,7 +10,7 @@ export const SAMPLE_OBRAS: PublicWork[] = [
     title: 'Plan de Pavimentación y Cordón Cuneta',
     slug: 'plan-pavimentacion-cordon-cuneta',
     description:
-      'Trabajamos en la pavimentación, construcción de cordón cuneta y repavimentación de las principales vías de nuestra ciudad, mejorando la movilidad urbana y la seguridad vial para todos los vecinos.',
+      'Trabajamos en la pavimentación, construcción de cordón cuneta y repavimentación de las principales vías de nuestro municipio, mejorando la movilidad urbana y la seguridad vial para todos los vecinos.',
     image_url: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&q=80',
     latitude: -32.005,
     longitude: -62.115,
@@ -70,7 +70,7 @@ export const SAMPLE_OBRAS: PublicWork[] = [
     title: 'Construcción de Centro Cultural',
     slug: 'construccion-centro-cultural',
     description:
-      'Construcción del nuevo Centro Cultural Municipal con salón de usos múltiples, biblioteca, sala de exposiciones y talleres para fomentar la cultura y las artes en nuestra ciudad.',
+      'Construcción del nuevo Centro Cultural Municipal con salón de usos múltiples, biblioteca, sala de exposiciones y talleres para fomentar la cultura y las artes en nuestro municipio.',
     image_url: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&q=80',
     latitude: -32.003,
     longitude: -62.112,

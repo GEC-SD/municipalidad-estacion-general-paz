@@ -144,8 +144,8 @@ const Header = () => {
 
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around', width: '100%', mt: 2 }}>
         {[
-          { icon: <FacebookIcon />, label: 'Facebook', href: 'https://www.facebook.com/share/16x2wrVwxV/?mibextid=wwXIfr' },
-          { icon: <InstagramIcon />, label: 'Instagram', href: 'https://www.instagram.com/municipalidadgralpaz?igsh=aDN4NTI2OGR4Mjlj' },
+          { icon: <FacebookIcon />, label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61569838749351' },
+          { icon: <InstagramIcon />, label: 'Instagram', href: 'https://www.instagram.com/municipalidadgralpaz' },
           { icon: <WhatsAppIcon />, label: 'WhatsApp', href: 'https://whatsapp.com/channel/0029VbBA769DZ4LTG98htH0p' },
         ].map((social) => (
           <IconButton

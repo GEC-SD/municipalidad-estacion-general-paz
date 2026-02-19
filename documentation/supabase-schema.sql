@@ -63,7 +63,7 @@ CREATE TABLE authorities (
   email VARCHAR(255),
   phone VARCHAR(50),
   order_position INTEGER,
-  category VARCHAR(100) NOT NULL CHECK (category IN ('intendente', 'gabinete', 'concejo')),
+  category VARCHAR(100) NOT NULL CHECK (category IN ('intendente', 'gabinete', 'concejo', 'tribunal')),
   is_active BOOLEAN DEFAULT true,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()

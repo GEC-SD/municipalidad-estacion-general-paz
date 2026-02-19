@@ -34,7 +34,7 @@ export const MAIN_MENU: MenuItem[] = [
         href: PUBLIC_ROUTES.MUNICIPALIDAD_TRIBUNAL,
       },
       {
-        label: 'Historia de la Ciudad',
+        label: 'Nuestra historia',
         href: PUBLIC_ROUTES.MUNICIPALIDAD_HISTORIA,
       },
       {

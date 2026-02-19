@@ -54,7 +54,7 @@ const heroSlides = [
   {
     id: '3',
     title: 'Transparencia y Compromiso',
-    subtitle: 'Consultá normativas, ordenanzas y toda la información institucional de nuestra ciudad.',
+    subtitle: 'Consultá normativas, ordenanzas y toda la información institucional de nuestro municipio.',
     ctaText: 'Ver Transparencia',
     ctaHref: PUBLIC_ROUTES.TRANSPARENCIA,
     backgroundImage: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?w=1600&q=80',
@@ -98,7 +98,7 @@ const HomePage = () => {
             >
               <SectionTitle
                 title="Novedades Destacadas"
-                subtitle="Mantente informado sobre las últimas noticias de nuestra ciudad"
+                subtitle="Mantente informado sobre las últimas noticias de nuestro municipio"
                 align="left"
               />
               <Button
@@ -383,119 +383,6 @@ const HomePage = () => {
         </Container>
       </Box>
 
-      {/* ── Obras Públicas ──────────────────────────────── */}
-      <Box sx={{ py: { xs: 6, md: 8 } }}>
-        <Container maxWidth="lg">
-          <AnimatedSection animation="fadeInUp">
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'flex-start',
-                mb: 2,
-                flexWrap: 'wrap',
-                gap: 2,
-              }}
-            >
-              <SectionTitle
-                title="Obras e Infraestructura"
-                subtitle="Construimos una ciudad más conectada y accesible para todos"
-                align="left"
-              />
-              <Button
-                component={Link}
-                href={PUBLIC_ROUTES.OBRAS_PUBLICAS}
-                endIcon={<ArrowForwardIcon />}
-                sx={{ mt: 1, flexShrink: 0 }}
-              >
-                Ver todas
-              </Button>
-            </Box>
-          </AnimatedSection>
-
-          <Box
-            sx={{
-              display: 'grid',
-              gridTemplateColumns: {
-                xs: '1fr',
-                sm: 'repeat(2, 1fr)',
-                md: 'repeat(3, 1fr)',
-              },
-              gap: 3,
-            }}
-          >
-            {SAMPLE_OBRAS.slice(0, 3).map((obra, index) => (
-              <AnimatedSection
-                key={obra.id}
-                animation="fadeInUp"
-                delay={index * 100}
-              >
-                <Card
-                  sx={{
-                    borderRadius: 3,
-                    overflow: 'hidden',
-                    height: '100%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    transition: 'all 0.3s ease',
-                    border: '2px solid transparent',
-                    cursor: 'default',
-                    '&:hover': {
-                      transform: 'translateY(-6px)',
-                      boxShadow: '0 12px 32px rgba(67, 160, 71, 0.15)',
-                      borderColor: 'rgba(67, 160, 71, 0.3)',
-                    },
-                  }}
-                >
-                  <Box sx={{ position: 'relative', overflow: 'hidden' }}>
-                    <Box
-                      component="img"
-                      src={obra.image_url}
-                      alt={obra.title}
-                      sx={{
-                        width: '100%',
-                        height: 200,
-                        objectFit: 'cover',
-                        display: 'block',
-                        transition: 'transform 0.5s ease',
-                        '&:hover': { transform: 'scale(1.05)' },
-                      }}
-                    />
-                  </Box>
-                  <CardContent sx={{ flex: 1, p: 2.5 }}>
-                    <Typography
-                      variant="h6"
-                      sx={{
-                        fontWeight: 700,
-                        color: '#43A047',
-                        mb: 1,
-                        fontSize: '1rem',
-                        lineHeight: 1.3,
-                      }}
-                    >
-                      {obra.title}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      sx={{
-                        display: '-webkit-box',
-                        WebkitLineClamp: 2,
-                        WebkitBoxOrient: 'vertical',
-                        overflow: 'hidden',
-                        lineHeight: 1.6,
-                      }}
-                    >
-                      {obra.description}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </AnimatedSection>
-            ))}
-          </Box>
-        </Container>
-      </Box>
-
       {/* ── Teléfonos de Emergencia ───────────────────── */}
       <EmergencyPhones />
 
@@ -535,7 +422,7 @@ const HomePage = () => {
                   Nuestro Gobierno
                 </Typography>
                 <Typography variant="body1" sx={{ mb: 4, opacity: 0.9, lineHeight: 1.8, maxWidth: 480 }}>
-                  Conocé la historia, autoridades y el compromiso institucional con la comunidad de Estación General Paz.
+                  Conocé cómo funciona el gobierno municipal, sus autoridades, organismos de control y el compromiso con la transparencia y la comunidad.
                 </Typography>
                 <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
                   <Button

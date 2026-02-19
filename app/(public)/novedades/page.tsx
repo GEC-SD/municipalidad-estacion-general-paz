@@ -81,167 +81,167 @@ const NovedadesPage = () => {
     <Box>
       <PageHero
         title="Novedades"
-        subtitle="Mantente informado sobre las últimas noticias y eventos de nuestra ciudad"
+        subtitle="Mantente informado sobre las últimas noticias y eventos de nuestro municipio"
         backgroundImage="https://images.unsplash.com/photo-1504711434969-e33886168d9c?w=1600&q=80"
         overlayColor="rgba(46,134,193,0.88)"
         overlayColorEnd="rgba(67,160,71,0.72)"
       />
       <Container maxWidth="lg" sx={{ py: { xs: 4, md: 6 } }}>
-      <AnimatedSection animation="fadeInUp">
-      {/* Filters */}
-      <Box
-        sx={{
-          mb: 4,
-          display: 'flex',
-          gap: 2,
-          flexDirection: { xs: 'column', sm: 'row' },
-        }}
-      >
-        <TextField
-          label="Buscar"
-          variant="outlined"
-          size="small"
-          value={filters.search || ''}
-          onChange={handleSearchChange}
-          sx={{ flex: 1 }}
-          placeholder="Buscar por título o contenido..."
-        />
-        <TextField
-          select
-          label="Categoría"
-          variant="outlined"
-          size="small"
-          value={filters.category || 'all'}
-          onChange={handleCategoryChange}
-          sx={{ minWidth: 200 }}
-        >
-          <MenuItem value="all">Todas las categorías</MenuItem>
-          {NEWS_CATEGORIES.map((cat) => (
-            <MenuItem key={cat.value} value={cat.value}>
-              {cat.label}
-            </MenuItem>
-          ))}
-        </TextField>
-      </Box>
-      </AnimatedSection>
+        <AnimatedSection animation="fadeInUp">
+          {/* Filters */}
+          <Box
+            sx={{
+              mb: 4,
+              display: 'flex',
+              gap: 2,
+              flexDirection: { xs: 'column', sm: 'row' },
+            }}
+          >
+            <TextField
+              label="Buscar"
+              variant="outlined"
+              size="small"
+              value={filters.search || ''}
+              onChange={handleSearchChange}
+              sx={{ flex: 1 }}
+              placeholder="Buscar por título o contenido..."
+            />
+            <TextField
+              select
+              label="Categoría"
+              variant="outlined"
+              size="small"
+              value={filters.category || 'all'}
+              onChange={handleCategoryChange}
+              sx={{ minWidth: 200 }}
+            >
+              <MenuItem value="all">Todas las categorías</MenuItem>
+              {NEWS_CATEGORIES.map((cat) => (
+                <MenuItem key={cat.value} value={cat.value}>
+                  {cat.label}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Box>
+        </AnimatedSection>
 
-      <AnimatedSection animation="fadeInUp" delay={200}>
-      {/* News Grid */}
-      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }, gap: 3, mb: 4 }}>
-        {loading
-          ? Array.from(new Array(9)).map((_, index) => (
-              <Box key={index}>
-                <Card>
-                  <Skeleton variant="rectangular" height={200} />
-                  <CardContent>
-                    <Skeleton variant="text" width="40%" />
-                    <Skeleton variant="text" width="80%" />
-                    <Skeleton variant="text" width="60%" />
-                    <Skeleton variant="text" width="100%" />
-                  </CardContent>
-                </Card>
-              </Box>
-            ))
-          : newsList.map((news) => (
-              <Box key={news.id}>
-                <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                  <CardActionArea
-                    component={Link}
-                    href={PUBLIC_ROUTES.NOVEDADES_DETALLE(news.slug)}
-                    sx={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'stretch' }}
-                  >
-                    {news.featured_image_url && (
-                      <CardMedia
-                        component="img"
-                        height="200"
-                        image={news.featured_image_url}
-                        alt={news.title}
-                      />
-                    )}
-                    <CardContent sx={{ flex: 1 }}>
-                      {news.category && (
-                        <Chip
-                          label={
-                            NEWS_CATEGORIES.find((c) => c.value === news.category)
-                              ?.label || news.category
-                          }
-                          size="small"
-                          color="primary"
-                          sx={{ mb: 1 }}
+        <AnimatedSection animation="fadeInUp" delay={200}>
+          {/* News Grid */}
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }, gap: 3, mb: 4 }}>
+            {loading
+              ? Array.from(new Array(9)).map((_, index) => (
+                <Box key={index}>
+                  <Card>
+                    <Skeleton variant="rectangular" height={200} />
+                    <CardContent>
+                      <Skeleton variant="text" width="40%" />
+                      <Skeleton variant="text" width="80%" />
+                      <Skeleton variant="text" width="60%" />
+                      <Skeleton variant="text" width="100%" />
+                    </CardContent>
+                  </Card>
+                </Box>
+              ))
+              : newsList.map((news) => (
+                <Box key={news.id}>
+                  <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                    <CardActionArea
+                      component={Link}
+                      href={PUBLIC_ROUTES.NOVEDADES_DETALLE(news.slug)}
+                      sx={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'stretch' }}
+                    >
+                      {news.featured_image_url && (
+                        <CardMedia
+                          component="img"
+                          height="200"
+                          image={news.featured_image_url}
+                          alt={news.title}
                         />
                       )}
-                      <Typography
-                        variant="h6"
-                        gutterBottom
-                        sx={{
-                          fontSize: '1.125rem',
-                          fontWeight: 600,
-                          display: '-webkit-box',
-                          WebkitLineClamp: 2,
-                          WebkitBoxOrient: 'vertical',
-                          overflow: 'hidden',
-                        }}
-                      >
-                        {news.title}
-                      </Typography>
-                      <Typography
-                        variant="caption"
-                        color="text.secondary"
-                        display="block"
-                        sx={{ mb: 1 }}
-                      >
-                        {formatDate(news.published_at || news.created_at)}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        sx={{
-                          display: '-webkit-box',
-                          WebkitLineClamp: 3,
-                          WebkitBoxOrient: 'vertical',
-                          overflow: 'hidden',
-                        }}
-                      >
-                        {news.excerpt}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
-              </Box>
-            ))}
-      </Box>
+                      <CardContent sx={{ flex: 1 }}>
+                        {news.category && (
+                          <Chip
+                            label={
+                              NEWS_CATEGORIES.find((c) => c.value === news.category)
+                                ?.label || news.category
+                            }
+                            size="small"
+                            color="primary"
+                            sx={{ mb: 1 }}
+                          />
+                        )}
+                        <Typography
+                          variant="h6"
+                          gutterBottom
+                          sx={{
+                            fontSize: '1.125rem',
+                            fontWeight: 600,
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden',
+                          }}
+                        >
+                          {news.title}
+                        </Typography>
+                        <Typography
+                          variant="caption"
+                          color="text.secondary"
+                          display="block"
+                          sx={{ mb: 1 }}
+                        >
+                          {formatDate(news.published_at || news.created_at)}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="text.secondary"
+                          sx={{
+                            display: '-webkit-box',
+                            WebkitLineClamp: 3,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden',
+                          }}
+                        >
+                          {news.excerpt}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Box>
+              ))}
+          </Box>
 
-      {/* Empty State */}
-      {!loading && newsList.length === 0 && (
-        <Box
-          sx={{
-            textAlign: 'center',
-            py: 8,
-          }}
-        >
-          <Typography variant="h6" color="text.secondary" gutterBottom>
-            No se encontraron novedades
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Intenta ajustar los filtros de búsqueda
-          </Typography>
-        </Box>
-      )}
+          {/* Empty State */}
+          {!loading && newsList.length === 0 && (
+            <Box
+              sx={{
+                textAlign: 'center',
+                py: 8,
+              }}
+            >
+              <Typography variant="h6" color="text.secondary" gutterBottom>
+                No se encontraron novedades
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Intenta ajustar los filtros de búsqueda
+              </Typography>
+            </Box>
+          )}
 
-      {/* Pagination */}
-      {!loading && pagination.totalPages > 1 && (
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
-          <Pagination
-            count={pagination.totalPages}
-            page={page}
-            onChange={handlePageChange}
-            color="primary"
-            size="large"
-          />
-        </Box>
-      )}
-      </AnimatedSection>
-    </Container>
+          {/* Pagination */}
+          {!loading && pagination.totalPages > 1 && (
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+              <Pagination
+                count={pagination.totalPages}
+                page={page}
+                onChange={handlePageChange}
+                color="primary"
+                size="large"
+              />
+            </Box>
+          )}
+        </AnimatedSection>
+      </Container>
     </Box>
   );
 };

@@ -95,7 +95,7 @@ const AreaGallery = ({
               position: 'relative',
               borderRadius: '10px',
               overflow: 'hidden',
-              cursor: 'zoom-in',
+              cursor: 'default',
               boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
               transition: 'box-shadow 0.35s ease',
               '&:hover': {
@@ -103,13 +103,6 @@ const AreaGallery = ({
               },
               '&:hover .g-img': {
                 transform: 'scale(1.06)',
-              },
-              '&:hover .g-overlay': {
-                opacity: 1,
-              },
-              '&:hover .g-caption': {
-                transform: 'translateY(0)',
-                opacity: 1,
               },
               '&:hover .g-accent': {
                 transform: 'scaleX(1)',
@@ -147,52 +140,6 @@ const AreaGallery = ({
               }}
             />
 
-            {/* Gradient overlay */}
-            <Box
-              className="g-overlay"
-              sx={{
-                position: 'absolute',
-                inset: 0,
-                background:
-                  'linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.18) 45%, transparent 75%)',
-                opacity: 0,
-                transition: 'opacity 0.4s ease',
-                zIndex: 1,
-              }}
-            />
-
-            {/* Caption */}
-            {photo.title && (
-              <Box
-                className="g-caption"
-                sx={{
-                  position: 'absolute',
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  px: 1.75,
-                  py: 1.5,
-                  zIndex: 2,
-                  transform: 'translateY(6px)',
-                  opacity: 0,
-                  transition:
-                    'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease',
-                }}
-              >
-                <Typography
-                  sx={{
-                    color: '#fff',
-                    fontWeight: 600,
-                    fontSize: '0.78rem',
-                    lineHeight: 1.35,
-                    letterSpacing: '0.01em',
-                    textShadow: '0 1px 3px rgba(0,0,0,0.4)',
-                  }}
-                >
-                  {photo.title}
-                </Typography>
-              </Box>
-            )}
           </Box>
         ))}
       </Box>

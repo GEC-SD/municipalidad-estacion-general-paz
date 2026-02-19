@@ -279,7 +279,7 @@ const DepartamentoEjecutivoPage = () => {
                 whiteSpace: 'nowrap',
               }}
             >
-              Gabinete Municipal
+              Secretarías
             </Box>
             <Box sx={{ flex: 1, height: '1px', bgcolor: 'rgba(0,0,0,0.1)' }} />
           </Box>

@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import {
   Box,
   Container,
@@ -29,22 +30,15 @@ import PageHero from '../../components/PageHero';
 import AnimatedSection from '../../components/AnimatedSection';
 import AreaGallery, { GalleryPhoto } from '../../components/AreaGallery';
 
-const SALUD_PHOTOS: GalleryPhoto[] = [
-  { src: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&q=80', alt: 'Atención médica', title: 'Atención Primaria de la Salud' },
-  { src: 'https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?w=600&q=80', alt: 'Enfermería comunitaria', title: 'Enfermería Comunitaria' },
-  { src: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=600&q=80', alt: 'Centro de salud', title: 'Centro de Salud Municipal' },
-  { src: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&q=80', alt: 'Vacunación', title: 'Campaña de Vacunación' },
-  { src: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80', alt: 'Salud y bienestar', title: 'Bienestar Comunitario' },
-  { src: 'https://images.unsplash.com/photo-1526256262350-7da7584cf5eb?w=600&q=80', alt: 'Feria de salud', title: 'Feria de Salud' },
-  { src: 'https://images.unsplash.com/photo-1576671081837-49000212a370?w=600&q=80', alt: 'Farmacia', title: 'Farmacia Municipal' },
-  { src: 'https://images.unsplash.com/photo-1504813184591-01572f98c85f?w=600&q=80', alt: 'Pediatría', title: 'Pediatría' },
-  { src: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?w=600&q=80', alt: 'Laboratorio', title: 'Laboratorio Clínico' },
-  { src: 'https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=600&q=80', alt: 'Telemedicina', title: 'Telemedicina' },
-  { src: 'https://images.unsplash.com/photo-1588776814546-1ffbb7f6c3e5?w=600&q=80', alt: 'Consulta médica', title: 'Consulta General' },
-  { src: 'https://images.unsplash.com/photo-1516841273335-e39b37888115?w=600&q=80', alt: 'Kinesiología', title: 'Kinesiología y Rehabilitación' },
-];
-
 const SaludPage = () => {
+  const [galleryPhotos, setGalleryPhotos] = useState<GalleryPhoto[]>([]);
+
+  useEffect(() => {
+    fetch('/api/gallery/salud')
+      .then((res) => res.json())
+      .then((photos: GalleryPhoto[]) => setGalleryPhotos(photos))
+      .catch(() => setGalleryPhotos([]));
+  }, []);
   const { servicesByCategory, status } = useAppSelector(
     (state) => state.services
   );
@@ -64,7 +58,7 @@ const SaludPage = () => {
   if (error && !services.length) {
     return (
       <Box>
-        <PageHero title="Servicios de Salud" subtitle="Atención médica y programas de prevención para toda la comunidad" backgroundImage="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1600&q=80" overlayColor="rgba(46,134,193,0.88)" overlayColorEnd="rgba(26,95,139,0.72)" />
+        <PageHero title="Servicios de Salud" subtitle="Atención médica y programas de prevención para toda la comunidad" backgroundImage="/salud/Salud5.webp" overlayColor="rgba(46,134,193,0.88)" overlayColorEnd="rgba(26,95,139,0.72)" />
         <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
           <Alert severity="error">
             No se pudo cargar la información. Intente nuevamente más tarde.
@@ -97,7 +91,7 @@ const SaludPage = () => {
 
   return (
     <Box>
-      <PageHero title="Servicios de Salud" subtitle="Atención médica y programas de prevención para toda la comunidad" backgroundImage="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1600&q=80" overlayColor="rgba(46,134,193,0.88)" overlayColorEnd="rgba(26,95,139,0.72)" />
+      <PageHero title="Servicios de Salud" subtitle="Atención médica y programas de prevención para toda la comunidad" backgroundImage="/salud/Salud5.webp" overlayColor="rgba(46,134,193,0.88)" overlayColorEnd="rgba(26,95,139,0.72)" />
 
       <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
         <AnimatedSection animation="fadeInUp">
@@ -229,7 +223,7 @@ const SaludPage = () => {
         </AnimatedSection>
 
         <AreaGallery
-          photos={SALUD_PHOTOS}
+          photos={galleryPhotos}
           accentColor="#2E86C1"
           sectionTitle="Galería de Salud"
         />

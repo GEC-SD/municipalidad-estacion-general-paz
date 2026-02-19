@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import {
@@ -189,74 +190,74 @@ const ContactoPage = () => {
 
       <Container maxWidth="md" sx={{ py: { xs: 6, md: 8 } }}>
         <AnimatedSection animation="fadeInUp">
-        {/* Main Municipal Info */}
-        <Paper sx={{ p: 4, mb: 4, backgroundColor: 'primary.main', color: 'white' }}>
-          <Typography variant="h5" gutterBottom sx={{ fontWeight: 600 }}>
-            Municipalidad de Estación General Paz
-          </Typography>
-          <Divider sx={{ my: 2, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
-          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' }, gap: 2 }}>
-            <Box>
-              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                <PhoneIcon sx={{ mr: 1.5 }} />
-                <Box>
-                  <Typography variant="caption" sx={{ opacity: 0.8 }}>
-                    Teléfono Central
-                  </Typography>
-                  <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                    3525-312959
-                  </Typography>
+          {/* Main Municipal Info */}
+          <Paper sx={{ p: 4, mb: 4, backgroundColor: 'primary.main', color: 'white' }}>
+            <Typography variant="h5" gutterBottom sx={{ fontWeight: 600 }}>
+              Municipalidad de Estación General Paz
+            </Typography>
+            <Divider sx={{ my: 2, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' }, gap: 2 }}>
+              <Box>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                  <PhoneIcon sx={{ mr: 1.5 }} />
+                  <Box>
+                    <Typography variant="caption" sx={{ opacity: 0.8 }}>
+                      Teléfono Central
+                    </Typography>
+                    <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                      3525-312959
+                    </Typography>
+                  </Box>
+                </Box>
+              </Box>
+              <Box>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                  <EmailIcon sx={{ mr: 1.5 }} />
+                  <Box>
+                    <Typography variant="caption" sx={{ opacity: 0.8 }}>
+                      Email
+                    </Typography>
+                    <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                      municipiogpaz@gmail.com
+                    </Typography>
+                  </Box>
+                </Box>
+              </Box>
+              <Box sx={{ gridColumn: { xs: '1', sm: '1 / -1' } }}>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <LocationOnIcon sx={{ mr: 1.5 }} />
+                  <Box>
+                    <Typography variant="caption" sx={{ opacity: 0.8 }}>
+                      Dirección
+                    </Typography>
+                    <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                      Buenos Aires, esq. Sgo. del Estero
+                    </Typography>
+                  </Box>
                 </Box>
               </Box>
             </Box>
-            <Box>
-              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                <EmailIcon sx={{ mr: 1.5 }} />
-                <Box>
-                  <Typography variant="caption" sx={{ opacity: 0.8 }}>
-                    Email
-                  </Typography>
-                  <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                    info@municipalidadgeneralpaz.gob.ar
-                  </Typography>
-                </Box>
-              </Box>
-            </Box>
-            <Box sx={{ gridColumn: { xs: '1', sm: '1 / -1' } }}>
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <LocationOnIcon sx={{ mr: 1.5 }} />
-                <Box>
-                  <Typography variant="caption" sx={{ opacity: 0.8 }}>
-                    Dirección
-                  </Typography>
-                  <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                    Estación General Paz, Córdoba
-                  </Typography>
-                </Box>
-              </Box>
-            </Box>
-          </Box>
-        </Paper>
+          </Paper>
         </AnimatedSection>
 
         <AnimatedSection animation="fadeInUp" delay={200}>
-        {/* Tabs */}
-        <Paper sx={{ mb: 3 }}>
-          <Tabs
-            value={tabValue}
-            onChange={handleTabChange}
-            variant="fullWidth"
-            textColor="primary"
-            indicatorColor="primary"
-          >
-            <Tab label="Emergencias" />
-            <Tab label="Administrativo" />
-            <Tab label="Servicios" />
-          </Tabs>
-        </Paper>
+          {/* Tabs */}
+          <Paper sx={{ mb: 3 }}>
+            <Tabs
+              value={tabValue}
+              onChange={handleTabChange}
+              variant="fullWidth"
+              textColor="primary"
+              indicatorColor="primary"
+            >
+              <Tab label="Emergencias" />
+              <Tab label="Administrativo" />
+              <Tab label="Servicios" />
+            </Tabs>
+          </Paper>
 
-        {/* Tab Content */}
-        {getTabContent()}
+          {/* Tab Content */}
+          {getTabContent()}
         </AnimatedSection>
       </Container>
     </Box>

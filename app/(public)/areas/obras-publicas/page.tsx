@@ -62,7 +62,7 @@ const ObrasPublicasPage = () => {
     // <Box>
     //   <PageHero
     //     title="Obras Públicas"
-    //     subtitle="Conocé las obras de infraestructura y mejoras que estamos realizando en nuestra ciudad"
+    //     subtitle="Conocé las obras de infraestructura y mejoras que estamos realizando en nuestro municipio"
     //     backgroundImage="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&q=80"
     //     overlayColor="rgba(67, 160, 71, 0.85)"
     //     overlayColorEnd="rgba(245, 166, 35, 0.7)"
@@ -74,7 +74,7 @@ const ObrasPublicasPage = () => {
     //       <AnimatedSection animation="fadeInUp">
     //         <SectionTitle
     //           title="Mapa de Obras"
-    //           subtitle="Ubicación de las obras realizadas y en ejecución en nuestra ciudad"
+    //           subtitle="Ubicación de las obras realizadas y en ejecución en nuestro municipio"
     //         />
     //       </AnimatedSection>
 

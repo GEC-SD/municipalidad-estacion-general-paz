@@ -28,7 +28,7 @@ const HistoriaPage = () => {
   return (
     <Box>
       <PageHero
-        title="Historia de la Ciudad"
+        title="Nuestra historia"
         subtitle="Conocé nuestras raíces y patrimonio"
         backgroundImage="https://images.unsplash.com/photo-1461360370896-922624d12a74?w=1600&q=80"
         overlayColor="rgba(26,95,139,0.88)"

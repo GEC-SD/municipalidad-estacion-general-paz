@@ -93,7 +93,7 @@ const AgendaPage = () => {
     <>
       <PageHero
         title="Agenda de Eventos"
-        subtitle="Actividades culturales, deportivas e institucionales de nuestra ciudad"
+        subtitle="Actividades culturales, deportivas e institucionales de nuestro municipio"
         backgroundImage="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1600&q=80"
         overlayColor="rgba(245,166,35,0.88)"
         overlayColorEnd="rgba(253,216,53,0.7)"
@@ -194,18 +194,18 @@ const AgendaPage = () => {
         >
           {loading
             ? Array.from(new Array(6)).map((_, index) => (
-                <Skeleton
-                  key={index}
-                  variant="rectangular"
-                  height={320}
-                  sx={{ borderRadius: 3 }}
-                />
-              ))
+              <Skeleton
+                key={index}
+                variant="rectangular"
+                height={320}
+                sx={{ borderRadius: 3 }}
+              />
+            ))
             : events.map((event, index) => (
-                <AnimatedSection key={event.id} delay={index * 100}>
-                  <EventCard event={event} />
-                </AnimatedSection>
-              ))}
+              <AnimatedSection key={event.id} delay={index * 100}>
+                <EventCard event={event} />
+              </AnimatedSection>
+            ))}
         </Box>
 
         {/* Empty state */}

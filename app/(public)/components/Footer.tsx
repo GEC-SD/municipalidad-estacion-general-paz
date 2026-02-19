@@ -36,8 +36,8 @@ const Footer = () => {
           </Typography>
           <Box sx={{ display: 'flex', gap: 1 }}>
             {[
-              { icon: <FacebookIcon />, label: 'Facebook', href: 'https://www.facebook.com/share/16x2wrVwxV/?mibextid=wwXIfr' },
-              { icon: <InstagramIcon />, label: 'Instagram', href: 'https://www.instagram.com/municipalidadgralpaz?igsh=aDN4NTI2OGR4Mjlj' },
+              { icon: <FacebookIcon />, label: 'Facebook', href: 'https://www.facebook.com/profile.php?id=61569838749351' },
+              { icon: <InstagramIcon />, label: 'Instagram', href: 'https://www.instagram.com/municipalidadgralpaz' },
               { icon: <WhatsAppIcon />, label: 'WhatsApp', href: 'https://whatsapp.com/channel/0029VbBA769DZ4LTG98htH0p' },
             ].map((social) => (
               <IconButton
@@ -98,7 +98,7 @@ const Footer = () => {
               <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 1, mb: 1.5 }}>
                 <LocationOnIcon fontSize="small" sx={{ mt: 0.3, opacity: 0.7 }} />
                 <Typography variant="body2" sx={{ opacity: 0.8 }}>
-                  Estación General Paz, Córdoba
+                  Buenos Aires, esq. Sgo. del Estero
                 </Typography>
               </Box>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
@@ -113,7 +113,7 @@ const Footer = () => {
                   variant="body2"
                   sx={{ opacity: 0.8, wordBreak: 'break-word' }}
                 >
-                  info@municipalidadgeneralpaz.gob.ar
+                  municipiogpaz@gmail.com
                 </Typography>
               </Box>
             </Box>
@@ -209,29 +209,8 @@ const Footer = () => {
                 Lunes a Viernes
               </Typography>
               <Typography variant="body2" sx={{ fontWeight: 600, mb: 2 }}>
-                07:00 a 13:00 hs
+                07:00 a 14:00 hs
               </Typography>
-              <Typography variant="h6" sx={classes.footerTitle}>
-                Seguinos
-              </Typography>
-              <Box sx={classes.footerSocialIcons}>
-                {[
-                  { icon: <FacebookIcon />, label: 'Facebook', href: 'https://www.facebook.com/share/16x2wrVwxV/?mibextid=wwXIfr' },
-                  { icon: <InstagramIcon />, label: 'Instagram', href: 'https://www.instagram.com/municipalidadgralpaz?igsh=aDN4NTI2OGR4Mjlj' },
-                  { icon: <WhatsAppIcon />, label: 'WhatsApp', href: 'https://whatsapp.com/channel/0029VbBA769DZ4LTG98htH0p' },
-                ].map((social) => (
-                  <IconButton
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    sx={classes.footerSocialIcon}
-                    aria-label={social.label}
-                  >
-                    {social.icon}
-                  </IconButton>
-                ))}
-              </Box>
             </Box>
           </Box>
 

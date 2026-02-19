@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import {
   Box,
   Container,
@@ -29,22 +30,15 @@ import PageHero from '../../components/PageHero';
 import AnimatedSection from '../../components/AnimatedSection';
 import AreaGallery, { GalleryPhoto } from '../../components/AreaGallery';
 
-const EDUCACION_PHOTOS: GalleryPhoto[] = [
-  { src: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80', alt: 'Niños aprendiendo', title: 'Educación Inicial' },
-  { src: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=600&q=80', alt: 'Aula', title: 'Clases Presenciales' },
-  { src: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&q=80', alt: 'Estudiantes', title: 'Vida Estudiantil' },
-  { src: 'https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?w=600&q=80', alt: 'Lectura', title: 'Fomento a la Lectura' },
-  { src: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600&q=80', alt: 'Biblioteca', title: 'Biblioteca Escolar' },
-  { src: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=600&q=80', alt: 'Docentes', title: 'Capacitación Docente' },
-  { src: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80', alt: 'Graduación', title: 'Egresados' },
-  { src: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=600&q=80', alt: 'Escritura', title: 'Taller de Escritura' },
-  { src: 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=600&q=80', alt: 'Tecnología', title: 'Sala de Computación' },
-  { src: 'https://images.unsplash.com/photo-1543269664-76bc3997d9ea?w=600&q=80', alt: 'Talleres creativos', title: 'Talleres Creativos' },
-  { src: 'https://images.unsplash.com/photo-1518534858427-e46a38edc38c?w=600&q=80', alt: 'Ciencias', title: 'Laboratorio de Ciencias' },
-  { src: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&q=80', alt: 'Arte', title: 'Arte y Expresión' },
-];
-
 const EducacionPage = () => {
+  const [galleryPhotos, setGalleryPhotos] = useState<GalleryPhoto[]>([]);
+
+  useEffect(() => {
+    fetch('/api/gallery/educacion')
+      .then((res) => res.json())
+      .then((photos: GalleryPhoto[]) => setGalleryPhotos(photos))
+      .catch(() => setGalleryPhotos([]));
+  }, []);
   const { servicesByCategory, status } = useAppSelector(
     (state) => state.services
   );
@@ -64,7 +58,7 @@ const EducacionPage = () => {
   if (error && !services.length) {
     return (
       <Box>
-        <PageHero title="Educación" subtitle="Programas educativos y actividades de formación para la comunidad" backgroundImage="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1600&q=80" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(67,160,71,0.72)" />
+        <PageHero title="Educación" subtitle="Programas educativos y actividades de formación para la comunidad" backgroundImage="/educacion/Educacion7.webp" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(67,160,71,0.72)" />
         <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
           <Alert severity="error">
             No se pudo cargar la información. Intente nuevamente más tarde.
@@ -97,7 +91,7 @@ const EducacionPage = () => {
 
   return (
     <Box>
-      <PageHero title="Educación" subtitle="Programas educativos y actividades de formación para la comunidad" backgroundImage="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1600&q=80" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(67,160,71,0.72)" />
+      <PageHero title="Educación" subtitle="Programas educativos y actividades de formación para la comunidad" backgroundImage="/educacion/Educacion7.webp" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(67,160,71,0.72)" />
 
       <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
         <AnimatedSection animation="fadeInUp">
@@ -227,7 +221,7 @@ const EducacionPage = () => {
         </AnimatedSection>
 
         <AreaGallery
-          photos={EDUCACION_PHOTOS}
+          photos={galleryPhotos}
           accentColor="#1A5F8B"
           sectionTitle="Galería Educativa"
         />

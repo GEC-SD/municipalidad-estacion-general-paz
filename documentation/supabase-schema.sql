@@ -82,7 +82,7 @@ CREATE TABLE services (
   title VARCHAR(255) NOT NULL,
   slug VARCHAR(255) UNIQUE NOT NULL,
   description TEXT NOT NULL,
-  category VARCHAR(100) NOT NULL CHECK (category IN ('salud', 'cultura', 'deporte', 'tramites')),
+  category VARCHAR(100) NOT NULL CHECK (category IN ('salud', 'cultura', 'obras', 'educacion')),
   icon VARCHAR(100),
   image_url TEXT,
   contact_info JSONB,
@@ -523,6 +523,29 @@ CREATE POLICY "Usuarios autenticados pueden eliminar archivos"
   ON storage.objects FOR DELETE
   TO authenticated
   USING (bucket_id IN ('news-images', 'news-attachments', 'authority-photos', 'service-images', 'regulations-pdfs', 'public-works-images', 'tramites-pdfs'));
+
+-- ============================================================================
+-- TABLA: area_resenas (Reseñas de áreas)
+-- ============================================================================
+CREATE TABLE area_resenas (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  area VARCHAR(50) NOT NULL UNIQUE,
+  content TEXT NOT NULL DEFAULT '',
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  CONSTRAINT area_resenas_area_check CHECK (area IN ('salud', 'cultura', 'obras', 'educacion'))
+);
+
+ALTER TABLE area_resenas ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Public can read area_resenas"
+  ON area_resenas FOR SELECT
+  USING (true);
+
+CREATE POLICY "Authenticated can manage area_resenas"
+  ON area_resenas FOR ALL
+  TO authenticated
+  USING (true);
 
 -- ============================================================================
 -- FIN DEL SCRIPT

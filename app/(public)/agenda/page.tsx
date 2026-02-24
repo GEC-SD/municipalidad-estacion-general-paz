@@ -93,7 +93,7 @@ const AgendaPage = () => {
     <>
       <PageHero
         title="Agenda de Eventos"
-        subtitle="Actividades culturales, deportivas e institucionales de nuestro municipio"
+        subtitle="Actividades culturales, deportivas e institucionales para la comunidad."
         backgroundImage="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1600&q=80"
         overlayColor="rgba(245,166,35,0.88)"
         overlayColorEnd="rgba(253,216,53,0.7)"

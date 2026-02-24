@@ -9,5 +9,4 @@ export * from './services';
 export * from './regulations';
 export * from './contact';
 export * from './events';
-export * from './publicWorks';
 export * from './tramites';

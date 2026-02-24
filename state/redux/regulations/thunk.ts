@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RegulationFormData, RegulationFilters } from '@/types';
+import { translateError } from '@/utils/translateError';
 import {
   getRegulationsApi,
   getRegulationByIdApi,
@@ -20,7 +21,7 @@ export const getRegulationsAsync = createAsyncThunk(
       return { ...response, page, limit };
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al obtener normativa',
+        error: translateError(error, 'Error al obtener normativa'),
       });
     }
   }
@@ -33,7 +34,7 @@ export const getRegulationByIdAsync = createAsyncThunk(
       return await getRegulationByIdApi(id);
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al obtener normativa',
+        error: translateError(error, 'Error al obtener normativa'),
       });
     }
   }
@@ -46,7 +47,7 @@ export const createRegulationAsync = createAsyncThunk(
       return await createRegulationApi(regulationData);
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al crear normativa',
+        error: translateError(error, 'Error al crear normativa'),
       });
     }
   }
@@ -62,7 +63,7 @@ export const updateRegulationAsync = createAsyncThunk(
       return await updateRegulationApi(params.id, params.data);
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al actualizar normativa',
+        error: translateError(error, 'Error al actualizar normativa'),
       });
     }
   }
@@ -76,7 +77,7 @@ export const deleteRegulationAsync = createAsyncThunk(
       return id;
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al eliminar normativa',
+        error: translateError(error, 'Error al eliminar normativa'),
       });
     }
   }

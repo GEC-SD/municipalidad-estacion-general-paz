@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { LoginCredentials } from '@/types';
+import { translateError } from '@/utils/translateError';
 import { loginApi, logoutApi, checkSessionApi, getCurrentUserApi } from './api';
 
 /**
@@ -14,7 +15,7 @@ export const loginAsync = createAsyncThunk(
       return response;
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al iniciar sesión',
+        error: translateError(error, 'Error al iniciar sesión'),
       });
     }
   }
@@ -32,7 +33,7 @@ export const logoutAsync = createAsyncThunk(
       return true;
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al cerrar sesión',
+        error: translateError(error, 'Error al cerrar sesión'),
       });
     }
   }
@@ -50,7 +51,7 @@ export const checkSessionAsync = createAsyncThunk(
       return response;
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al verificar sesión',
+        error: translateError(error, 'Error al verificar sesión'),
       });
     }
   }
@@ -68,7 +69,7 @@ export const getCurrentUserAsync = createAsyncThunk(
       return response;
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al obtener usuario',
+        error: translateError(error, 'Error al obtener usuario'),
       });
     }
   }

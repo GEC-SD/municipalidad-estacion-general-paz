@@ -39,8 +39,6 @@ import { ADMIN_ROUTES, STORAGE_BUCKETS, FILE_SIZE_LIMITS, ALLOWED_FILE_TYPES } f
 import { TramiteFormData } from '@/types';
 import FileUpload from '../../../components/FileUpload';
 
-import 'react-quill-new/dist/quill.snow.css';
-
 const RichTextEditor = dynamic(() => import('../../../components/RichTextEditor'), {
   ssr: false,
   loading: () => <Box sx={{ height: 250, border: '1px solid rgba(0,0,0,0.23)', borderRadius: 2 }} />,

@@ -17,13 +17,15 @@ import {
   ArrowForward as ArrowForwardIcon,
   InfoOutlined as InfoOutlinedIcon,
   LocationOn as LocationOnIcon,
+  CalendarMonth as CalendarMonthIcon,
+  Schedule as ScheduleIcon,
 } from '@mui/icons-material';
 import { useAppSelector } from '@/state/redux/store';
 import { getFeaturedNewsAsync } from '@/state/redux/news';
+import { getFeaturedEventsAsync } from '@/state/redux/events';
 import { useCachedFetch } from '@/hooks';
 import { CACHE_TTL } from '@/constants/cache';
 import { PUBLIC_ROUTES, SERVICES } from '@/constants';
-import { SAMPLE_OBRAS } from '@/constants/sampleObras';
 import HeroCarousel from './components/HeroCarousel';
 import AnimatedSection from './components/AnimatedSection';
 import SectionTitle from './components/SectionTitle';
@@ -44,7 +46,7 @@ const heroSlides = [
   {
     id: '2',
     title: 'Areas Municipales a tu Alcance',
-    subtitle: 'Salud, cultura, deporte y educación. Todo lo que necesitás al alcance de un click.',
+    subtitle: 'Salud, cultura y deporte, obra e infraestructura, y educación. Todo lo que necesitás al alcance de un click.',
     ctaText: 'Explorar Areas',
     ctaHref: PUBLIC_ROUTES.SERVICIOS,
     backgroundImage: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1600&q=80',
@@ -64,7 +66,8 @@ const heroSlides = [
 ];
 
 const HomePage = () => {
-  const { featuredNews, status } = useAppSelector((state) => state.news);
+  const { featuredNews, status: newsStatus } = useAppSelector((state) => state.news);
+  const { featuredEvents, status: eventsStatus } = useAppSelector((state) => state.events);
 
   useCachedFetch({
     selector: (state) => state.news.lastFetched,
@@ -74,8 +77,17 @@ const HomePage = () => {
     hasData: featuredNews.length > 0,
   });
 
-  const loading = status.getFeaturedNewsAsync?.loading;
-  const error = status.getFeaturedNewsAsync?.response === 'rejected';
+  useCachedFetch({
+    selector: (state) => state.events.lastFetched,
+    dataKey: 'featuredEvents',
+    fetchAction: () => getFeaturedEventsAsync(3),
+    ttl: CACHE_TTL.FEATURED_NEWS,
+    hasData: (featuredEvents ?? []).length > 0,
+  });
+
+  const loading = newsStatus.getFeaturedNewsAsync?.loading;
+  const error = newsStatus.getFeaturedNewsAsync?.response === 'rejected';
+  const eventsLoading = eventsStatus.getFeaturedEventsAsync?.loading;
 
   return (
     <Box>
@@ -181,6 +193,141 @@ const HomePage = () => {
           )}
         </Container>
       </Box>
+
+      {/* ── Eventos Destacados ─────────────────────────── */}
+      {(eventsLoading || (featuredEvents ?? []).length > 0) && (
+        <Box sx={{ py: { xs: 6, md: 8 }, backgroundColor: '#FAFBFC' }}>
+          <Container maxWidth="lg">
+            <AnimatedSection animation="fadeInUp">
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'flex-start',
+                  mb: 2,
+                  flexWrap: 'wrap',
+                  gap: 2,
+                }}
+              >
+                <SectionTitle
+                  title="Eventos Destacados"
+                  subtitle="No te pierdas los próximos eventos de nuestra comunidad"
+                  align="left"
+                />
+                <Button
+                  component={Link}
+                  href={PUBLIC_ROUTES.AGENDA}
+                  endIcon={<ArrowForwardIcon />}
+                  sx={{ mt: 1, flexShrink: 0 }}
+                >
+                  Ver agenda
+                </Button>
+              </Box>
+            </AnimatedSection>
+
+            {eventsLoading ? (
+              <Box
+                sx={{
+                  display: 'grid',
+                  gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' },
+                  gap: 3,
+                }}
+              >
+                {Array.from(new Array(3)).map((_, index) => (
+                  <Card key={index}>
+                    <Skeleton variant="rectangular" height={180} />
+                    <CardContent>
+                      <Skeleton variant="text" width="40%" />
+                      <Skeleton variant="text" width="80%" />
+                      <Skeleton variant="text" width="60%" />
+                    </CardContent>
+                  </Card>
+                ))}
+              </Box>
+            ) : (
+              <Box
+                sx={{
+                  display: 'grid',
+                  gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' },
+                  gap: 3,
+                }}
+              >
+                {(featuredEvents ?? []).map((event, index) => (
+                  <AnimatedSection key={event.id} animation="fadeInUp" delay={index * 100}>
+                    <Card
+                      component={Link}
+                      href={`${PUBLIC_ROUTES.AGENDA}/${event.slug}`}
+                      sx={{
+                        height: '100%',
+                        textDecoration: 'none',
+                        transition: 'all 0.3s ease',
+                        '&:hover': {
+                          transform: 'translateY(-4px)',
+                          boxShadow: '0 12px 32px rgba(0,0,0,0.12)',
+                        },
+                      }}
+                    >
+                      {event.image_url && (
+                        <Box
+                          sx={{
+                            height: 180,
+                            backgroundImage: `url(${event.image_url})`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                          }}
+                        />
+                      )}
+                      <CardContent sx={{ p: 3 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                          <CalendarMonthIcon sx={{ fontSize: 16, color: 'primary.main' }} />
+                          <Typography variant="caption" color="primary.main" sx={{ fontWeight: 600 }}>
+                            {new Date(event.event_date + 'T12:00:00').toLocaleDateString('es-AR', {
+                              day: 'numeric',
+                              month: 'long',
+                              year: 'numeric',
+                            })}
+                          </Typography>
+                        </Box>
+                        {event.event_time && (
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1.5 }}>
+                            <ScheduleIcon sx={{ fontSize: 16, color: 'text.secondary' }} />
+                            <Typography variant="caption" color="text.secondary">
+                              {event.event_time} hs
+                            </Typography>
+                          </Box>
+                        )}
+                        <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, lineHeight: 1.3 }}>
+                          {event.title}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          color="text.secondary"
+                          sx={{
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden',
+                          }}
+                        >
+                          {event.description}
+                        </Typography>
+                        {event.location && (
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mt: 1.5 }}>
+                            <LocationOnIcon sx={{ fontSize: 16, color: 'text.secondary' }} />
+                            <Typography variant="caption" color="text.secondary">
+                              {event.location}
+                            </Typography>
+                          </Box>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </AnimatedSection>
+                ))}
+              </Box>
+            )}
+          </Container>
+        </Box>
+      )}
 
       {/* ── Areas Municipales ──────────────────────────── */}
       <Box sx={{ position: 'relative', py: { xs: 6, md: 8 }, overflow: 'hidden' }}>

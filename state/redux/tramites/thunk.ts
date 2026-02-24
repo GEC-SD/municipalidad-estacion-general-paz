@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { TramiteFormData } from '@/types';
+import { translateError } from '@/utils/translateError';
 import {
   getTramitesApi,
   getActiveTramitesApi,
@@ -21,7 +22,7 @@ export const getTramitesAsync = createAsyncThunk(
       return { ...response, page, limit };
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al obtener trámites',
+        error: translateError(error, 'Error al obtener trámites'),
       });
     }
   }
@@ -34,7 +35,7 @@ export const getActiveTramitesAsync = createAsyncThunk(
       return await getActiveTramitesApi();
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al obtener trámites',
+        error: translateError(error, 'Error al obtener trámites'),
       });
     }
   }
@@ -47,7 +48,7 @@ export const getTramiteByIdAsync = createAsyncThunk(
       return await getTramiteByIdApi(id);
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al obtener trámite',
+        error: translateError(error, 'Error al obtener trámite'),
       });
     }
   }
@@ -60,7 +61,7 @@ export const createTramiteAsync = createAsyncThunk(
       return await createTramiteApi(tramiteData);
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al crear trámite',
+        error: translateError(error, 'Error al crear trámite'),
       });
     }
   }
@@ -76,7 +77,7 @@ export const updateTramiteAsync = createAsyncThunk(
       return await updateTramiteApi(params.id, params.data);
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al actualizar trámite',
+        error: translateError(error, 'Error al actualizar trámite'),
       });
     }
   }
@@ -90,7 +91,7 @@ export const deleteTramiteAsync = createAsyncThunk(
       return id;
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al eliminar trámite',
+        error: translateError(error, 'Error al eliminar trámite'),
       });
     }
   }

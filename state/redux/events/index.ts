@@ -21,6 +21,7 @@ const eventsSlice = createSlice({
     },
     resetEventsState: (state) => {
       state.events = [];
+      state.featuredEvents = [];
       state.upcomingEvents = [];
       state.currentEvent = null;
       state.pagination = { page: 1, limit: 10, total: 0, totalPages: 0 };
@@ -55,6 +56,7 @@ export default eventsSlice.reducer;
 // Re-export thunks
 export {
   getEventsAsync,
+  getFeaturedEventsAsync,
   getMonthEventsAsync,
   getUpcomingEventsAsync,
   getEventByIdAsync,

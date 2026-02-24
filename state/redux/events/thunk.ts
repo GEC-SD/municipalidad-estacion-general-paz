@@ -1,7 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { EventFormData, EventFilters } from '@/types';
+import { translateError } from '@/utils/translateError';
 import {
   getEventsApi,
+  getFeaturedEventsApi,
   getUpcomingEventsApi,
   getMonthEventsApi,
   getEventByIdApi,
@@ -10,6 +12,19 @@ import {
   updateEventApi,
   deleteEventApi,
 } from './api';
+
+export const getFeaturedEventsAsync = createAsyncThunk(
+  'events/getFeaturedEvents',
+  async (limit: number = 3, { rejectWithValue }) => {
+    try {
+      return await getFeaturedEventsApi(limit);
+    } catch (error: any) {
+      return rejectWithValue({
+        error: translateError(error, 'Error al obtener eventos destacados'),
+      });
+    }
+  }
+);
 
 export const getEventsAsync = createAsyncThunk(
   'events/getEvents',
@@ -28,7 +43,7 @@ export const getEventsAsync = createAsyncThunk(
       };
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al obtener eventos',
+        error: translateError(error, 'Error al obtener eventos'),
       });
     }
   }
@@ -42,7 +57,7 @@ export const getMonthEventsAsync = createAsyncThunk(
       return data;
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al obtener eventos del mes',
+        error: translateError(error, 'Error al obtener eventos del mes'),
       });
     }
   }
@@ -56,7 +71,7 @@ export const getUpcomingEventsAsync = createAsyncThunk(
       return data;
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al obtener eventos próximos',
+        error: translateError(error, 'Error al obtener eventos próximos'),
       });
     }
   }
@@ -70,7 +85,7 @@ export const getEventByIdAsync = createAsyncThunk(
       return data;
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al obtener evento',
+        error: translateError(error, 'Error al obtener evento'),
       });
     }
   }
@@ -84,7 +99,7 @@ export const getEventBySlugAsync = createAsyncThunk(
       return data;
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Evento no encontrado',
+        error: translateError(error, 'Evento no encontrado'),
       });
     }
   }
@@ -98,7 +113,7 @@ export const createEventAsync = createAsyncThunk(
       return data;
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al crear evento',
+        error: translateError(error, 'Error al crear evento'),
       });
     }
   }
@@ -115,7 +130,7 @@ export const updateEventAsync = createAsyncThunk(
       return data;
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al actualizar evento',
+        error: translateError(error, 'Error al actualizar evento'),
       });
     }
   }
@@ -129,7 +144,7 @@ export const deleteEventAsync = createAsyncThunk(
       return id;
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al eliminar evento',
+        error: translateError(error, 'Error al eliminar evento'),
       });
     }
   }

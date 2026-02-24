@@ -26,7 +26,7 @@ const stripTransientFields = createTransform(
       status: {},
     };
   },
-  { whitelist: ['services', 'authorities', 'contact', 'publicWorks', 'tramites'] }
+  { whitelist: ['services', 'authorities', 'contact', 'tramites'] }
 );
 
 export default stripTransientFields;

@@ -167,10 +167,9 @@ const Footer = () => {
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
                 {[
                   { label: 'Salud', href: PUBLIC_ROUTES.SERVICIOS_SALUD },
-                  { label: 'Cultura', href: PUBLIC_ROUTES.SERVICIOS_CULTURA },
-                  { label: 'Deporte', href: PUBLIC_ROUTES.SERVICIOS_DEPORTE },
+                  { label: 'Cultura y Deporte', href: PUBLIC_ROUTES.SERVICIOS_CULTURA },
+                  { label: 'Obra e infraestructura', href: PUBLIC_ROUTES.SERVICIOS_OBRAS },
                   { label: 'Educación', href: PUBLIC_ROUTES.SERVICIOS_EDUCACION },
-                  // { label: 'Obras Públicas', href: PUBLIC_ROUTES.OBRAS_PUBLICAS },
                 ].map((link) => (
                   <Link key={link.label} href={link.href} style={classes.footerLink}>
                     <Typography
@@ -220,6 +219,53 @@ const Footer = () => {
               © {currentYear} Municipalidad de Estación General Paz. Todos los
               derechos reservados.
             </Typography>
+            <Box
+              component="a"
+              href="https://gecdigital.dev/"
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 1,
+                mt: 1.5,
+                pt: 1.5,
+                borderTop: '1px solid rgba(255,255,255,0.08)',
+                opacity: 0.45,
+                transition: 'opacity 0.3s ease',
+                textDecoration: 'none',
+                '&:hover': { opacity: 0.8 },
+              }}
+            >
+              <Typography
+                variant="caption"
+                sx={{
+                  color: 'rgba(255,255,255,0.7)',
+                  fontSize: '0.68rem',
+                  letterSpacing: '0.02em',
+                }}
+              >
+                Desarrollado por
+              </Typography>
+              <Image
+                src="/logo-gec.png"
+                alt="GEC Soluciones Digitales"
+                width={22}
+                height={22}
+                style={{ objectFit: 'contain' }}
+              />
+              <Typography
+                variant="caption"
+                sx={{
+                  color: 'rgba(255,255,255,0.8)',
+                  fontSize: '0.68rem',
+                  fontWeight: 600,
+                  letterSpacing: '0.02em',
+                }}
+              >
+                GEC Soluciones Digitales
+              </Typography>
+            </Box>
           </Box>
         </Container>
       </Box>

@@ -157,7 +157,7 @@ const ContactoPage = () => {
   if (error && !contacts.length) {
     return (
       <Box>
-        <PageHero title="Contacto" subtitle="Números útiles y datos de contacto" backgroundImage="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1600&q=80" overlayColor="rgba(67,160,71,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
+        <PageHero title="Contacto" subtitle="Información de contacto y canales de atención para la comunidad." backgroundImage="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1600&q=80" overlayColor="rgba(67,160,71,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
         <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
           <Alert severity="error">
             No se pudo cargar la información. Intente nuevamente más tarde.
@@ -186,7 +186,7 @@ const ContactoPage = () => {
 
   return (
     <Box>
-      <PageHero title="Contacto" subtitle="Números útiles y datos de contacto" backgroundImage="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1600&q=80" overlayColor="rgba(67,160,71,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
+      <PageHero title="Contacto" subtitle="Información de contacto y canales de atención para la comunidad." backgroundImage="https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1600&q=80" overlayColor="rgba(67,160,71,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
 
       <Container maxWidth="md" sx={{ py: { xs: 6, md: 8 } }}>
         <AnimatedSection animation="fadeInUp">

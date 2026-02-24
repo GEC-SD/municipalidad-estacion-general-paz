@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ContactFormData, ContactCategory } from '@/types';
+import { translateError } from '@/utils/translateError';
 import {
   getContactsApi,
   getContactsByCategoryApi,
@@ -16,7 +17,7 @@ export const getContactsAsync = createAsyncThunk(
       return await getContactsApi();
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al obtener contactos',
+        error: translateError(error, 'Error al obtener contactos'),
       });
     }
   }
@@ -30,7 +31,7 @@ export const getContactsByCategoryAsync = createAsyncThunk(
       return { category, data };
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al obtener contactos por categoría',
+        error: translateError(error, 'Error al obtener contactos por categoría'),
       });
     }
   }
@@ -43,7 +44,7 @@ export const getContactByIdAsync = createAsyncThunk(
       return await getContactByIdApi(id);
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al obtener contacto',
+        error: translateError(error, 'Error al obtener contacto'),
       });
     }
   }
@@ -56,7 +57,7 @@ export const createContactAsync = createAsyncThunk(
       return await createContactApi(contactData);
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al crear contacto',
+        error: translateError(error, 'Error al crear contacto'),
       });
     }
   }
@@ -72,7 +73,7 @@ export const updateContactAsync = createAsyncThunk(
       return await updateContactApi(params.id, params.data);
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al actualizar contacto',
+        error: translateError(error, 'Error al actualizar contacto'),
       });
     }
   }
@@ -86,7 +87,7 @@ export const deleteContactAsync = createAsyncThunk(
       return id;
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al eliminar contacto',
+        error: translateError(error, 'Error al eliminar contacto'),
       });
     }
   }

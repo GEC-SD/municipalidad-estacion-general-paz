@@ -8,6 +8,8 @@ import {
   createServiceAsync,
   updateServiceAsync,
   deleteServiceAsync,
+  getAreaResenaAsync,
+  upsertAreaResenaAsync,
 } from './thunk';
 
 const extraReducersServices = (
@@ -27,16 +29,14 @@ const extraReducersServices = (
       state.servicesByCategory = {
         salud: action.payload.filter((s) => s.category === 'salud'),
         cultura: action.payload.filter((s) => s.category === 'cultura'),
-        deporte: action.payload.filter((s) => s.category === 'deporte'),
-        tramites: action.payload.filter((s) => s.category === 'tramites'),
+        obras: action.payload.filter((s) => s.category === 'obras'),
         educacion: action.payload.filter((s) => s.category === 'educacion'),
       };
       const now = Date.now();
       state.lastFetched['services'] = now;
       state.lastFetched['servicesByCategory.salud'] = now;
       state.lastFetched['servicesByCategory.cultura'] = now;
-      state.lastFetched['servicesByCategory.deporte'] = now;
-      state.lastFetched['servicesByCategory.tramites'] = now;
+      state.lastFetched['servicesByCategory.obras'] = now;
       state.lastFetched['servicesByCategory.educacion'] = now;
       state.status.getServicesAsync = {
         response: 'fulfilled',
@@ -216,6 +216,60 @@ const extraReducersServices = (
       state.status.deleteServiceAsync = {
         response: 'rejected',
         message: action.payload?.error || 'Error al eliminar servicio',
+        loading: false,
+      };
+    });
+
+  // GET AREA RESENA
+  builder
+    .addCase(getAreaResenaAsync.pending, (state) => {
+      state.status.getAreaResenaAsync = {
+        response: 'pending',
+        message: '',
+        loading: true,
+      };
+    })
+    .addCase(getAreaResenaAsync.fulfilled, (state, action) => {
+      const { area, data } = action.payload;
+      state.resenas[area] = data;
+      state.lastFetched[`resena.${area}`] = Date.now();
+      state.status.getAreaResenaAsync = {
+        response: 'fulfilled',
+        message: '',
+        loading: false,
+      };
+    })
+    .addCase(getAreaResenaAsync.rejected, (state, action: any) => {
+      state.status.getAreaResenaAsync = {
+        response: 'rejected',
+        message: action.payload?.error || 'Error al obtener reseña',
+        loading: false,
+      };
+    });
+
+  // UPSERT AREA RESENA
+  builder
+    .addCase(upsertAreaResenaAsync.pending, (state) => {
+      state.status.upsertAreaResenaAsync = {
+        response: 'pending',
+        message: '',
+        loading: true,
+      };
+    })
+    .addCase(upsertAreaResenaAsync.fulfilled, (state, action) => {
+      const resena = action.payload;
+      state.resenas[resena.area] = resena;
+      state.lastFetched[`resena.${resena.area}`] = Date.now();
+      state.status.upsertAreaResenaAsync = {
+        response: 'fulfilled',
+        message: 'Reseña guardada correctamente',
+        loading: false,
+      };
+    })
+    .addCase(upsertAreaResenaAsync.rejected, (state, action: any) => {
+      state.status.upsertAreaResenaAsync = {
+        response: 'rejected',
+        message: action.payload?.error || 'Error al guardar reseña',
         loading: false,
       };
     });

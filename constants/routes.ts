@@ -23,11 +23,10 @@ export const PUBLIC_ROUTES = {
   // Areas (Servicios)
   SERVICIOS: '/areas',
   SERVICIOS_SALUD: '/areas/salud',
-  SERVICIOS_CULTURA: '/areas/cultura',
-  SERVICIOS_DEPORTE: '/areas/deporte',
+  SERVICIOS_CULTURA: '/areas/cultura-y-deporte',
+  SERVICIOS_OBRAS: '/areas/obra-e-infraestructura',
   SERVICIOS_TRAMITES: '/tramites',
   SERVICIOS_EDUCACION: '/areas/educacion',
-  OBRAS_PUBLICAS: '/areas/obras-publicas',
 
   // Transparencia
   TRANSPARENCIA: '/transparencia',
@@ -60,10 +59,11 @@ export const ADMIN_ROUTES = {
   ADMIN_NOVEDADES_NUEVA: '/admin/novedades/nueva',
   ADMIN_NOVEDADES_EDITAR: (id: string) => `/admin/novedades/editar/${id}`,
 
-  // Servicios
-  ADMIN_SERVICIOS: '/admin/servicios',
-  ADMIN_SERVICIOS_NUEVO: '/admin/servicios/nuevo',
-  ADMIN_SERVICIOS_EDITAR: (id: string) => `/admin/servicios/editar/${id}`,
+  // Areas
+  ADMIN_SERVICIOS: '/admin/areas',
+  ADMIN_SERVICIOS_NUEVO: '/admin/areas/nuevo',
+  ADMIN_SERVICIOS_EDITAR: (id: string) => `/admin/areas/editar/${id}`,
+  ADMIN_RESENAS: '/admin/areas/resenas',
 
   // Autoridades
   ADMIN_AUTORIDADES: '/admin/autoridades',
@@ -84,11 +84,6 @@ export const ADMIN_ROUTES = {
   ADMIN_CONTACTO: '/admin/contacto',
   ADMIN_CONTACTO_NUEVO: '/admin/contacto/nuevo',
   ADMIN_CONTACTO_EDITAR: (id: string) => `/admin/contacto/editar/${id}`,
-
-  // Obras Públicas
-  ADMIN_OBRAS: '/admin/obras-publicas',
-  ADMIN_OBRAS_NUEVA: '/admin/obras-publicas/nueva',
-  ADMIN_OBRAS_EDITAR: (id: string) => `/admin/obras-publicas/editar/${id}`,
 
   // Trámites
   ADMIN_TRAMITES: '/admin/tramites',

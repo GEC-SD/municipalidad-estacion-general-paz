@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AuthorityFormData, AuthorityCategory } from '@/types';
+import { translateError } from '@/utils/translateError';
 import {
   getAuthoritiesApi,
   getAuthoritiesByCategoryApi,
@@ -20,7 +21,7 @@ export const getAuthoritiesAsync = createAsyncThunk(
       return data;
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al obtener autoridades',
+        error: translateError(error, 'Error al obtener autoridades'),
       });
     }
   }
@@ -37,7 +38,7 @@ export const getAuthoritiesByCategoryAsync = createAsyncThunk(
       return { category, data };
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al obtener autoridades por categoría',
+        error: translateError(error, 'Error al obtener autoridades por categoría'),
       });
     }
   }
@@ -54,7 +55,7 @@ export const getAuthorityByIdAsync = createAsyncThunk(
       return data;
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al obtener autoridad',
+        error: translateError(error, 'Error al obtener autoridad'),
       });
     }
   }
@@ -71,7 +72,7 @@ export const createAuthorityAsync = createAsyncThunk(
       return data;
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al crear autoridad',
+        error: translateError(error, 'Error al crear autoridad'),
       });
     }
   }
@@ -91,7 +92,7 @@ export const updateAuthorityAsync = createAsyncThunk(
       return data;
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al actualizar autoridad',
+        error: translateError(error, 'Error al actualizar autoridad'),
       });
     }
   }
@@ -108,7 +109,7 @@ export const deleteAuthorityAsync = createAsyncThunk(
       return id;
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al eliminar autoridad',
+        error: translateError(error, 'Error al eliminar autoridad'),
       });
     }
   }

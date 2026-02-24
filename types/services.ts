@@ -1,6 +1,6 @@
 import { Status } from './global';
 
-export type ServiceCategory = 'salud' | 'cultura' | 'deporte' | 'tramites' | 'educacion';
+export type ServiceCategory = 'salud' | 'cultura' | 'obras' | 'educacion';
 
 export type ServiceContactInfo = {
   email?: string;
@@ -37,15 +37,23 @@ export type ServiceFormData = {
   order_position?: number;
 };
 
+export type AreaResena = {
+  id: string;
+  area: ServiceCategory;
+  content: string;
+  created_at: string;
+  updated_at: string;
+};
+
 export type ServicesSlice = {
   services: Service[];
   servicesByCategory: {
     salud: Service[];
     cultura: Service[];
-    deporte: Service[];
-    tramites: Service[];
+    obras: Service[];
     educacion: Service[];
   };
+  resenas: Record<ServiceCategory, AreaResena | null>;
   currentService: Service | null;
   lastFetched: Record<string, number>;
   status: {

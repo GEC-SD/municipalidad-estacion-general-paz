@@ -52,21 +52,17 @@ export const MAIN_MENU: MenuItem[] = [
         href: PUBLIC_ROUTES.SERVICIOS_SALUD,
       },
       {
-        label: 'Cultura',
+        label: 'Cultura y Deporte',
         href: PUBLIC_ROUTES.SERVICIOS_CULTURA,
       },
       {
-        label: 'Deporte',
-        href: PUBLIC_ROUTES.SERVICIOS_DEPORTE,
+        label: 'Obra e infraestructura',
+        href: PUBLIC_ROUTES.SERVICIOS_OBRAS,
       },
       {
         label: 'Educación',
         href: PUBLIC_ROUTES.SERVICIOS_EDUCACION,
       },
-      // {
-      //   label: 'Obras Públicas',
-      //   href: PUBLIC_ROUTES.OBRAS_PUBLICAS,
-      // },
     ],
   },
   {
@@ -96,7 +92,7 @@ export const ADMIN_MENU: MenuItem[] = [
     icon: 'Article',
   },
   {
-    label: 'Servicios',
+    label: 'Areas',
     href: ADMIN_ROUTES.ADMIN_SERVICIOS,
     icon: 'MiscellaneousServices',
   },
@@ -120,11 +116,6 @@ export const ADMIN_MENU: MenuItem[] = [
     href: ADMIN_ROUTES.ADMIN_TRAMITES,
     icon: 'Description',
   },
-  // {
-  //   label: 'Obras Públicas',
-  //   href: ADMIN_ROUTES.ADMIN_OBRAS,
-  //   icon: 'Construction',
-  // },
 ];
 
 // Breadcrumbs labels
@@ -140,18 +131,17 @@ export const BREADCRUMB_LABELS: Record<string, string> = {
   '/novedades': 'Novedades',
   '/areas': 'Areas',
   '/areas/salud': 'Salud',
-  '/areas/cultura': 'Cultura',
-  '/areas/deporte': 'Deporte',
+  '/areas/cultura-y-deporte': 'Cultura y Deporte',
+  '/areas/obra-e-infraestructura': 'Obra e infraestructura',
   '/tramites': 'Trámites',
   '/areas/educacion': 'Educación',
-  // '/areas/obras-publicas': 'Obras Públicas',
   '/transparencia': 'Transparencia',
   '/contacto': 'Contacto',
   '/admin': 'Dashboard',
   '/admin/novedades': 'Novedades',
   '/admin/novedades/nueva': 'Nueva Novedad',
-  '/admin/servicios': 'Servicios',
-  '/admin/servicios/nuevo': 'Nuevo Servicio',
+  '/admin/areas': 'Areas',
+  '/admin/areas/nuevo': 'Nueva Area',
   '/admin/autoridades': 'Autoridades',
   '/admin/autoridades/nueva': 'Nueva Autoridad',
   '/admin/transparencia': 'Transparencia',
@@ -159,8 +149,6 @@ export const BREADCRUMB_LABELS: Record<string, string> = {
   '/admin/eventos': 'Eventos',
   '/admin/eventos/nuevo': 'Nuevo Evento',
   '/agenda': 'Agenda',
-  // '/admin/obras-publicas': 'Obras Públicas',
-  // '/admin/obras-publicas/nueva': 'Nueva Obra',
   '/admin/tramites': 'Trámites',
   '/admin/tramites/nuevo': 'Nuevo Trámite',
 };

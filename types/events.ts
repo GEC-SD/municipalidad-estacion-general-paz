@@ -52,6 +52,7 @@ export type EventFilters = {
 
 export type EventsSlice = {
   events: Event[];
+  featuredEvents: Event[];
   upcomingEvents: Event[];
   monthEvents: Event[];
   currentEvent: Event | null;

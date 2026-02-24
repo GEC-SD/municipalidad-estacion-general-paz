@@ -2,6 +2,7 @@ import { ActionReducerMapBuilder } from '@reduxjs/toolkit';
 import { EventsSlice } from '@/types';
 import {
   getEventsAsync,
+  getFeaturedEventsAsync,
   getMonthEventsAsync,
   getUpcomingEventsAsync,
   getEventByIdAsync,
@@ -12,6 +13,32 @@ import {
 } from './thunk';
 
 const extraReducersEvents = (builder: ActionReducerMapBuilder<EventsSlice>) => {
+  // GET FEATURED EVENTS
+  builder
+    .addCase(getFeaturedEventsAsync.pending, (state) => {
+      state.status.getFeaturedEventsAsync = {
+        response: 'pending',
+        message: '',
+        loading: true,
+      };
+    })
+    .addCase(getFeaturedEventsAsync.fulfilled, (state, action) => {
+      state.featuredEvents = action.payload;
+      state.lastFetched['featuredEvents'] = Date.now();
+      state.status.getFeaturedEventsAsync = {
+        response: 'fulfilled',
+        message: '',
+        loading: false,
+      };
+    })
+    .addCase(getFeaturedEventsAsync.rejected, (state, action: any) => {
+      state.status.getFeaturedEventsAsync = {
+        response: 'rejected',
+        message: action.payload?.error || 'Error al obtener eventos destacados',
+        loading: false,
+      };
+    });
+
   // GET EVENTS
   builder
     .addCase(getEventsAsync.pending, (state) => {

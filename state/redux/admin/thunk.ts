@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { translateError } from '@/utils/translateError';
 import { getAdminStatsApi } from './api';
 
 /**
@@ -11,7 +12,7 @@ export const getAdminStatsAsync = createAsyncThunk(
       return await getAdminStatsApi();
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al obtener estadísticas',
+        error: translateError(error, 'Error al obtener estadísticas'),
       });
     }
   }

@@ -2,6 +2,7 @@ import { EventsSlice } from '@/types';
 
 const initialState: EventsSlice = {
   events: [],
+  featuredEvents: [],
   upcomingEvents: [],
   monthEvents: [],
   currentEvent: null,

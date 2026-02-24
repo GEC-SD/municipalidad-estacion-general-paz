@@ -23,7 +23,6 @@ import {
   Gavel as GavelIcon,
   Event as EventIcon,
   ContactPhone as ContactPhoneIcon,
-  Construction as ConstructionIcon,
   Description as DescriptionIcon,
 } from '@mui/icons-material';
 import Image from 'next/image';
@@ -53,7 +52,7 @@ const menuItems = [
     icon: <PeopleIcon />,
   },
   {
-    label: 'Servicios',
+    label: 'Areas',
     href: ADMIN_ROUTES.ADMIN_SERVICIOS,
     icon: <ServicesIcon />,
   },
@@ -77,11 +76,6 @@ const menuItems = [
     href: ADMIN_ROUTES.ADMIN_TRAMITES,
     icon: <DescriptionIcon />,
   },
-  // {
-  //   label: 'Obras Públicas',
-  //   href: ADMIN_ROUTES.ADMIN_OBRAS,
-  //   icon: <ConstructionIcon />,
-  // },
 ];
 
 const AdminSidebar = ({ mobileOpen, onClose }: AdminSidebarProps) => {

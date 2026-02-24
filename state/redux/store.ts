@@ -15,7 +15,6 @@ import regulationsReducer from './regulations';
 import contactReducer from './contact';
 import adminReducer from './admin';
 import eventsReducer from './events';
-import publicWorksReducer from './publicWorks';
 import tramitesReducer from './tramites';
 
 // Configuración de Redux Persist
@@ -24,7 +23,7 @@ import tramitesReducer from './tramites';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['app', 'services', 'authorities', 'contact', 'publicWorks', 'tramites'],
+  whitelist: ['app', 'services', 'authorities', 'contact', 'tramites'],
   transforms: [stripTransientFields],
 };
 
@@ -39,7 +38,6 @@ const rootReducer = combineReducers({
   contact: contactReducer,
   admin: adminReducer,
   events: eventsReducer,
-  publicWorks: publicWorksReducer,
   tramites: tramitesReducer,
 });
 

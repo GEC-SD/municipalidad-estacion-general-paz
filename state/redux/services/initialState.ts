@@ -5,9 +5,14 @@ const initialState: ServicesSlice = {
   servicesByCategory: {
     salud: [],
     cultura: [],
-    deporte: [],
-    tramites: [],
+    obras: [],
     educacion: [],
+  },
+  resenas: {
+    salud: null,
+    cultura: null,
+    obras: null,
+    educacion: null,
   },
   currentService: null,
   lastFetched: {},

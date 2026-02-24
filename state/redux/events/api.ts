@@ -2,6 +2,29 @@ import { supabase } from '@/state/supabase/config';
 import { EventFormData, EventFilters } from '@/types';
 
 /**
+ * Limpia los datos del formulario de eventos antes de enviar a Supabase.
+ * Convierte strings vacíos a null en campos opcionales para evitar
+ * errores de tipo "invalid input syntax for type date".
+ */
+const cleanEventData = (data: EventFormData | Partial<EventFormData>) => {
+  const cleaned = { ...data };
+  const optionalStringFields: (keyof EventFormData)[] = [
+    'event_time',
+    'end_date',
+    'location',
+    'image_url',
+    'organizer',
+    'contact_info',
+  ];
+  for (const field of optionalStringFields) {
+    if (field in cleaned && cleaned[field] === '') {
+      (cleaned as any)[field] = null;
+    }
+  }
+  return cleaned;
+};
+
+/**
  * Obtener todos los eventos con paginación y filtros
  */
 export const getEventsApi = async (
@@ -41,6 +64,23 @@ export const getEventsApi = async (
     data: data || [],
     count: count || 0,
   };
+};
+
+/**
+ * Obtener eventos destacados (público - página de inicio)
+ */
+export const getFeaturedEventsApi = async (limit: number = 3) => {
+  const { data, error } = await supabase
+    .from('events')
+    .select('*')
+    .eq('is_active', true)
+    .eq('is_featured', true)
+    .gte('event_date', new Date().toISOString().split('T')[0])
+    .order('event_date', { ascending: true })
+    .limit(limit);
+
+  if (error) throw error;
+  return data || [];
 };
 
 /**
@@ -113,7 +153,7 @@ export const getEventBySlugApi = async (slug: string) => {
 export const createEventApi = async (eventData: EventFormData) => {
   const { data, error } = await supabase
     .from('events')
-    .insert([eventData])
+    .insert([cleanEventData(eventData)])
     .select()
     .single();
 
@@ -127,7 +167,7 @@ export const createEventApi = async (eventData: EventFormData) => {
 export const updateEventApi = async (id: string, eventData: Partial<EventFormData>) => {
   const { data, error } = await supabase
     .from('events')
-    .update(eventData)
+    .update(cleanEventData(eventData))
     .eq('id', id)
     .select()
     .single();

@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { NewsFormData, NewsFilters } from '@/types';
+import { translateError } from '@/utils/translateError';
 import {
   getNewsApi,
   getPublishedNewsApi,
@@ -33,7 +34,7 @@ export const getNewsAsync = createAsyncThunk(
       };
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al obtener noticias',
+        error: translateError(error, 'Error al obtener noticias'),
       });
     }
   }
@@ -59,7 +60,7 @@ export const getPublishedNewsAsync = createAsyncThunk(
       };
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al obtener noticias publicadas',
+        error: translateError(error, 'Error al obtener noticias publicadas'),
       });
     }
   }
@@ -76,7 +77,7 @@ export const getFeaturedNewsAsync = createAsyncThunk(
       return data;
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al obtener noticias destacadas',
+        error: translateError(error, 'Error al obtener noticias destacadas'),
       });
     }
   }
@@ -93,7 +94,7 @@ export const getNewsByIdAsync = createAsyncThunk(
       return data;
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al obtener noticia',
+        error: translateError(error, 'Error al obtener noticia'),
       });
     }
   }
@@ -110,7 +111,7 @@ export const getNewsBySlugAsync = createAsyncThunk(
       return data;
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Noticia no encontrada',
+        error: translateError(error, 'Noticia no encontrada'),
       });
     }
   }
@@ -127,7 +128,7 @@ export const createNewsAsync = createAsyncThunk(
       return data;
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al crear noticia',
+        error: translateError(error, 'Error al crear noticia'),
       });
     }
   }
@@ -147,7 +148,7 @@ export const updateNewsAsync = createAsyncThunk(
       return data;
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al actualizar noticia',
+        error: translateError(error, 'Error al actualizar noticia'),
       });
     }
   }
@@ -164,7 +165,7 @@ export const deleteNewsAsync = createAsyncThunk(
       return id;
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al eliminar noticia',
+        error: translateError(error, 'Error al eliminar noticia'),
       });
     }
   }
@@ -195,7 +196,7 @@ export const createNewsAttachmentAsync = createAsyncThunk(
       return data;
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al crear adjunto',
+        error: translateError(error, 'Error al crear adjunto'),
       });
     }
   }
@@ -212,7 +213,7 @@ export const deleteNewsAttachmentAsync = createAsyncThunk(
       return attachmentId;
     } catch (error: any) {
       return rejectWithValue({
-        error: error?.message || 'Error al eliminar adjunto',
+        error: translateError(error, 'Error al eliminar adjunto'),
       });
     }
   }

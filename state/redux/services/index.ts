@@ -17,8 +17,7 @@ const servicesSlice = createSlice({
       state.servicesByCategory = {
         salud: [],
         cultura: [],
-        deporte: [],
-        tramites: [],
+        obras: [],
         educacion: [],
       };
       state.currentService = null;
@@ -56,4 +55,6 @@ export {
   createServiceAsync,
   updateServiceAsync,
   deleteServiceAsync,
+  getAreaResenaAsync,
+  upsertAreaResenaAsync,
 } from './thunk';

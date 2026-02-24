@@ -1,5 +1,6 @@
+import slugify from 'slugify';
 import { supabase } from '@/state/supabase/config';
-import { ServiceFormData, ServiceCategory } from '@/types';
+import { ServiceFormData, ServiceCategory, AreaResena } from '@/types';
 
 /**
  * Obtener todos los servicios
@@ -68,9 +69,10 @@ export const getServiceBySlugApi = async (slug: string) => {
  * POST /api/services
  */
 export const createServiceApi = async (serviceData: ServiceFormData) => {
+  const slug = slugify(serviceData.title, { lower: true, strict: true });
   const { data, error } = await supabase
     .from('services')
-    .insert([serviceData])
+    .insert([{ ...serviceData, slug }])
     .select()
     .single();
 
@@ -86,9 +88,12 @@ export const updateServiceApi = async (
   id: string,
   serviceData: Partial<ServiceFormData>
 ) => {
+  const updateData = serviceData.title
+    ? { ...serviceData, slug: slugify(serviceData.title, { lower: true, strict: true }) }
+    : serviceData;
   const { data, error } = await supabase
     .from('services')
-    .update(serviceData)
+    .update(updateData)
     .eq('id', id)
     .select()
     .single();
@@ -106,4 +111,38 @@ export const deleteServiceApi = async (id: string) => {
 
   if (error) throw error;
   return true;
+};
+
+/**
+ * Obtener reseña de un area
+ */
+export const getAreaResenaApi = async (area: ServiceCategory): Promise<AreaResena | null> => {
+  const { data, error } = await supabase
+    .from('area_resenas')
+    .select('*')
+    .eq('area', area)
+    .maybeSingle();
+
+  if (error) throw error;
+  return data;
+};
+
+/**
+ * Crear o actualizar reseña de un area (upsert)
+ */
+export const upsertAreaResenaApi = async (
+  area: ServiceCategory,
+  content: string
+): Promise<AreaResena> => {
+  const { data, error } = await supabase
+    .from('area_resenas')
+    .upsert(
+      { area, content, updated_at: new Date().toISOString() },
+      { onConflict: 'area' }
+    )
+    .select()
+    .single();
+
+  if (error) throw error;
+  return data;
 };

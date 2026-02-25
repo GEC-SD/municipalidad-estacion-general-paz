@@ -20,37 +20,79 @@ export type MapLocation = {
   name: string;
   lat: number;
   lng: number;
-  category: 'gobierno' | 'salud' | 'cultura' | 'educacion' | 'deporte' | 'servicios' | 'seguridad' | 'transporte' | 'espacio-publico';
+  category: 'gobierno' | 'salud' | 'cultura' | 'educacion' | 'deporte' | 'obra' | 'informacion' | 'registro' | 'seguridad' | 'transporte' | 'espacio-publico';
   address?: string;
-  googleMapsUrl: string;
+  googleMapsUrl?: string;
   imageUrl?: string;
 };
 
+// ---------------------------------------------------------------------------
+// Auto-matching de imágenes: archivos en /public/vistasMapas/
+// Para agregar una imagen nueva, colocar el .webp en esa carpeta y agregar
+// el nombre del archivo (sin extensión) a esta lista.
+// El sistema matchea automáticamente por nombre normalizado (sin tildes,
+// minúsculas). Si el nombre del archivo no matchea directamente con el de
+// la ubicación, agregar una entrada en IMAGE_ALIASES.
+// ---------------------------------------------------------------------------
+const VISTA_IMAGES = [
+  'Centro Modular de Salud',
+  'Centro de Capacitacion',
+  'Cine Teatro Municipal',
+  'Concejo Deliberante Tribunal de Cuentas',
+  'Guardia Urbana',
+  'Juzgado de Paz',
+  'Municipalidad',
+  'Pileta municipal',
+  'Planta Potabilizadora de Agua',
+  'Polideportivo Est Gral Paz',
+  'Punto Digital',
+  'RAAC',
+  'Registro Civil',
+  'Sala Cuna',
+  'Terminal de Ómnibus',
+  'Vivienda Semilla',
+];
+
+/** Alias: nombre de ubicación → nombre de archivo (para los que no matchean) */
+const IMAGE_ALIASES: Record<string, string> = {
+  'HCD y HTC': 'Concejo Deliberante Tribunal de Cuentas',
+  'Municipalidad de Estación General Paz': 'Municipalidad',
+  'Polideportivo Municipal': 'Polideportivo Est Gral Paz',
+  'Planta Potabilizadora': 'Planta Potabilizadora de Agua',
+  'RAC': 'RAAC',
+  'Sala Cuna - Tía María Elena': 'Sala Cuna',
+  'Obra Viviendas Semilla': 'Vivienda Semilla',
+};
+
+/** Normaliza texto: quita tildes, baja a minúsculas */
+const normalize = (s: string) =>
+  s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
+/** Índice normalizado de imágenes disponibles */
+const imageIndex = new Map(
+  VISTA_IMAGES.map((f) => [normalize(f), `/vistasMapas/${f}.webp`]),
+);
+
+/** Dado el nombre de una ubicación, devuelve la URL de imagen o undefined */
+const resolveImage = (locationName: string): string | undefined => {
+  // 1. Alias explícito
+  const alias = IMAGE_ALIASES[locationName];
+  if (alias) {
+    const url = imageIndex.get(normalize(alias));
+    if (url) return url;
+  }
+  // 2. Match directo por nombre normalizado
+  const direct = imageIndex.get(normalize(locationName));
+  if (direct) return direct;
+  // 3. Match parcial: el nombre de la ubicación contiene el del archivo o viceversa
+  const normName = normalize(locationName);
+  for (const [normFile, url] of imageIndex) {
+    if (normName.includes(normFile) || normFile.includes(normName)) return url;
+  }
+  return undefined;
+};
+
 const LOCATIONS: MapLocation[] = [
-  {
-    name: 'Municipalidad de Estación General Paz',
-    lat: -31.1335947,
-    lng: -64.1403912,
-    category: 'gobierno',
-    address: 'Buenos Aires esq. Sgo. del Estero',
-    googleMapsUrl: 'https://maps.app.goo.gl/je3CN2qfW1fgdwpa9',
-  },
-  {
-    name: 'HCD y HTC Estación General Paz',
-    lat: -31.133742,
-    lng: -64.139976,
-    category: 'gobierno',
-    address: 'Estación General Paz',
-    googleMapsUrl: 'https://maps.app.goo.gl/Mm2u98g2G5zLcgHi9',
-  },
-  {
-    name: 'Registro Civil',
-    lat: -31.133741,
-    lng: -64.140001,
-    category: 'gobierno',
-    address: 'Estación General Paz',
-    googleMapsUrl: 'https://maps.app.goo.gl/VzyWqz4pHW8NB2Kn7',
-  },
   {
     name: 'Terminal de Ómnibus',
     lat: -31.1308595,
@@ -79,10 +121,33 @@ const LOCATIONS: MapLocation[] = [
     name: 'Centro de Capacitación',
     lat: -31.134604,
     lng: -64.142181,
-    category: 'educacion',
+    category: 'cultura',
     address: 'Estación General Paz',
     googleMapsUrl: 'https://maps.app.goo.gl/dgESGJME3PPyDUvg7',
-    imageUrl: '/vistasMapas/Centro de Capacitacion.webp',
+  },
+  {
+    name: 'Municipalidad de Estación General Paz',
+    lat: -31.1335947,
+    lng: -64.1403912,
+    category: 'gobierno',
+    address: 'Buenos Aires esq. Sgo. del Estero',
+    googleMapsUrl: 'https://maps.app.goo.gl/je3CN2qfW1fgdwpa9',
+  },
+  {
+    name: 'HCD y HTC',
+    lat: -31.133742,
+    lng: -64.139976,
+    category: 'gobierno',
+    address: 'Estación General Paz',
+    googleMapsUrl: 'https://maps.app.goo.gl/Mm2u98g2G5zLcgHi9',
+  },
+  {
+    name: 'Registro Civil',
+    lat: -31.133741,
+    lng: -64.140001,
+    category: 'registro',
+    address: 'Estación General Paz',
+    googleMapsUrl: 'https://maps.app.goo.gl/VzyWqz4pHW8NB2Kn7',
   },
   {
     name: 'Polideportivo Municipal',
@@ -123,13 +188,12 @@ const LOCATIONS: MapLocation[] = [
     category: 'deporte',
     address: 'Estación General Paz',
     googleMapsUrl: 'https://maps.app.goo.gl/fF3yEsHGvJEGwabs8',
-    imageUrl: '/vistasMapas/Pileta municipal.webp',
   },
   {
-    name: 'Cisterna Municipal - Red de Agua',
+    name: 'Planta Potabilizadora',
     lat: -31.136670,
     lng: -64.143245,
-    category: 'servicios',
+    category: 'obra',
     address: 'Estación General Paz',
     googleMapsUrl: 'https://maps.app.goo.gl/gS4iefwzAd2dVtn8A',
   },
@@ -137,7 +201,7 @@ const LOCATIONS: MapLocation[] = [
     name: 'RAC',
     lat: -31.133995,
     lng: -64.139927,
-    category: 'servicios',
+    category: 'salud',
     address: 'Estación General Paz',
     googleMapsUrl: 'https://maps.app.goo.gl/QFuVdKVE9AWHdFDD9',
   },
@@ -145,7 +209,7 @@ const LOCATIONS: MapLocation[] = [
     name: 'Punto Digital',
     lat: -31.134008,
     lng: -64.139874,
-    category: 'servicios',
+    category: 'informacion',
     address: 'Estación General Paz',
     googleMapsUrl: 'https://maps.app.goo.gl/ZpWhNfCKaP3gVU9j6',
   },
@@ -158,22 +222,33 @@ const LOCATIONS: MapLocation[] = [
     googleMapsUrl: 'https://maps.app.goo.gl/PAW1MnAL29Uo679v6',
   },
   {
-    name: 'Servicio de Agua',
-    lat: -31.134035,
-    lng: -64.139711,
-    category: 'servicios',
+    name: 'Obra Viviendas Semilla',
+    lat: -31.1340,
+    lng: -64.1420,
+    category: 'obra',
     address: 'Estación General Paz',
-    googleMapsUrl: 'https://maps.app.goo.gl/qMeadkMnF3GCJN2i7',
   },
   {
-    name: 'Servicio de Alumbrado Público',
-    lat: -31.134117,
-    lng: -64.139891,
-    category: 'servicios',
+    name: 'Huerta Municipal',
+    lat: -31.1320,
+    lng: -64.1430,
+    category: 'espacio-publico',
     address: 'Estación General Paz',
-    googleMapsUrl: 'https://maps.app.goo.gl/6yMJLwzRrWkGbL736',
+  },
+  {
+    name: 'Juzgado de Paz',
+    lat: -31.1338,
+    lng: -64.1400,
+    category: 'gobierno',
+    address: 'Bv. Pedro Fraire 63',
   },
 ];
+
+// Aplicar imágenes automáticamente a cada ubicación
+const LOCATIONS_WITH_IMAGES: MapLocation[] = LOCATIONS.map((loc) => ({
+  ...loc,
+  imageUrl: loc.imageUrl ?? resolveImage(loc.name),
+}));
 
 export const CATEGORY_CONFIG: Record<
   MapLocation['category'],
@@ -184,7 +259,9 @@ export const CATEGORY_CONFIG: Record<
   cultura: { color: '#B52A1C', icon: '🎭', label: 'Cultura' },
   educacion: { color: '#1A5F8B', icon: '📚', label: 'Educación' },
   deporte: { color: '#43A047', icon: '⚽', label: 'Deporte' },
-  servicios: { color: '#F5A623', icon: '⚙️', label: 'Servicios' },
+  obra: { color: '#F5A623', icon: '🏗️', label: 'Obra e Infraestructura' },
+  informacion: { color: '#7B1FA2', icon: '💻', label: 'Información' },
+  registro: { color: '#2E7D32', icon: '📋', label: 'Registro Civil' },
   seguridad: { color: '#5C6BC0', icon: '🛡️', label: 'Seguridad' },
   transporte: { color: '#00897B', icon: '🚌', label: 'Transporte' },
   'espacio-publico': { color: '#66BB6A', icon: '🌳', label: 'Espacios Públicos' },
@@ -194,7 +271,7 @@ const MapSection = () => {
   const [selected, setSelected] = useState<MapLocation | null>(null);
 
   const categories = useMemo(() => {
-    const cats = new Set(LOCATIONS.map((l) => l.category));
+    const cats = new Set(LOCATIONS_WITH_IMAGES.map((l) => l.category));
     return Array.from(cats).map((c) => ({ key: c, ...CATEGORY_CONFIG[c] }));
   }, []);
 
@@ -259,7 +336,7 @@ const MapSection = () => {
               }}
             >
               <LazyMap
-                locations={LOCATIONS}
+                locations={LOCATIONS_WITH_IMAGES}
                 onMarkerClick={setSelected}
               />
             </Paper>
@@ -388,23 +465,25 @@ const MapSection = () => {
                     </IconButton>
                   </Box>
 
-                  <Typography
-                    component="a"
-                    href={selected.googleMapsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    variant="caption"
-                    sx={{
-                      display: 'inline-block',
-                      mt: 1,
-                      color: '#2E86C1',
-                      fontWeight: 600,
-                      textDecoration: 'none',
-                      '&:hover': { textDecoration: 'underline' },
-                    }}
-                  >
-                    Ver en Google Maps →
-                  </Typography>
+                  {selected.googleMapsUrl && (
+                    <Typography
+                      component="a"
+                      href={selected.googleMapsUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      variant="caption"
+                      sx={{
+                        display: 'inline-block',
+                        mt: 1,
+                        color: '#2E86C1',
+                        fontWeight: 600,
+                        textDecoration: 'none',
+                        '&:hover': { textDecoration: 'underline' },
+                      }}
+                    >
+                      Ver en Google Maps →
+                    </Typography>
+                  )}
                 </Box>
               </Paper>
             )}

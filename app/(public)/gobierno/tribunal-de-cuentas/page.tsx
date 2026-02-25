@@ -34,7 +34,7 @@ const TribunalPage = () => {
   if (error && !tribunal.length) {
     return (
       <Box>
-        <PageHero title="Honorable Tribunal de Cuentas" subtitle="Órgano de control y fiscalización municipal" backgroundImage="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1600&q=80" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
+        <PageHero title="Honorable Tribunal de Cuentas" subtitle="Órgano de control y fiscalización municipal" backgroundImage="/pages-hero/tribunal-de-cuentas-hero.webp" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
         <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
           <Alert severity="error">
             No se pudo cargar la información. Intente nuevamente más tarde.
@@ -47,7 +47,7 @@ const TribunalPage = () => {
   if (loading) {
     return (
       <Box>
-        <PageHero title="Honorable Tribunal de Cuentas" subtitle="Órgano de control y fiscalización municipal" backgroundImage="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1600&q=80" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
+        <PageHero title="Honorable Tribunal de Cuentas" subtitle="Órgano de control y fiscalización municipal" backgroundImage="/pages-hero/tribunal-de-cuentas-hero.webp" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
         <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
           <Skeleton variant="rectangular" height={120} sx={{ mb: 4, borderRadius: 2 }} />
           <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }, gap: 3 }}>
@@ -70,7 +70,7 @@ const TribunalPage = () => {
 
   return (
     <Box>
-      <PageHero title="Honorable Tribunal de Cuentas" subtitle="Órgano de control y fiscalización municipal" backgroundImage="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1600&q=80" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
+      <PageHero title="Honorable Tribunal de Cuentas" subtitle="Órgano de control y fiscalización municipal" backgroundImage="/pages-hero/tribunal-de-cuentas-hero.webp" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
 
       <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
         <AnimatedSection animation="fadeInUp">

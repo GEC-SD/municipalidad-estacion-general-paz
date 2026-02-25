@@ -33,7 +33,7 @@ const GabinetePage = () => {
   if (error && !gabinete.length) {
     return (
       <Box>
-        <PageHero title="Gabinete Municipal" subtitle="Secretarías y áreas del gobierno municipal" backgroundImage="https://images.unsplash.com/photo-1577495508048-b635879837f1?w=1600&q=80" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
+        <PageHero title="Gabinete Municipal" subtitle="Secretarías y áreas del gobierno municipal" backgroundImage="/pages-hero/gobierno-hero.webp" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
         <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
           <Alert severity="error">
             No se pudo cargar la información. Intente nuevamente más tarde.
@@ -46,7 +46,7 @@ const GabinetePage = () => {
   if (loading) {
     return (
       <Box>
-        <PageHero title="Gabinete Municipal" subtitle="Secretarías y áreas del gobierno municipal" backgroundImage="https://images.unsplash.com/photo-1577495508048-b635879837f1?w=1600&q=80" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
+        <PageHero title="Gabinete Municipal" subtitle="Secretarías y áreas del gobierno municipal" backgroundImage="/pages-hero/gobierno-hero.webp" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
         <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
           <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }, gap: 3 }}>
             {Array.from({ length: 6 }).map((_, i) => (
@@ -68,7 +68,7 @@ const GabinetePage = () => {
 
   return (
     <Box>
-      <PageHero title="Gabinete Municipal" subtitle="Secretarías y áreas del gobierno municipal" backgroundImage="https://images.unsplash.com/photo-1577495508048-b635879837f1?w=1600&q=80" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
+      <PageHero title="Gabinete Municipal" subtitle="Secretarías y áreas del gobierno municipal" backgroundImage="/pages-hero/gobierno-hero.webp" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
 
       <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
         <AnimatedSection animation="fadeInUp">

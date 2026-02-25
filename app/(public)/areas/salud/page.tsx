@@ -70,7 +70,7 @@ const SaludPage = () => {
   if (error && !services.length) {
     return (
       <Box>
-        <PageHero title="Área de Salud" subtitle="Atención médica y programas de prevención para toda la comunidad" backgroundImage="/salud/Salud5.webp" overlayColor="rgba(46,134,193,0.88)" overlayColorEnd="rgba(26,95,139,0.72)" />
+        <PageHero title="Área de Salud" subtitle="Atención médica y programas de prevención para toda la comunidad" backgroundImage="/pages-hero/salud-hero.webp" overlayColor="rgba(46,134,193,0.88)" overlayColorEnd="rgba(26,95,139,0.72)" />
         <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
           <Alert severity="error">
             No se pudo cargar la información. Intente nuevamente más tarde.
@@ -103,7 +103,7 @@ const SaludPage = () => {
 
   return (
     <Box>
-      <PageHero title="Área de Salud" subtitle="Atención médica y programas de prevención para toda la comunidad" backgroundImage="/salud/Salud5.webp" overlayColor="rgba(46,134,193,0.88)" overlayColorEnd="rgba(26,95,139,0.72)" />
+      <PageHero title="Área de Salud" subtitle="Atención médica y programas de prevención para toda la comunidad" backgroundImage="/pages-hero/salud-hero.webp" overlayColor="rgba(46,134,193,0.88)" overlayColorEnd="rgba(26,95,139,0.72)" />
 
       {resena?.content && (
         <AnimatedSection animation="fadeInUp">

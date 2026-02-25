@@ -35,7 +35,7 @@ const IntendentePage = () => {
   if (error && !intendente) {
     return (
       <Box>
-        <PageHero title="Intendente" subtitle="Máxima autoridad ejecutiva municipal" backgroundImage="https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=1600&q=80" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
+        <PageHero title="Intendente" subtitle="Máxima autoridad ejecutiva municipal" backgroundImage="/pages-hero/gobierno-hero.webp" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
         <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
           <Alert severity="error">
             No se pudo cargar la información. Intente nuevamente más tarde.
@@ -69,7 +69,7 @@ const IntendentePage = () => {
 
   return (
     <Box>
-      <PageHero title="Intendente" subtitle="Máxima autoridad ejecutiva municipal" backgroundImage="https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=1600&q=80" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
+      <PageHero title="Intendente" subtitle="Máxima autoridad ejecutiva municipal" backgroundImage="/pages-hero/gobierno-hero.webp" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
 
       <Container maxWidth="md" sx={{ py: { xs: 6, md: 8 } }}>
         <AnimatedSection animation="fadeInUp">

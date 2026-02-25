@@ -68,7 +68,7 @@ const DepartamentoEjecutivoPage = () => {
       <PageHero
         title="Departamento Ejecutivo"
         subtitle="Autoridades del poder ejecutivo municipal"
-        backgroundImage="https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=1600&q=80"
+        backgroundImage="/pages-hero/gobierno-hero.webp"
         overlayColor="rgba(26,95,139,0.88)"
         overlayColorEnd="rgba(46,134,193,0.72)"
       />

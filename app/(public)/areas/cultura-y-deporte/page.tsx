@@ -70,7 +70,7 @@ const CulturaPage = () => {
   if (error && !services.length) {
     return (
       <Box>
-        <PageHero title="Área de Cultura y Deporte" subtitle="Eventos, talleres, propuestas culturales y actividades deportivas para la comunidad." backgroundImage="/cultura/Cultura5.webp" overlayColor="rgba(181,42,28,0.88)" overlayColorEnd="rgba(212,85,74,0.72)" />
+        <PageHero title="Área de Cultura y Deporte" subtitle="Eventos, talleres, propuestas culturales y actividades deportivas para la comunidad." backgroundImage="/pages-hero/cultura-y-deporte-hero.webp" overlayColor="rgba(181,42,28,0.88)" overlayColorEnd="rgba(212,85,74,0.72)" />
         <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
           <Alert severity="error">
             No se pudo cargar la información. Intente nuevamente más tarde.
@@ -97,7 +97,7 @@ const CulturaPage = () => {
 
   return (
     <Box>
-      <PageHero title="Área de Cultura y Deporte" subtitle="Eventos, talleres, propuestas culturales y actividades deportivas para la comunidad." backgroundImage="/cultura/Cultura5.webp" overlayColor="rgba(181,42,28,0.88)" overlayColorEnd="rgba(212,85,74,0.72)" />
+      <PageHero title="Área de Cultura y Deporte" subtitle="Eventos, talleres, propuestas culturales y actividades deportivas para la comunidad." backgroundImage="/pages-hero/cultura-y-deporte-hero.webp" overlayColor="rgba(181,42,28,0.88)" overlayColorEnd="rgba(212,85,74,0.72)" />
 
       {resena?.content && (
         <AnimatedSection animation="fadeInUp">

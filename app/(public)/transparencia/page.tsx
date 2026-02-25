@@ -117,7 +117,7 @@ const TransparenciaPage = () => {
       <PageHero
         title="Transparencia"
         subtitle="Consultá ordenanzas, decretos y toda la normativa municipal"
-        backgroundImage="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1600&q=80"
+        backgroundImage="/pages-hero/transparencia-hero.webp"
         overlayColor="rgba(181,42,28,0.85)"
         overlayColorEnd="rgba(245,166,35,0.7)"
       />

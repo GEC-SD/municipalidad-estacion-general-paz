@@ -57,7 +57,7 @@ const TramitesPage = () => {
         <PageHero
           title="Trámites Municipales"
           subtitle="Instructivos y requisitos para trámites municipales."
-          backgroundImage="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1600&q=80"
+          backgroundImage="/pages-hero/tramites-hero.webp"
           overlayColor="rgba(26,95,139,0.88)"
           overlayColorEnd="rgba(46,134,193,0.72)"
         />
@@ -90,7 +90,7 @@ const TramitesPage = () => {
       <PageHero
         title="Trámites Municipales"
         subtitle="Instructivos y requisitos para trámites municipales."
-        backgroundImage="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1600&q=80"
+        backgroundImage="/pages-hero/tramites-hero.webp"
         overlayColor="rgba(26,95,139,0.88)"
         overlayColorEnd="rgba(46,134,193,0.72)"
       />

@@ -57,7 +57,7 @@ const MunicipalidadPage = () => {
 
   return (
     <Box>
-      <PageHero title="Gobierno" subtitle="Autoridades, organización y gestión municipal." backgroundImage="https://images.unsplash.com/photo-1577495508048-b635879837f1?w=1600&q=80" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
+      <PageHero title="Gobierno" subtitle="Autoridades, organización y gestión municipal." backgroundImage="/pages-hero/gobierno-hero.webp" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
 
       {/* Sections Grid */}
       <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>

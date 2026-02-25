@@ -70,7 +70,7 @@ const ObrasPage = () => {
   if (error && !services.length) {
     return (
       <Box>
-        <PageHero title="Área de Obra e Infraestructura" subtitle="Obras, infraestructura y proyectos para el desarrollo de la comunidad." backgroundImage="/obras/Obras1.webp" overlayColor="rgba(245,166,35,0.88)" overlayColorEnd="rgba(196,132,27,0.72)" />
+        <PageHero title="Área de Obra e Infraestructura" subtitle="Obras, infraestructura y proyectos para el desarrollo de la comunidad." backgroundImage="/pages-hero/obra-e-infraestructura-hero.webp" overlayColor="rgba(245,166,35,0.88)" overlayColorEnd="rgba(196,132,27,0.72)" />
         <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
           <Alert severity="error">
             No se pudo cargar la información. Intente nuevamente más tarde.
@@ -97,7 +97,7 @@ const ObrasPage = () => {
 
   return (
     <Box>
-      <PageHero title="Área de Obra e Infraestructura" subtitle="Obras, infraestructura y proyectos para el desarrollo de la comunidad." backgroundImage="/obras/Obras1.webp" overlayColor="rgba(245,166,35,0.88)" overlayColorEnd="rgba(196,132,27,0.72)" />
+      <PageHero title="Área de Obra e Infraestructura" subtitle="Obras, infraestructura y proyectos para el desarrollo de la comunidad." backgroundImage="/pages-hero/obra-e-infraestructura-hero.webp" overlayColor="rgba(245,166,35,0.88)" overlayColorEnd="rgba(196,132,27,0.72)" />
 
       {resena?.content && (
         <AnimatedSection animation="fadeInUp">

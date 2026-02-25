@@ -70,7 +70,7 @@ const EducacionPage = () => {
   if (error && !services.length) {
     return (
       <Box>
-        <PageHero title="Área de Educación" subtitle="Programas educativos y actividades de formación para la comunidad" backgroundImage="/educacion/Educacion7.webp" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(67,160,71,0.72)" />
+        <PageHero title="Área de Educación" subtitle="Programas educativos y actividades de formación para la comunidad" backgroundImage="/pages-hero/educacion-hero.webp" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(67,160,71,0.72)" />
         <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
           <Alert severity="error">
             No se pudo cargar la información. Intente nuevamente más tarde.
@@ -103,7 +103,7 @@ const EducacionPage = () => {
 
   return (
     <Box>
-      <PageHero title="Área de Educación" subtitle="Programas educativos y actividades de formación para la comunidad" backgroundImage="/educacion/Educacion7.webp" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(67,160,71,0.72)" />
+      <PageHero title="Área de Educación" subtitle="Programas educativos y actividades de formación para la comunidad" backgroundImage="/pages-hero/educacion-hero.webp" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(67,160,71,0.72)" />
 
       {resena?.content && (
         <AnimatedSection animation="fadeInUp">

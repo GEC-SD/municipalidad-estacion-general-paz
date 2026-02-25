@@ -35,7 +35,7 @@ const ConcejoPage = () => {
   if (error && !concejo.length) {
     return (
       <Box>
-        <PageHero title="Concejo Deliberante" subtitle="Cuerpo legislativo municipal" backgroundImage="https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=1600&q=80" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
+        <PageHero title="Concejo Deliberante" subtitle="Cuerpo legislativo municipal" backgroundImage="/pages-hero/concejo-hero.webp" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
         <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
           <Alert severity="error">
             No se pudo cargar la información. Intente nuevamente más tarde.
@@ -48,7 +48,7 @@ const ConcejoPage = () => {
   if (loading) {
     return (
       <Box>
-        <PageHero title="Honorable Concejo Deliberante" subtitle="Cuerpo legislativo municipal" backgroundImage="https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=1600&q=80" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
+        <PageHero title="Honorable Concejo Deliberante" subtitle="Cuerpo legislativo municipal" backgroundImage="/pages-hero/concejo-hero.webp" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
         <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
           <Skeleton variant="rectangular" height={120} sx={{ mb: 4, borderRadius: 2 }} />
           <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }, gap: 3 }}>
@@ -71,7 +71,7 @@ const ConcejoPage = () => {
 
   return (
     <Box>
-      <PageHero title="Honorable Concejo Deliberante" subtitle="Cuerpo legislativo municipal" backgroundImage="https://images.unsplash.com/photo-1568992687947-868a62a9f521?w=1600&q=80" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
+      <PageHero title="Honorable Concejo Deliberante" subtitle="Cuerpo legislativo municipal" backgroundImage="/pages-hero/concejo-hero.webp" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(46,134,193,0.72)" />
 
       <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
         <AnimatedSection animation="fadeInUp">

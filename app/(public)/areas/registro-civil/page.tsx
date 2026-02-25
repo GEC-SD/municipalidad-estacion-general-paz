@@ -70,7 +70,7 @@ const RegistroCivilPage = () => {
   if (error && !services.length) {
     return (
       <Box>
-        <PageHero title="Área de Registro Civil" subtitle="Trámites, certificados y servicios del Registro Civil municipal." backgroundImage="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1600&q=80" overlayColor="rgba(46,125,50,0.88)" overlayColorEnd="rgba(56,142,60,0.72)" />
+        <PageHero title="Área de Registro Civil" subtitle="Trámites, certificados y servicios del Registro Civil municipal." backgroundImage="/pages-hero/registro-civil-hero.webp" overlayColor="rgba(46,125,50,0.88)" overlayColorEnd="rgba(56,142,60,0.72)" />
         <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
           <Alert severity="error">
             No se pudo cargar la información. Intente nuevamente más tarde.
@@ -97,7 +97,7 @@ const RegistroCivilPage = () => {
 
   return (
     <Box>
-      <PageHero title="Área de Registro Civil" subtitle="Trámites, certificados y servicios del Registro Civil municipal." backgroundImage="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1600&q=80" overlayColor="rgba(46,125,50,0.88)" overlayColorEnd="rgba(56,142,60,0.72)" />
+      <PageHero title="Área de Registro Civil" subtitle="Trámites, certificados y servicios del Registro Civil municipal." backgroundImage="/pages-hero/registro-civil-hero.webp" overlayColor="rgba(46,125,50,0.88)" overlayColorEnd="rgba(56,142,60,0.72)" />
 
       {resena?.content && (
         <AnimatedSection animation="fadeInUp">

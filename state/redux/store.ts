@@ -20,11 +20,26 @@ import tramitesReducer from './tramites';
 // Configuración de Redux Persist
 // SEGURIDAD: NO persistir auth (se maneja via cookies httpOnly de Supabase)
 // Persistir datos públicos estables para reducir llamadas a Supabase
+//
+// VERSIONADO: Incrementar `version` cuando se hagan cambios que invaliden
+// datos persistidos (ej: renombrar categorías, cambiar estructura de slices).
+// Redux Persist comparará la versión almacenada con la actual.
+// Si no coinciden, `migrate` descarta todo y devuelve undefined (purge limpio).
+const PERSIST_VERSION = 4;
+
 const persistConfig = {
   key: 'root',
+  version: PERSIST_VERSION,
   storage,
   whitelist: ['app', 'services', 'authorities', 'contact', 'tramites'],
   transforms: [stripTransientFields],
+  migrate: (state: any, currentVersion: number) => {
+    if (state?._persist?.version !== currentVersion) {
+      // Versión diferente: descartar datos obsoletos
+      return Promise.resolve(undefined);
+    }
+    return Promise.resolve(state);
+  },
 };
 
 // Combinar reducers

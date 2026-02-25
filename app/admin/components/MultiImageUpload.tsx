@@ -4,49 +4,43 @@ import { useState, useRef, useCallback } from 'react';
 import {
   Box,
   Typography,
-  Button,
   IconButton,
   LinearProgress,
   Alert,
   Paper,
 } from '@mui/material';
 import {
-  CloudUpload as UploadIcon,
   Delete as DeleteIcon,
-  InsertDriveFile as FileIcon,
   Image as ImageIcon,
+  AddPhotoAlternate as AddPhotoIcon,
 } from '@mui/icons-material';
 import { useFileUpload } from '@/hooks';
 
-type FileUploadProps = {
+type MultiImageUploadProps = {
+  value: string[];
+  onChange: (urls: string[]) => void;
+  maxImages?: number;
   bucket: string;
   maxSize?: number;
   allowedTypes?: string[];
   accept?: string;
   label?: string;
   helperText?: string;
-  value?: string;
-  onChange: (url: string | undefined) => void;
   disabled?: boolean;
-  variant?: 'image' | 'file';
-  path?: string;
-  hideUrlInput?: boolean;
 };
 
-const FileUpload = ({
+const MultiImageUpload = ({
+  value = [],
+  onChange,
+  maxImages = 3,
   bucket,
   maxSize,
   allowedTypes,
-  accept,
-  label = 'Subir archivo',
+  accept = 'image/jpeg,image/png,image/webp',
+  label = 'Imágenes',
   helperText,
-  value,
-  onChange,
   disabled = false,
-  variant = 'image',
-  path,
-  hideUrlInput = false,
-}: FileUploadProps) => {
+}: MultiImageUploadProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragActive, setDragActive] = useState(false);
 
@@ -54,7 +48,6 @@ const FileUpload = ({
     bucket,
     maxSize,
     allowedTypes,
-    path,
   });
 
   const handleFileSelect = useCallback(
@@ -62,10 +55,10 @@ const FileUpload = ({
       reset();
       const url = await upload(file);
       if (url) {
-        onChange(url);
+        onChange([...value, url]);
       }
     },
-    [upload, onChange, reset]
+    [upload, onChange, reset, value]
   );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -73,14 +66,13 @@ const FileUpload = ({
     if (file) {
       handleFileSelect(file);
     }
-    // Reset input value to allow re-uploading the same file
     e.target.value = '';
   };
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!disabled && !uploading) setDragActive(true);
+    if (!disabled && !uploading && value.length < maxImages) setDragActive(true);
   };
 
   const handleDragLeave = (e: React.DragEvent) => {
@@ -93,82 +85,107 @@ const FileUpload = ({
     e.preventDefault();
     e.stopPropagation();
     setDragActive(false);
-    if (disabled || uploading) return;
+    if (disabled || uploading || value.length >= maxImages) return;
     const file = e.dataTransfer.files?.[0];
     if (file) {
       handleFileSelect(file);
     }
   };
 
-  const handleRemove = () => {
-    onChange(undefined);
-    reset();
+  const handleRemove = (index: number) => {
+    const updated = value.filter((_, i) => i !== index);
+    onChange(updated);
   };
 
-  const isImage = variant === 'image';
+  const canAddMore = value.length < maxImages;
 
   return (
     <Box>
       {label && (
         <Typography variant="body2" sx={{ mb: 1, fontWeight: 500, color: 'text.secondary' }}>
-          {label}
+          {label} ({value.length}/{maxImages})
         </Typography>
       )}
 
-      {/* Preview or Upload Zone */}
-      {value ? (
-        <Paper
-          variant="outlined"
+      {/* Image previews grid */}
+      {value.length > 0 && (
+        <Box
           sx={{
-            p: 2,
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-            borderRadius: 2,
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: 1.5,
+            mb: 2,
           }}
         >
-          {isImage ? (
-            <Box
-              component="img"
-              src={value}
-              alt="Preview"
+          {value.map((url, index) => (
+            <Paper
+              key={url}
+              variant="outlined"
               sx={{
-                width: 80,
-                height: 80,
-                objectFit: 'cover',
-                borderRadius: 1,
-                border: '1px solid',
-                borderColor: 'divider',
+                position: 'relative',
+                borderRadius: 2,
+                overflow: 'hidden',
+                aspectRatio: '4/3',
               }}
-            />
-          ) : (
-            <FileIcon sx={{ fontSize: 40, color: 'primary.main' }} />
-          )}
-          <Box sx={{ flex: 1, minWidth: 0 }}>
-            <Typography variant="body2" noWrap>
-              {value.split('/').pop() || 'Archivo subido'}
-            </Typography>
-            <Typography variant="caption" color="text.secondary">
-              Archivo cargado correctamente
-            </Typography>
-          </Box>
-          <IconButton
-            onClick={handleRemove}
-            disabled={disabled}
-            size="small"
-            color="error"
-          >
-            <DeleteIcon />
-          </IconButton>
-        </Paper>
-      ) : (
+            >
+              <Box
+                component="img"
+                src={url}
+                alt={`Imagen ${index + 1}`}
+                sx={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                }}
+              />
+              {index === 0 && (
+                <Typography
+                  variant="caption"
+                  sx={{
+                    position: 'absolute',
+                    top: 4,
+                    left: 4,
+                    backgroundColor: 'primary.main',
+                    color: 'white',
+                    px: 1,
+                    py: 0.25,
+                    borderRadius: 1,
+                    fontSize: '0.65rem',
+                    fontWeight: 600,
+                  }}
+                >
+                  Destacada
+                </Typography>
+              )}
+              <IconButton
+                onClick={() => handleRemove(index)}
+                disabled={disabled}
+                size="small"
+                sx={{
+                  position: 'absolute',
+                  top: 4,
+                  right: 4,
+                  backgroundColor: 'rgba(0,0,0,0.6)',
+                  color: 'white',
+                  '&:hover': { backgroundColor: 'error.main' },
+                }}
+              >
+                <DeleteIcon fontSize="small" />
+              </IconButton>
+            </Paper>
+          ))}
+        </Box>
+      )}
+
+      {/* Upload zone */}
+      {canAddMore && (
         <Paper
           variant="outlined"
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
           sx={{
-            p: 3,
+            p: 2.5,
             textAlign: 'center',
             cursor: disabled || uploading ? 'default' : 'pointer',
             borderStyle: 'dashed',
@@ -185,13 +202,15 @@ const FileUpload = ({
             if (!disabled && !uploading) inputRef.current?.click();
           }}
         >
-          {isImage ? (
-            <ImageIcon sx={{ fontSize: 40, color: 'text.disabled', mb: 1 }} />
+          {value.length === 0 ? (
+            <ImageIcon sx={{ fontSize: 36, color: 'text.disabled', mb: 0.5 }} />
           ) : (
-            <UploadIcon sx={{ fontSize: 40, color: 'text.disabled', mb: 1 }} />
+            <AddPhotoIcon sx={{ fontSize: 36, color: 'text.disabled', mb: 0.5 }} />
           )}
           <Typography variant="body2" color="text.secondary">
-            Arrastrá un archivo aquí o hacé click para seleccionar
+            {value.length === 0
+              ? 'Arrastrá una imagen aquí o hacé click para seleccionar'
+              : 'Agregar otra imagen'}
           </Typography>
           {helperText && (
             <Typography variant="caption" color="text.disabled" sx={{ mt: 0.5, display: 'block' }}>
@@ -208,7 +227,7 @@ const FileUpload = ({
         accept={accept}
         onChange={handleInputChange}
         style={{ display: 'none' }}
-        disabled={disabled || uploading}
+        disabled={disabled || uploading || !canAddMore}
       />
 
       {/* Progress bar */}
@@ -231,24 +250,8 @@ const FileUpload = ({
           {error}
         </Alert>
       )}
-
-      {/* Alternative: manual URL input */}
-      {!hideUrlInput && !value && !uploading && (
-        <Button
-          size="small"
-          sx={{ mt: 1, textTransform: 'none' }}
-          onClick={(e) => {
-            e.stopPropagation();
-            const url = prompt('Ingresá la URL del archivo:');
-            if (url) onChange(url);
-          }}
-          disabled={disabled}
-        >
-          O ingresá una URL manualmente
-        </Button>
-      )}
     </Box>
   );
 };
 
-export default FileUpload;
+export default MultiImageUpload;

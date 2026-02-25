@@ -170,6 +170,7 @@ const Footer = () => {
                   { label: 'Cultura y Deporte', href: PUBLIC_ROUTES.SERVICIOS_CULTURA },
                   { label: 'Obra e infraestructura', href: PUBLIC_ROUTES.SERVICIOS_OBRAS },
                   { label: 'Educación', href: PUBLIC_ROUTES.SERVICIOS_EDUCACION },
+                  { label: 'Registro Civil', href: PUBLIC_ROUTES.SERVICIOS_REGISTRO },
                 ].map((link) => (
                   <Link key={link.label} href={link.href} style={classes.footerLink}>
                     <Typography

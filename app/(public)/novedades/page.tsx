@@ -150,11 +150,11 @@ const NovedadesPage = () => {
                       href={PUBLIC_ROUTES.NOVEDADES_DETALLE(news.slug)}
                       sx={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'stretch' }}
                     >
-                      {news.featured_image_url && (
+                      {(news.image_urls?.[0] || news.featured_image_url) && (
                         <CardMedia
                           component="img"
                           height="200"
-                          image={news.featured_image_url}
+                          image={news.image_urls?.[0] || news.featured_image_url}
                           alt={news.title}
                         />
                       )}

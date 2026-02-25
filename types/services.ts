@@ -1,6 +1,6 @@
 import { Status } from './global';
 
-export type ServiceCategory = 'salud' | 'cultura' | 'obras' | 'educacion';
+export type ServiceCategory = 'salud' | 'cultura' | 'obras' | 'educacion' | 'registro';
 
 export type ServiceContactInfo = {
   email?: string;
@@ -52,6 +52,7 @@ export type ServicesSlice = {
     cultura: Service[];
     obras: Service[];
     educacion: Service[];
+    registro: Service[];
   };
   resenas: Record<ServiceCategory, AreaResena | null>;
   currentService: Service | null;

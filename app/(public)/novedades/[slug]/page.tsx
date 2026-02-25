@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -18,6 +18,7 @@ import {
   Button,
   Skeleton,
   Alert,
+  IconButton,
 } from '@mui/material';
 import {
   NavigateNext as NavigateNextIcon,
@@ -25,6 +26,10 @@ import {
   AttachFile as AttachFileIcon,
   ArrowBack as ArrowBackIcon,
   Download as DownloadIcon,
+  Launch as LaunchIcon,
+  ChevronLeft as ChevronLeftIcon,
+  ChevronRight as ChevronRightIcon,
+  FiberManualRecord as DotIcon,
 } from '@mui/icons-material';
 import { useAppDispatch, useAppSelector } from '@/state/redux/store';
 import { getNewsBySlugAsync, clearCurrentNews } from '@/state/redux/news';
@@ -32,6 +37,101 @@ import { PUBLIC_ROUTES, NEWS_CATEGORIES } from '@/constants';
 import { sanitizeHtml } from '@/utils/sanitize';
 import PageHero from '../../components/PageHero';
 import AnimatedSection from '../../components/AnimatedSection';
+
+const ImageGallery = ({ images, title }: { images: string[]; title: string }) => {
+  const [current, setCurrent] = useState(0);
+
+  if (images.length === 0) return null;
+
+  if (images.length === 1) {
+    return (
+      <Box
+        component="img"
+        src={images[0]}
+        alt={title}
+        sx={{
+          width: '100%',
+          height: 'auto',
+          maxHeight: 500,
+          objectFit: 'cover',
+          borderRadius: 2,
+          mb: 3,
+        }}
+      />
+    );
+  }
+
+  return (
+    <Box sx={{ position: 'relative', mb: 3 }}>
+      <Box
+        component="img"
+        src={images[current]}
+        alt={`${title} - Imagen ${current + 1}`}
+        sx={{
+          width: '100%',
+          height: 'auto',
+          maxHeight: 500,
+          objectFit: 'cover',
+          borderRadius: 2,
+        }}
+      />
+      {/* Navigation arrows */}
+      <IconButton
+        onClick={() => setCurrent((prev) => (prev === 0 ? images.length - 1 : prev - 1))}
+        sx={{
+          position: 'absolute',
+          left: 8,
+          top: '50%',
+          transform: 'translateY(-50%)',
+          backgroundColor: 'rgba(0,0,0,0.5)',
+          color: 'white',
+          '&:hover': { backgroundColor: 'rgba(0,0,0,0.7)' },
+        }}
+      >
+        <ChevronLeftIcon />
+      </IconButton>
+      <IconButton
+        onClick={() => setCurrent((prev) => (prev === images.length - 1 ? 0 : prev + 1))}
+        sx={{
+          position: 'absolute',
+          right: 8,
+          top: '50%',
+          transform: 'translateY(-50%)',
+          backgroundColor: 'rgba(0,0,0,0.5)',
+          color: 'white',
+          '&:hover': { backgroundColor: 'rgba(0,0,0,0.7)' },
+        }}
+      >
+        <ChevronRightIcon />
+      </IconButton>
+      {/* Dots indicator */}
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          gap: 0.5,
+          mt: 1.5,
+        }}
+      >
+        {images.map((_, index) => (
+          <IconButton
+            key={index}
+            onClick={() => setCurrent(index)}
+            size="small"
+            sx={{ p: 0.25 }}
+          >
+            <DotIcon
+              sx={{
+                fontSize: 12,
+                color: index === current ? 'primary.main' : 'text.disabled',
+              }}
+            />
+          </IconButton>
+        ))}
+      </Box>
+    </Box>
+  );
+};
 
 const NewsDetailPage = () => {
   const params = useParams();
@@ -93,6 +193,13 @@ const NewsDetailPage = () => {
       </Container>
     );
   }
+
+  // Build images array with fallback
+  const images = currentNews.image_urls && currentNews.image_urls.length > 0
+    ? currentNews.image_urls
+    : currentNews.featured_image_url
+      ? [currentNews.featured_image_url]
+      : [];
 
   return (
     <Box>
@@ -163,20 +270,8 @@ const NewsDetailPage = () => {
 
         <Divider sx={{ mb: 3 }} />
 
-        {/* Featured Image */}
-        {currentNews.featured_image_url && (
-          <Box
-            component="img"
-            src={currentNews.featured_image_url}
-            alt={currentNews.title}
-            sx={{
-              width: '100%',
-              height: 'auto',
-              borderRadius: 2,
-              mb: 3,
-            }}
-          />
-        )}
+        {/* Image Gallery */}
+        <ImageGallery images={images} title={currentNews.title} />
 
         {/* Excerpt */}
         {currentNews.excerpt && (
@@ -199,6 +294,23 @@ const NewsDetailPage = () => {
           sx={{ mb: 4 }}
           dangerouslySetInnerHTML={{ __html: sanitizeHtml(currentNews.content) }}
         />
+
+        {/* Social Link */}
+        {currentNews.social_url && (
+          <Box sx={{ mb: 3 }}>
+            <Button
+              variant="outlined"
+              startIcon={<LaunchIcon />}
+              component="a"
+              href={currentNews.social_url.match(/^https?:\/\//) ? currentNews.social_url : `https://${currentNews.social_url}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{ textTransform: 'none' }}
+            >
+              Ver publicación en redes sociales
+            </Button>
+          </Box>
+        )}
 
         {/* Attachments */}
         {currentNews.attachments && currentNews.attachments.length > 0 && (

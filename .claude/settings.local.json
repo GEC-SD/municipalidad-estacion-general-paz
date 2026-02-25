@@ -28,7 +28,8 @@
       "WebFetch(domain:images.unsplash.com)",
       "WebFetch(domain:unsplash.com)",
       "Bash(git mv:*)",
-      "Bash(echo:*)"
+      "Bash(echo:*)",
+      "WebFetch(domain:maps.app.goo.gl)"
     ]
   }
 }

@@ -31,6 +31,9 @@ import AnimatedSection from './components/AnimatedSection';
 import SectionTitle from './components/SectionTitle';
 import NewsCard from './components/NewsCard';
 import EmergencyPhones from './components/EmergencyPhones';
+import MapSection from './components/MapSection';
+
+const HERO_VIDEO_URL = '/pages-hero/inicio-hero.mp4';
 
 const heroSlides = [
   {
@@ -39,17 +42,15 @@ const heroSlides = [
     subtitle: 'Trabajando juntos por una ciudad mejor. Accedé a todos los servicios municipales desde un solo lugar.',
     ctaText: 'Ver Novedades',
     ctaHref: PUBLIC_ROUTES.NOVEDADES,
-    backgroundImage: 'https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=1600&q=80',
     overlayColor: 'rgba(26, 95, 139, 0.85)',
     overlayColorEnd: 'rgba(46, 134, 193, 0.65)',
   },
   {
     id: '2',
     title: 'Areas Municipales a tu Alcance',
-    subtitle: 'Salud, cultura y deporte, obra e infraestructura, y educación. Todo lo que necesitás al alcance de un click.',
+    subtitle: 'Salud, cultura y deporte, obra e infraestructura, educación y registro civil. Todo lo que necesitás al alcance de un click.',
     ctaText: 'Explorar Areas',
     ctaHref: PUBLIC_ROUTES.SERVICIOS,
-    backgroundImage: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1600&q=80',
     overlayColor: 'rgba(67, 160, 71, 0.82)',
     overlayColorEnd: 'rgba(46, 134, 193, 0.7)',
   },
@@ -59,7 +60,6 @@ const heroSlides = [
     subtitle: 'Consultá normativas, ordenanzas y toda la información institucional de nuestro municipio.',
     ctaText: 'Ver Transparencia',
     ctaHref: PUBLIC_ROUTES.TRANSPARENCIA,
-    backgroundImage: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?w=1600&q=80',
     overlayColor: 'rgba(181, 42, 28, 0.82)',
     overlayColorEnd: 'rgba(245, 166, 35, 0.65)',
   },
@@ -92,7 +92,7 @@ const HomePage = () => {
   return (
     <Box>
       {/* ── Hero Carousel ─────────────────────────────── */}
-      <HeroCarousel slides={heroSlides} />
+      <HeroCarousel slides={heroSlides} backgroundVideo={HERO_VIDEO_URL} />
 
       {/* ── Novedades Destacadas ──────────────────────── */}
       <Box sx={{ py: { xs: 6, md: 8 } }}>
@@ -529,6 +529,9 @@ const HomePage = () => {
           </Box>
         </Container>
       </Box>
+
+      {/* ── Mapa Interactivo ────────────────────────────── */}
+      <MapSection />
 
       {/* ── Teléfonos de Emergencia ───────────────────── */}
       <EmergencyPhones />

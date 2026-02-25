@@ -35,7 +35,7 @@ import FileUpload from '../../components/FileUpload';
 const schema = yup.object({
   title: yup.string().required('El título es requerido'),
   description: yup.string().required('La descripción es requerida'),
-  category: yup.string<'salud' | 'cultura' | 'obras' | 'educacion'>().required('La categoría es requerida'),
+  category: yup.string<'salud' | 'cultura' | 'obras' | 'educacion' | 'registro'>().required('La categoría es requerida'),
   icon: yup.string().optional(),
   image_url: yup.string().optional(),
   is_active: yup.boolean().required(),

@@ -3,6 +3,7 @@ import {
   TheaterComedy as TheaterComedyIcon,
   Construction as ConstructionIcon,
   School as SchoolIcon,
+  Badge as BadgeIcon,
 } from '@mui/icons-material';
 import { PUBLIC_ROUTES } from './routes';
 
@@ -38,5 +39,13 @@ export const SERVICES = [
     href: PUBLIC_ROUTES.SERVICIOS_EDUCACION,
     color: '#1A5F8B',
     image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80',
+  },
+  {
+    title: 'Registro Civil',
+    icon: BadgeIcon,
+    description: 'Trámites y servicios del Registro Civil',
+    href: PUBLIC_ROUTES.SERVICIOS_REGISTRO,
+    color: '#2E7D32',
+    image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80',
   },
 ] as const;

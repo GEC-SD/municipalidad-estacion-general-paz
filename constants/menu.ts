@@ -63,6 +63,10 @@ export const MAIN_MENU: MenuItem[] = [
         label: 'Educación',
         href: PUBLIC_ROUTES.SERVICIOS_EDUCACION,
       },
+      {
+        label: 'Registro Civil',
+        href: PUBLIC_ROUTES.SERVICIOS_REGISTRO,
+      },
     ],
   },
   {
@@ -135,6 +139,7 @@ export const BREADCRUMB_LABELS: Record<string, string> = {
   '/areas/obra-e-infraestructura': 'Obra e infraestructura',
   '/tramites': 'Trámites',
   '/areas/educacion': 'Educación',
+  '/areas/registro-civil': 'Registro Civil',
   '/transparencia': 'Transparencia',
   '/contacto': 'Contacto',
   '/admin': 'Dashboard',

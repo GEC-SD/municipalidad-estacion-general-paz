@@ -60,6 +60,12 @@ export const SERVICE_CATEGORIES: Array<{
     icon: 'School',
     description: 'Programas educativos municipales',
   },
+  {
+    value: 'registro',
+    label: 'Registro Civil',
+    icon: 'Badge',
+    description: 'Trámites y servicios del Registro Civil',
+  },
 ] as const;
 
 // Categorías de contactos

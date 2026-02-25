@@ -14,7 +14,7 @@ type HeroSlide = {
   subtitle?: string;
   ctaText?: string;
   ctaHref?: string;
-  /** URL de imagen de fondo */
+  /** URL de imagen de fondo (se ignora si hay backgroundVideo en el carousel) */
   backgroundImage?: string;
   /** Color primario del gradiente overlay */
   overlayColor?: string;
@@ -25,11 +25,17 @@ type HeroSlide = {
 type HeroCarouselProps = {
   slides: HeroSlide[];
   autoplayInterval?: number;
+  /** URL de video de fondo compartido para todos los slides */
+  backgroundVideo?: string;
+  /** Imagen poster/fallback mientras carga el video */
+  backgroundPoster?: string;
 };
 
 const HeroCarousel = ({
   slides,
   autoplayInterval = 8000,
+  backgroundVideo,
+  backgroundPoster,
 }: HeroCarouselProps) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -63,6 +69,29 @@ const HeroCarousel = ({
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
+      {/* Shared video background */}
+      {backgroundVideo && (
+        <Box
+          component="video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster={backgroundPoster}
+          sx={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            objectPosition: 'center',
+            zIndex: 0,
+          }}
+        >
+          <source src={backgroundVideo} type={`video/${backgroundVideo.split('.').pop()?.split('?')[0] || 'mp4'}`} />
+        </Box>
+      )}
+
       {/* Slides */}
       {slides.map((slide, index) => (
         <Box
@@ -74,8 +103,8 @@ const HeroCarousel = ({
             opacity: index === activeSlide ? 1 : 0,
           }}
         >
-          {/* Background image */}
-          {slide.backgroundImage && (
+          {/* Background image (only when no shared video) */}
+          {!backgroundVideo && slide.backgroundImage && (
             <Box
               sx={{
                 position: 'absolute',

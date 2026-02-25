@@ -27,6 +27,7 @@ export const PUBLIC_ROUTES = {
   SERVICIOS_OBRAS: '/areas/obra-e-infraestructura',
   SERVICIOS_TRAMITES: '/tramites',
   SERVICIOS_EDUCACION: '/areas/educacion',
+  SERVICIOS_REGISTRO: '/areas/registro-civil',
 
   // Transparencia
   TRANSPARENCIA: '/transparencia',

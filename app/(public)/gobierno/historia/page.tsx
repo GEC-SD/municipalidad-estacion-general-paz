@@ -30,7 +30,7 @@ const HistoriaPage = () => {
       <PageHero
         title="Nuestra historia"
         subtitle="Conocé nuestras raíces y patrimonio"
-        backgroundImage="https://images.unsplash.com/photo-1461360370896-922624d12a74?w=1600&q=80"
+        backgroundImage="/pages-hero/historia-hero.webp"
         overlayColor="rgba(26,95,139,0.88)"
         overlayColorEnd="rgba(46,134,193,0.72)"
       />

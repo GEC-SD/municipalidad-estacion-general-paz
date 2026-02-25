@@ -25,6 +25,8 @@ export type News = {
   excerpt?: string;
   content: string;
   featured_image_url?: string;
+  image_urls?: string[];
+  social_url?: string;
   category?: NewsCategory;
   is_featured: boolean;
   published_at?: string;
@@ -51,6 +53,8 @@ export type NewsFormData = {
   excerpt?: string;
   content: string;
   featured_image_url?: string;
+  image_urls?: string[];
+  social_url?: string;
   category?: NewsCategory;
   is_featured: boolean;
   published_at?: string;

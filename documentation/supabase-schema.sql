@@ -18,6 +18,8 @@ CREATE TABLE news (
   excerpt TEXT,
   content TEXT NOT NULL,
   featured_image_url TEXT,
+  image_urls TEXT[] DEFAULT '{}',
+  social_url TEXT,
   category VARCHAR(100),
   is_featured BOOLEAN DEFAULT false,
   published_at TIMESTAMPTZ,
@@ -82,7 +84,7 @@ CREATE TABLE services (
   title VARCHAR(255) NOT NULL,
   slug VARCHAR(255) UNIQUE NOT NULL,
   description TEXT NOT NULL,
-  category VARCHAR(100) NOT NULL CHECK (category IN ('salud', 'cultura', 'obras', 'educacion')),
+  category VARCHAR(100) NOT NULL CHECK (category IN ('salud', 'cultura', 'obras', 'educacion', 'registro')),
   icon VARCHAR(100),
   image_url TEXT,
   contact_info JSONB,
@@ -533,7 +535,7 @@ CREATE TABLE area_resenas (
   content TEXT NOT NULL DEFAULT '',
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW(),
-  CONSTRAINT area_resenas_area_check CHECK (area IN ('salud', 'cultura', 'obras', 'educacion'))
+  CONSTRAINT area_resenas_area_check CHECK (area IN ('salud', 'cultura', 'obras', 'educacion', 'registro'))
 );
 
 ALTER TABLE area_resenas ENABLE ROW LEVEL SECURITY;

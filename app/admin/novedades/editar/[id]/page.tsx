@@ -16,18 +16,10 @@ import {
   CircularProgress,
   Breadcrumbs,
   Skeleton,
-  Divider,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  IconButton,
 } from '@mui/material';
 import {
   ArrowBack as ArrowBackIcon,
   Save as SaveIcon,
-  AttachFile as AttachFileIcon,
-  Delete as DeleteIcon,
 } from '@mui/icons-material';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -36,14 +28,13 @@ import { useAppDispatch, useAppSelector } from '@/state/redux/store';
 import {
   getNewsByIdAsync,
   updateNewsAsync,
-  createNewsAttachmentAsync,
-  deleteNewsAttachmentAsync,
   clearNewsStatus,
   clearCurrentNews,
 } from '@/state/redux/news';
 import { ADMIN_ROUTES, NEWS_CATEGORIES, NEWS_STATUS, STORAGE_BUCKETS, FILE_SIZE_LIMITS, ALLOWED_FILE_TYPES } from '@/constants';
 import { NewsFormData } from '@/types';
-import FileUpload from '../../../components/FileUpload';
+import RichTextEditor from '../../../components/RichTextEditor';
+import MultiImageUpload from '../../../components/MultiImageUpload';
 
 const schema = yup.object({
   title: yup.string().required('El título es requerido'),
@@ -52,7 +43,9 @@ const schema = yup.object({
   excerpt: yup.string(),
   category: yup.string(),
   status: yup.string().required('El estado es requerido'),
-  featured_image_url: yup.string().url('Debe ser una URL válida').optional(),
+  featured_image_url: yup.string().optional(),
+  image_urls: yup.array().of(yup.string().required()).optional(),
+  social_url: yup.string().optional(),
   is_featured: yup.boolean().required(),
 }) as yup.ObjectSchema<NewsFormData>;
 
@@ -72,6 +65,18 @@ const EditarNovedadPage = () => {
     formState: { errors },
   } = useForm<NewsFormData>({
     resolver: yupResolver(schema),
+    defaultValues: {
+      title: '',
+      slug: '',
+      content: '',
+      excerpt: '',
+      category: '' as any,
+      status: 'draft',
+      featured_image_url: '',
+      image_urls: [],
+      social_url: '',
+      is_featured: false,
+    },
   });
 
   // Load news data
@@ -89,6 +94,13 @@ const EditarNovedadPage = () => {
   // Populate form when news is loaded
   useEffect(() => {
     if (currentNews) {
+      // Build image_urls from existing data
+      const imageUrls = currentNews.image_urls && currentNews.image_urls.length > 0
+        ? currentNews.image_urls
+        : currentNews.featured_image_url
+          ? [currentNews.featured_image_url]
+          : [];
+
       reset({
         title: currentNews.title,
         slug: currentNews.slug,
@@ -97,6 +109,8 @@ const EditarNovedadPage = () => {
         category: currentNews.category,
         status: currentNews.status,
         featured_image_url: currentNews.featured_image_url || '',
+        image_urls: imageUrls,
+        social_url: currentNews.social_url || '',
         is_featured: currentNews.is_featured || false,
       });
     }
@@ -110,7 +124,12 @@ const EditarNovedadPage = () => {
   }, [status.updateNewsAsync?.response, router]);
 
   const onSubmit = (data: NewsFormData) => {
-    dispatch(updateNewsAsync({ id, data }));
+    // Sync featured_image_url with first image for retrocompatibility
+    const submitData = {
+      ...data,
+      featured_image_url: data.image_urls?.[0] || '',
+    };
+    dispatch(updateNewsAsync({ id, data: submitData }));
   };
 
   const loadingGet = status.getNewsByIdAsync?.loading;
@@ -224,16 +243,34 @@ const EditarNovedadPage = () => {
               />
             </Box>
 
-            {/* Content */}
+            {/* Content - Rich Text Editor */}
+            <Box>
+              <Controller
+                name="content"
+                control={control}
+                render={({ field }) => (
+                  <RichTextEditor
+                    value={field.value}
+                    onChange={field.onChange}
+                    disabled={loadingUpdate}
+                    label="Contenido"
+                    placeholder="Escribí el contenido de la novedad..."
+                    error={!!errors.content}
+                    helperText={errors.content?.message}
+                  />
+                )}
+              />
+            </Box>
+
+            {/* Social URL */}
             <Box>
               <TextField
-                {...register('content')}
-                label="Contenido"
+                {...register('social_url')}
+                label="URL de red social (opcional)"
                 fullWidth
-                multiline
-                rows={10}
-                error={!!errors.content}
-                helperText={errors.content?.message || 'Contenido completo de la novedad (HTML permitido)'}
+                placeholder="instagram.com/p/... o facebook.com/..."
+                error={!!errors.social_url}
+                helperText={errors.social_url?.message || 'Link a la publicación en redes sociales'}
                 disabled={loadingUpdate}
               />
             </Box>
@@ -290,23 +327,22 @@ const EditarNovedadPage = () => {
               </Box>
             </Box>
 
-            {/* Featured Image */}
+            {/* Multiple Images */}
             <Box>
               <Controller
-                name="featured_image_url"
+                name="image_urls"
                 control={control}
                 render={({ field }) => (
-                  <FileUpload
+                  <MultiImageUpload
+                    value={field.value || []}
+                    onChange={field.onChange}
+                    maxImages={3}
                     bucket={STORAGE_BUCKETS.NEWS_IMAGES}
                     maxSize={FILE_SIZE_LIMITS.NEWS_IMAGE_MAX_SIZE}
                     allowedTypes={[...ALLOWED_FILE_TYPES.IMAGES]}
-                    accept="image/jpeg,image/png,image/webp"
-                    label="Imagen destacada"
-                    helperText="JPG, PNG o WebP. Máximo 2 MB."
-                    value={field.value}
-                    onChange={(url) => field.onChange(url || '')}
+                    label="Imágenes"
+                    helperText="JPG, PNG o WebP. Máximo 2 MB por imagen. La primera será la imagen destacada."
                     disabled={loadingUpdate}
-                    variant="image"
                   />
                 )}
               />
@@ -332,78 +368,6 @@ const EditarNovedadPage = () => {
               />
             </Box>
 
-            {/* Attachments Section */}
-            {currentNews && (
-              <Box>
-                <Divider sx={{ my: 1 }} />
-                <Typography variant="h6" sx={{ fontWeight: 600, mb: 2 }}>
-                  Archivos Adjuntos
-                </Typography>
-
-                {currentNews.attachments && currentNews.attachments.length > 0 && (
-                  <List sx={{ mb: 2 }}>
-                    {currentNews.attachments.map((attachment) => (
-                      <ListItem
-                        key={attachment.id}
-                        sx={{
-                          border: '1px solid',
-                          borderColor: 'divider',
-                          borderRadius: 1,
-                          mb: 1,
-                        }}
-                        secondaryAction={
-                          <IconButton
-                            edge="end"
-                            color="error"
-                            onClick={() => dispatch(deleteNewsAttachmentAsync(attachment.id))}
-                            disabled={status.deleteNewsAttachmentAsync?.loading}
-                          >
-                            <DeleteIcon />
-                          </IconButton>
-                        }
-                      >
-                        <ListItemIcon>
-                          <AttachFileIcon />
-                        </ListItemIcon>
-                        <ListItemText
-                          primary={attachment.file_name}
-                          secondary={
-                            attachment.file_size
-                              ? `${(attachment.file_size / 1024 / 1024).toFixed(2)} MB`
-                              : undefined
-                          }
-                        />
-                      </ListItem>
-                    ))}
-                  </List>
-                )}
-
-                <FileUpload
-                  bucket={STORAGE_BUCKETS.NEWS_ATTACHMENTS}
-                  maxSize={FILE_SIZE_LIMITS.ATTACHMENT_MAX_SIZE}
-                  allowedTypes={[...ALLOWED_FILE_TYPES.IMAGES, ...ALLOWED_FILE_TYPES.DOCUMENTS]}
-                  accept="image/jpeg,image/png,image/webp,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                  label="Agregar adjunto"
-                  helperText="Imágenes, PDF o documentos Word. Máximo 10 MB."
-                  variant="file"
-                  disabled={loadingUpdate}
-                  onChange={(url) => {
-                    if (url) {
-                      const fileName = url.split('/').pop() || 'adjunto';
-                      dispatch(
-                        createNewsAttachmentAsync({
-                          newsId: id,
-                          attachmentData: {
-                            file_name: fileName,
-                            file_url: url,
-                          },
-                        })
-                      );
-                    }
-                  }}
-                />
-              </Box>
-            )}
 
             {/* Submit Button */}
             <Box>

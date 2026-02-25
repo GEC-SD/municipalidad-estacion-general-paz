@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
-const ALLOWED_AREAS = ['cultura', 'salud', 'obras', 'educacion'];
+const ALLOWED_AREAS = ['cultura', 'salud', 'obras', 'educacion', 'registro'];
 const IMAGE_EXTENSIONS = /\.(webp|jpg|jpeg|png|gif)$/i;
 
 export async function GET(

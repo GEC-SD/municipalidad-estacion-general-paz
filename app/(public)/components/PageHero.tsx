@@ -9,12 +9,22 @@ import { NavigateNext as NavigateNextIcon } from '@mui/icons-material';
 type PageHeroProps = {
   title: string;
   subtitle?: string;
-  /** URL de imagen de fondo (stock/unsplash) */
+  /** URL de imagen o video de fondo (.webp/.jpg/.png o .mp4/.webm) */
   backgroundImage?: string;
+  /** Imagen de poster/fallback para videos (se muestra mientras carga) */
+  backgroundPoster?: string;
   /** Color del gradiente overlay (default: primary blue) */
   overlayColor?: string;
   /** Segundo color del gradiente overlay */
   overlayColorEnd?: string;
+};
+
+const VIDEO_EXTENSIONS = ['.mp4', '.webm', '.ogg'];
+
+const isVideo = (url?: string): boolean => {
+  if (!url) return false;
+  const lower = url.toLowerCase().split('?')[0];
+  return VIDEO_EXTENSIONS.some((ext) => lower.endsWith(ext));
 };
 
 // Wave SVG separator — curva suave al final del hero
@@ -46,9 +56,11 @@ const PageHero = ({
   title,
   subtitle,
   backgroundImage,
+  backgroundPoster,
   overlayColor = 'rgba(26, 95, 139, 0.85)',
   overlayColorEnd = 'rgba(46, 134, 193, 0.7)',
 }: PageHeroProps) => {
+  const hasVideo = isVideo(backgroundImage);
   const pathname = usePathname();
 
   // Build breadcrumb segments from current path
@@ -73,8 +85,8 @@ const PageHero = ({
         alignItems: 'center',
       }}
     >
-      {/* Background image */}
-      {backgroundImage && (
+      {/* Background media (image or video) */}
+      {backgroundImage && !hasVideo && (
         <Box
           sx={{
             position: 'absolute',
@@ -85,6 +97,27 @@ const PageHero = ({
             zIndex: 0,
           }}
         />
+      )}
+      {backgroundImage && hasVideo && (
+        <Box
+          component="video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster={backgroundPoster}
+          sx={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            objectPosition: 'center',
+            zIndex: 0,
+          }}
+        >
+          <source src={backgroundImage} type={`video/${backgroundImage.split('.').pop()?.split('?')[0]}`} />
+        </Box>
       )}
 
       {/* Gradient overlay */}

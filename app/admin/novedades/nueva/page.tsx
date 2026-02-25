@@ -28,7 +28,8 @@ import { useAppDispatch, useAppSelector } from '@/state/redux/store';
 import { createNewsAsync, clearNewsStatus } from '@/state/redux/news';
 import { ADMIN_ROUTES, NEWS_CATEGORIES, NEWS_STATUS, STORAGE_BUCKETS, FILE_SIZE_LIMITS, ALLOWED_FILE_TYPES } from '@/constants';
 import { NewsFormData } from '@/types';
-import FileUpload from '../../components/FileUpload';
+import RichTextEditor from '../../components/RichTextEditor';
+import MultiImageUpload from '../../components/MultiImageUpload';
 
 const schema = yup.object({
   title: yup.string().required('El título es requerido'),
@@ -37,7 +38,9 @@ const schema = yup.object({
   excerpt: yup.string(),
   category: yup.string(),
   status: yup.string().required('El estado es requerido'),
-  featured_image_url: yup.string().url('Debe ser una URL válida').optional(),
+  featured_image_url: yup.string().optional(),
+  image_urls: yup.array().of(yup.string().required()).optional(),
+  social_url: yup.string().optional(),
   is_featured: yup.boolean().required(),
 }) as yup.ObjectSchema<NewsFormData>;
 
@@ -60,9 +63,11 @@ const NuevaNovedadPage = () => {
       slug: '',
       content: '',
       excerpt: '',
-      category: undefined,
+      category: '' as any,
       status: 'draft',
       featured_image_url: '',
+      image_urls: [],
+      social_url: '',
       is_featured: false,
     },
   });
@@ -91,7 +96,12 @@ const NuevaNovedadPage = () => {
   }, [dispatch]);
 
   const onSubmit = (data: NewsFormData) => {
-    dispatch(createNewsAsync(data));
+    // Sync featured_image_url with first image for retrocompatibility
+    const submitData = {
+      ...data,
+      featured_image_url: data.image_urls?.[0] || '',
+    };
+    dispatch(createNewsAsync(submitData));
   };
 
   const loading = status.createNewsAsync?.loading;
@@ -171,16 +181,34 @@ const NuevaNovedadPage = () => {
               />
             </Box>
 
-            {/* Content */}
+            {/* Content - Rich Text Editor */}
+            <Box>
+              <Controller
+                name="content"
+                control={control}
+                render={({ field }) => (
+                  <RichTextEditor
+                    value={field.value}
+                    onChange={field.onChange}
+                    disabled={loading}
+                    label="Contenido"
+                    placeholder="Escribí el contenido de la novedad..."
+                    error={!!errors.content}
+                    helperText={errors.content?.message}
+                  />
+                )}
+              />
+            </Box>
+
+            {/* Social URL */}
             <Box>
               <TextField
-                {...register('content')}
-                label="Contenido"
+                {...register('social_url')}
+                label="URL de red social (opcional)"
                 fullWidth
-                multiline
-                rows={10}
-                error={!!errors.content}
-                helperText={errors.content?.message || 'Contenido completo de la novedad (HTML permitido)'}
+                placeholder="instagram.com/p/... o facebook.com/..."
+                error={!!errors.social_url}
+                helperText={errors.social_url?.message || 'Link a la publicación en redes sociales'}
                 disabled={loading}
               />
             </Box>
@@ -237,23 +265,22 @@ const NuevaNovedadPage = () => {
               </Box>
             </Box>
 
-            {/* Featured Image */}
+            {/* Multiple Images */}
             <Box>
               <Controller
-                name="featured_image_url"
+                name="image_urls"
                 control={control}
                 render={({ field }) => (
-                  <FileUpload
+                  <MultiImageUpload
+                    value={field.value || []}
+                    onChange={field.onChange}
+                    maxImages={3}
                     bucket={STORAGE_BUCKETS.NEWS_IMAGES}
                     maxSize={FILE_SIZE_LIMITS.NEWS_IMAGE_MAX_SIZE}
                     allowedTypes={[...ALLOWED_FILE_TYPES.IMAGES]}
-                    accept="image/jpeg,image/png,image/webp"
-                    label="Imagen destacada"
-                    helperText="JPG, PNG o WebP. Máximo 2 MB."
-                    value={field.value}
-                    onChange={(url) => field.onChange(url || '')}
+                    label="Imágenes"
+                    helperText="JPG, PNG o WebP. Máximo 2 MB por imagen. La primera será la imagen destacada."
                     disabled={loading}
-                    variant="image"
                   />
                 )}
               />

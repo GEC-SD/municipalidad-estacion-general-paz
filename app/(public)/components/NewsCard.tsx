@@ -37,11 +37,11 @@ const NewsCard = ({ news }: NewsCardProps) => {
         sx={classes.newsCardActionArea}
       >
         <Box sx={{ position: 'relative' }}>
-          {news.featured_image_url && (
+          {(news.image_urls?.[0] || news.featured_image_url) && (
             <CardMedia
               component="img"
               height="200"
-              image={news.featured_image_url}
+              image={news.image_urls?.[0] || news.featured_image_url}
               alt={news.title}
               sx={{ objectFit: 'cover' }}
             />

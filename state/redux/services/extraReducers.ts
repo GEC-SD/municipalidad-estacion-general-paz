@@ -31,6 +31,7 @@ const extraReducersServices = (
         cultura: action.payload.filter((s) => s.category === 'cultura'),
         obras: action.payload.filter((s) => s.category === 'obras'),
         educacion: action.payload.filter((s) => s.category === 'educacion'),
+        registro: action.payload.filter((s) => s.category === 'registro'),
       };
       const now = Date.now();
       state.lastFetched['services'] = now;
@@ -38,6 +39,7 @@ const extraReducersServices = (
       state.lastFetched['servicesByCategory.cultura'] = now;
       state.lastFetched['servicesByCategory.obras'] = now;
       state.lastFetched['servicesByCategory.educacion'] = now;
+      state.lastFetched['servicesByCategory.registro'] = now;
       state.status.getServicesAsync = {
         response: 'fulfilled',
         message: '',

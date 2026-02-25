@@ -64,7 +64,7 @@ const RichTextEditor = ({
         }}
       >
         <ReactQuill
-          value={value}
+          value={value || ''}
           onChange={onChange}
           modules={modules}
           placeholder={placeholder}

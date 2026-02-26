@@ -235,6 +235,7 @@ const LOCATIONS: MapLocation[] = [
     lng: -64.1430,
     category: 'espacio-publico',
     address: 'Estación General Paz',
+    googleMapsUrl: '',
   },
   {
     name: 'Juzgado de Paz',
@@ -242,6 +243,7 @@ const LOCATIONS: MapLocation[] = [
     lng: -64.1400,
     category: 'gobierno',
     address: 'Bv. Pedro Fraire 63',
+    googleMapsUrl: 'https://maps.app.goo.gl/5dchidRZmnqHsYPv8',
   },
 ];
 

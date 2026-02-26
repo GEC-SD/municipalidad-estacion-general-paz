@@ -111,10 +111,10 @@ const LOCATIONS: MapLocation[] = [
   },
   {
     name: 'Cine Teatro Municipal',
-    lat: -31.1335348,
-    lng: -64.1405651,
+    lat: -31.1334,
+    lng: -64.1407,
     category: 'cultura',
-    address: 'Estación General Paz',
+    address: 'Buenos Aires, Estación General Paz',
     googleMapsUrl: 'https://maps.app.goo.gl/Mq3Jn4vtVmb4DngM8',
   },
   {
@@ -135,7 +135,7 @@ const LOCATIONS: MapLocation[] = [
   },
   {
     name: 'HCD y HTC',
-    lat: -31.133742,
+    lat: -31.133360,
     lng: -64.139976,
     category: 'gobierno',
     address: 'Estación General Paz',
@@ -223,10 +223,11 @@ const LOCATIONS: MapLocation[] = [
   },
   {
     name: 'Obra Viviendas Semilla',
-    lat: -31.1340,
-    lng: -64.1420,
+    lat: -31.130222,
+    lng: -64.138940,
     category: 'obra',
     address: 'Estación General Paz',
+    googleMapsUrl: 'https://maps.app.goo.gl/UKtuAQudNjQXZNvA8',
   },
   {
     name: 'Huerta Municipal',

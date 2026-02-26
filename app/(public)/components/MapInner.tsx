@@ -46,8 +46,8 @@ const createCategoryIcon = (category: MapLocation['category']) => {
  */
 const spreadOverlappingMarkers = (
   locations: MapLocation[],
-  threshold = 0.00025,
-  radiusDeg = 0.0004,
+  threshold = 0.0002,
+  radiusDeg = 0.00035,
 ): { location: MapLocation; lat: number; lng: number }[] => {
   // Group locations that are within threshold distance of each other
   const groups: MapLocation[][] = [];

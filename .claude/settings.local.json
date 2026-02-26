@@ -29,7 +29,19 @@
       "WebFetch(domain:unsplash.com)",
       "Bash(git mv:*)",
       "Bash(echo:*)",
-      "WebFetch(domain:maps.app.goo.gl)"
+      "WebFetch(domain:maps.app.goo.gl)",
+      "WebFetch(domain:www.google.com)",
+      "WebFetch(domain:nominatim.openstreetmap.org)",
+      "WebFetch(domain:www.openstreetmap.org)",
+      "Bash(curl -s -H \"User-Agent: MunicipalidadGP/1.0\" \"https://nominatim.openstreetmap.org/search?q=calle+Buenos+Aires+Estacion+General+Paz+Cordoba+Argentina&format=json&limit=5\")",
+      "Bash(curl -s -H \"User-Agent: MunicipalidadGP/1.0\" \"https://nominatim.openstreetmap.org/search?q=Estacion+General+Paz+Cordoba+Argentina&format=json&limit=3\")",
+      "Bash(curl -s -H \"User-Agent: MunicipalidadGP/1.0\" \"https://nominatim.openstreetmap.org/search?q=Ruta+Nacional+9+near+Estacion+General+Paz+Cordoba&format=json&limit=3\")",
+      "Bash(curl -s -H \"User-Agent: MunicipalidadGP/1.0\" \"https://overpass-api.de/api/interpreter?data=[out:json];way[name~\"\"Buenos Aires\"\"][\"\"highway\"\"]\\(around:1000,-31.1344,-64.1401\\);out center;\")",
+      "Bash(curl -s -H \"User-Agent: MunicipalidadGP/1.0\" \"https://overpass-api.de/api/interpreter?data=[out:json];way[\"\"highway\"\"]\\(around:500,-31.1335,-64.1401\\);out tags center;\")",
+      "Bash(curl -s -H \"User-Agent: MunicipalidadGP/1.0\" --max-time 10 \"https://overpass-api.de/api/interpreter\" --data-urlencode 'data=[out:json];way[\"\"highway\"\"][\"\"name\"\"]\\(around:500,-31.1335,-64.1401\\);out tags center;')",
+      "Bash(curl -s -H \"User-Agent: MunicipalidadGP/1.0\" --max-time 10 \"https://overpass-api.de/api/interpreter\" --data-urlencode 'data=[out:json];way[\"\"name\"\"=\"\"Buenos Aires\"\"]\\(around:500,-31.1335,-64.1401\\);out geom;')",
+      "Bash(curl -s -H \"User-Agent: MunicipalidadGP/1.0\" --max-time 10 \"https://overpass-api.de/api/interpreter\" --data-urlencode 'data=[out:json];way\\(345596281\\);out geom;')",
+      "Bash(curl -s -H \"User-Agent: MunicipalidadGP/1.0\" --max-time 10 \"https://overpass-api.de/api/interpreter\" --data-urlencode 'data=[out:json];way\\(152423414\\);out geom;')"
     ]
   }
 }

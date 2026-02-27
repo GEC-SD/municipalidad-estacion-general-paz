@@ -4,7 +4,6 @@ import { useState, useRef, useCallback } from 'react';
 import {
   Box,
   Typography,
-  Button,
   IconButton,
   LinearProgress,
   Alert,
@@ -45,7 +44,6 @@ const FileUpload = ({
   disabled = false,
   variant = 'image',
   path,
-  hideUrlInput = false,
 }: FileUploadProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [dragActive, setDragActive] = useState(false);
@@ -230,22 +228,6 @@ const FileUpload = ({
         <Alert severity="error" sx={{ mt: 1 }} onClose={reset}>
           {error}
         </Alert>
-      )}
-
-      {/* Alternative: manual URL input */}
-      {!hideUrlInput && !value && !uploading && (
-        <Button
-          size="small"
-          sx={{ mt: 1, textTransform: 'none' }}
-          onClick={(e) => {
-            e.stopPropagation();
-            const url = prompt('Ingresá la URL del archivo:');
-            if (url) onChange(url);
-          }}
-          disabled={disabled}
-        >
-          O ingresá una URL manualmente
-        </Button>
       )}
     </Box>
   );

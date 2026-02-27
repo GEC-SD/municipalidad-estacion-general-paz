@@ -123,73 +123,73 @@ const TransparenciaListPage = () => {
             <TableBody>
               {loading
                 ? Array.from(new Array(5)).map((_, index) => (
-                    <TableRow key={index}>
-                      <TableCell><Skeleton width={60} /></TableCell>
-                      <TableCell><Skeleton width={80} /></TableCell>
-                      <TableCell><Skeleton /></TableCell>
-                      <TableCell><Skeleton width={80} /></TableCell>
-                      <TableCell><Skeleton width={40} /></TableCell>
-                      <TableCell><Skeleton width={40} /></TableCell>
-                    </TableRow>
-                  ))
+                  <TableRow key={index}>
+                    <TableCell><Skeleton width={60} /></TableCell>
+                    <TableCell><Skeleton width={80} /></TableCell>
+                    <TableCell><Skeleton /></TableCell>
+                    <TableCell><Skeleton width={80} /></TableCell>
+                    <TableCell><Skeleton width={40} /></TableCell>
+                    <TableCell><Skeleton width={40} /></TableCell>
+                  </TableRow>
+                ))
                 : regulations.map((regulation) => (
-                    <TableRow key={regulation.id} hover>
-                      <TableCell>
-                        <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                          N° {regulation.regulation_number}
-                        </Typography>
-                        <Typography variant="caption" color="text.secondary">
-                          {regulation.year}
-                        </Typography>
-                      </TableCell>
-                      <TableCell>
+                  <TableRow key={regulation.id} hover>
+                    <TableCell>
+                      <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                        N° {regulation.regulation_number}
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary">
+                        {regulation.year}
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Chip
+                        label={
+                          REGULATION_TYPES.find((t) => t.value === regulation.type)?.label ||
+                          regulation.type
+                        }
+                        size="small"
+                        color={regulation.type === 'ordenanza' ? 'primary' : 'secondary'}
+                        variant="outlined"
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                        {regulation.title}
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      {regulation.category && (
                         <Chip
                           label={
-                            REGULATION_TYPES.find((t) => t.value === regulation.type)?.label ||
-                            regulation.type
+                            REGULATION_CATEGORIES.find((c) => c.value === regulation.category)
+                              ?.label || regulation.category
                           }
                           size="small"
-                          color={regulation.type === 'ordenanza' ? 'primary' : 'secondary'}
-                          variant="outlined"
                         />
-                      </TableCell>
-                      <TableCell>
-                        <Typography variant="body2" sx={{ fontWeight: 500 }}>
-                          {regulation.title}
-                        </Typography>
-                      </TableCell>
-                      <TableCell>
-                        {regulation.category && (
-                          <Chip
-                            label={
-                              REGULATION_CATEGORIES.find((c) => c.value === regulation.category)
-                                ?.label || regulation.category
-                            }
-                            size="small"
-                          />
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        {regulation.pdf_url && (
-                          <IconButton
-                            component="a"
-                            href={regulation.pdf_url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            size="small"
-                            color="error"
-                          >
-                            <PdfIcon />
-                          </IconButton>
-                        )}
-                      </TableCell>
-                      <TableCell align="right">
-                        <IconButton size="small" onClick={(e) => handleMenuOpen(e, regulation)}>
-                          <MoreVertIcon />
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {regulation.pdf_url && (
+                        <IconButton
+                          component="a"
+                          href={regulation.pdf_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          size="small"
+                          color="error"
+                        >
+                          <PdfIcon />
                         </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                      )}
+                    </TableCell>
+                    <TableCell align="right">
+                      <IconButton size="small" onClick={(e) => handleMenuOpen(e, regulation)}>
+                        <MoreVertIcon />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>

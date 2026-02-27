@@ -180,6 +180,7 @@ const NuevaNormativaPage = () => {
                   render={({ field }) => (
                     <TextField
                       {...field}
+                      value={field.value ?? ''}
                       select
                       label="Categoría"
                       fullWidth

@@ -183,6 +183,7 @@ const EditarNormativaPage = () => {
                   render={({ field }) => (
                     <TextField
                       {...field}
+                      value={field.value ?? ''}
                       select
                       label="Tipo"
                       fullWidth
@@ -227,6 +228,7 @@ const EditarNormativaPage = () => {
                   render={({ field }) => (
                     <TextField
                       {...field}
+                      value={field.value ?? ''}
                       select
                       label="Categoría"
                       fullWidth

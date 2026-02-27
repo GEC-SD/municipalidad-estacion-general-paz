@@ -191,8 +191,24 @@ const ERROR_PATTERNS: ErrorPattern[] = [
   },
 
   {
+    pattern: /exceeded the maximum allowed size|object.*(too large|size limit)/i,
+    message:
+      'El archivo excede el tamaño máximo permitido en el servidor. Contactá al administrador para aumentar el límite del bucket.',
+  },
+
+  {
     pattern: /Payload too large|413/i,
     message: 'El archivo es demasiado grande. Reducí su tamaño e intentá nuevamente.',
+  },
+
+  {
+    pattern: /bucket not found|Bucket not public/i,
+    message: 'Error de configuración del almacenamiento. Contactá al administrador.',
+  },
+
+  {
+    pattern: /storage\/object.*not found|Object not found/i,
+    message: 'El archivo no fue encontrado en el servidor.',
   },
 
   // Permission errors

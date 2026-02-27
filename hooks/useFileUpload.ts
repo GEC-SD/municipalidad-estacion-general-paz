@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { supabase } from '@/state/supabase/config';
 import { FILE_SIZE_LIMITS, FILE_UPLOAD_ERRORS } from '@/constants';
 import { compressImage } from '@/utils/compressImage';
+import { translateError } from '@/utils/translateError';
 
 type UseFileUploadOptions = {
   bucket: string;
@@ -170,7 +171,7 @@ export const useFileUpload = (options: UseFileUploadOptions) => {
       setProgress({ loaded: processedFile.size, total: processedFile.size, percentage: 100 });
       return urlData.publicUrl;
     } catch (err: any) {
-      setError(err.message || FILE_UPLOAD_ERRORS.UPLOAD_FAILED);
+      setError(translateError(err, FILE_UPLOAD_ERRORS.UPLOAD_FAILED));
       return null;
     } finally {
       setUploading(false);
@@ -189,7 +190,7 @@ export const useFileUpload = (options: UseFileUploadOptions) => {
       if (deleteError) throw deleteError;
       return true;
     } catch (err: any) {
-      setError(err.message || 'Error al eliminar el archivo');
+      setError(translateError(err, 'Error al eliminar el archivo'));
       return false;
     }
   };

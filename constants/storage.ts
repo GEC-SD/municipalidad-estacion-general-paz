@@ -19,9 +19,9 @@ export const FILE_SIZE_LIMITS = {
   NEWS_IMAGE_MAX_SIZE: 2, // 2 MB - imágenes de novedades
   AUTHORITY_PHOTO_MAX_SIZE: 1, // 1 MB - fotos de autoridades
   SERVICE_IMAGE_MAX_SIZE: 2, // 2 MB - imágenes de servicios
-  REGULATION_PDF_MAX_SIZE: 5, // 5 MB - PDFs de normativa
+  REGULATION_PDF_MAX_SIZE: 50, // 50 MB - PDFs de normativa (máx Supabase)
   ATTACHMENT_MAX_SIZE: 10, // 10 MB - adjuntos de novedades
-  TRAMITE_PDF_MAX_SIZE: 5, // 5 MB - PDFs de trámites
+  TRAMITE_PDF_MAX_SIZE: 50, // 50 MB - PDFs de trámites (máx Supabase)
 } as const;
 
 // Tipos MIME permitidos por categoría

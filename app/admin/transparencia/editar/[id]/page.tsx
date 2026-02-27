@@ -270,7 +270,7 @@ const EditarNormativaPage = () => {
                     allowedTypes={[...ALLOWED_FILE_TYPES.PDFS]}
                     accept="application/pdf"
                     label="Archivo PDF"
-                    helperText="Solo PDF. Máximo 5 MB."
+                    helperText="Solo archivos PDF."
                     value={field.value}
                     onChange={(url) => field.onChange(url || '')}
                     disabled={loadingUpdate}

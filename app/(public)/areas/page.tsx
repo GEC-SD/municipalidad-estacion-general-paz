@@ -18,7 +18,7 @@ const ServiciosPage = () => {
       <PageHero
         title="Áreas Municipales"
         subtitle="Servicios, programas y atención a la comunidad."
-        backgroundImage="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=1600&q=80"
+        backgroundImage="/pages-hero/areas-hero.webp"
         overlayColor="rgba(67,160,71,0.88)"
         overlayColorEnd="rgba(46,134,193,0.72)"
       />

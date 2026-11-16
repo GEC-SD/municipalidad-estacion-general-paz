@@ -16,7 +16,8 @@ const WhatsAppButton = () => {
         position: 'fixed',
         bottom: { xs: 16, md: 24 },
         right: { xs: 16, md: 24 },
-        zIndex: 1000,
+        // Se mantiene por encima de cualquier aviso flotante.
+        zIndex: 1300,
         display: 'flex',
         alignItems: 'center',
         gap: 1,

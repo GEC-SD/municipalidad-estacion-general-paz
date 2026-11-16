@@ -11,6 +11,7 @@ export const STORAGE_BUCKETS = {
   SERVICE_IMAGES: 'service-images',
   REGULATIONS_PDFS: 'regulations-pdfs',
   TRAMITES_PDFS: 'tramites-pdfs',
+  FINANCIAL_DOCUMENTS: 'financial-documents',
 } as const;
 
 // Límites de tamaño de archivos (en MB)
@@ -22,6 +23,7 @@ export const FILE_SIZE_LIMITS = {
   REGULATION_PDF_MAX_SIZE: 50, // 50 MB - PDFs de normativa (máx Supabase)
   ATTACHMENT_MAX_SIZE: 10, // 10 MB - adjuntos de novedades
   TRAMITE_PDF_MAX_SIZE: 50, // 50 MB - PDFs de trámites (máx Supabase)
+  FINANCIAL_DOCUMENT_PDF_MAX_SIZE: 50,
 } as const;
 
 // Tipos MIME permitidos por categoría

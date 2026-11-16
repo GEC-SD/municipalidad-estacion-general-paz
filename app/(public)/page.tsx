@@ -20,6 +20,8 @@ import {
   LocationOn as LocationOnIcon,
   CalendarMonth as CalendarMonthIcon,
   Schedule as ScheduleIcon,
+  Payments as PaymentsIcon,
+  OpenInNew as OpenInNewIcon,
 } from '@mui/icons-material';
 import { useAppSelector } from '@/state/redux/store';
 import { getFeaturedNewsAsync } from '@/state/redux/news';
@@ -33,6 +35,7 @@ import SectionTitle from './components/SectionTitle';
 import NewsCard from './components/NewsCard';
 import EmergencyPhones from './components/EmergencyPhones';
 import MapSection from './components/MapSection';
+import ResidentAttentionCard from './components/ResidentAttentionCard';
 
 const HERO_VIDEO_URL = '/pages-hero/inicio-hero.mp4';
 
@@ -94,6 +97,43 @@ const HomePage = () => {
     <Box>
       {/* ── Hero Carousel ─────────────────────────────── */}
       <HeroCarousel slides={heroSlides} backgroundVideo={HERO_VIDEO_URL} />
+
+      <Box sx={{ backgroundColor: '#f5a623', py: { xs: 2.5, md: 3 } }}>
+        <Container maxWidth="lg">
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: { xs: 'flex-start', sm: 'center' },
+              justifyContent: 'space-between',
+              flexDirection: { xs: 'column', sm: 'row' },
+              gap: 2,
+            }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+              <PaymentsIcon sx={{ color: '#173f5f', fontSize: 34 }} />
+              <Box>
+                <Typography variant="h6" sx={{ color: '#173f5f', fontWeight: 800, lineHeight: 1.2 }}>
+                  Consulta y Pago de tasas municipales
+                </Typography>
+                <Typography variant="body2" sx={{ color: 'rgba(23,63,95,.82)' }}>
+                  Accedé al portal oficial de pagos en línea.
+                </Typography>
+              </Box>
+            </Box>
+            <Button
+              component="a"
+              href="https://municipalidad.com/egpa/home/menu"
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="contained"
+              endIcon={<OpenInNewIcon />}
+              sx={{ backgroundColor: '#173f5f', '&:hover': { backgroundColor: '#0d2b42' } }}
+            >
+              Pagar tasas
+            </Button>
+          </Box>
+        </Container>
+      </Box>
 
       {/* ── Novedades Destacadas ──────────────────────── */}
       <Box sx={{ py: { xs: 6, md: 8 } }}>
@@ -630,6 +670,7 @@ const HomePage = () => {
         </Container>
       </Box>
 
+      <ResidentAttentionCard />
     </Box>
   );
 };

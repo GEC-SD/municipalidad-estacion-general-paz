@@ -24,6 +24,7 @@ import {
   Event as EventIcon,
   ContactPhone as ContactPhoneIcon,
   Description as DescriptionIcon,
+  AccountBalanceWallet as BudgetIcon,
 } from '@mui/icons-material';
 import Image from 'next/image';
 import { ADMIN_ROUTES } from '@/constants';
@@ -60,6 +61,11 @@ const menuItems = [
     label: 'Transparencia',
     href: ADMIN_ROUTES.ADMIN_TRANSPARENCIA,
     icon: <GavelIcon />,
+  },
+  {
+    label: 'Presupuestos y Balances',
+    href: ADMIN_ROUTES.ADMIN_PRESUPUESTOS_BALANCES,
+    icon: <BudgetIcon />,
   },
   {
     label: 'Eventos',

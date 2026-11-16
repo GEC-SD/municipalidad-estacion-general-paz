@@ -191,16 +191,16 @@ const ContactoPage = () => {
       <Container maxWidth="md" sx={{ py: { xs: 6, md: 8 } }}>
         <AnimatedSection animation="fadeInUp">
           {/* Main Municipal Info */}
-          <Paper sx={{ p: 4, mb: 4, backgroundColor: 'primary.main', color: 'white' }}>
+          <Paper sx={{ p: { xs: 2, sm: 4 }, minWidth: 0, mb: 4, backgroundColor: 'primary.main', color: 'white' }}>
             <Typography variant="h5" gutterBottom sx={{ fontWeight: 600 }}>
               Municipalidad de Estación General Paz
             </Typography>
             <Divider sx={{ my: 2, borderColor: 'rgba(255, 255, 255, 0.3)' }} />
-            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)' }, gap: 2 }}>
-              <Box>
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'minmax(0, 1fr)', sm: 'repeat(2, minmax(0, 1fr))' }, gap: 2 }}>
+              <Box sx={{ minWidth: 0 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                   <PhoneIcon sx={{ mr: 1.5 }} />
-                  <Box>
+                  <Box sx={{ minWidth: 0 }}>
                     <Typography variant="caption" sx={{ opacity: 0.8 }}>
                       Teléfono Central
                     </Typography>
@@ -210,20 +210,20 @@ const ContactoPage = () => {
                   </Box>
                 </Box>
               </Box>
-              <Box>
+              <Box sx={{ minWidth: 0 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                   <EmailIcon sx={{ mr: 1.5 }} />
-                  <Box>
+                  <Box sx={{ minWidth: 0 }}>
                     <Typography variant="caption" sx={{ opacity: 0.8 }}>
                       Email
                     </Typography>
-                    <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                    <Typography variant="body1" sx={{ fontWeight: 500, overflowWrap: 'anywhere' }}>
                       municipalidadestgeneralpaz@gmail.com
                     </Typography>
                   </Box>
                 </Box>
               </Box>
-              <Box sx={{ gridColumn: { xs: '1', sm: '1 / -1' } }}>
+              <Box sx={{ gridColumn: { xs: '1', sm: '1 / -1' }, minWidth: 0 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                   <LocationOnIcon sx={{ mr: 1.5 }} />
                   <Box>

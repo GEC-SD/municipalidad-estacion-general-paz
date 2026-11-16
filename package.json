@@ -2,8 +2,13 @@
   "name": "municipalidad-general-paz",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
-    "dev": "next dev",
+    "dev": "powershell -NoProfile -ExecutionPolicy Bypass -File supabase/dev-local.ps1",
+    "dev:local": "powershell -NoProfile -ExecutionPolicy Bypass -File supabase/dev-local.ps1",
+    "admin:local": "powershell -NoProfile -ExecutionPolicy Bypass -File supabase/create-local-admin.ps1",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
@@ -27,7 +32,7 @@
     "react-dom": "19.2.3",
     "react-hook-form": "^7.71.1",
     "react-leaflet": "^5.0.0",
-    "react-pdf": "^10.3.0",
+    "react-pdf": "10.1.0",
     "react-quill-new": "^3.8.3",
     "react-redux": "^9.2.0",
     "redux-persist": "^6.0.0",
@@ -41,6 +46,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.1.5",
+    "supabase": "3.1.0",
     "typescript": "^5"
   }
 }

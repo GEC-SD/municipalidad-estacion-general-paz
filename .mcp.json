@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "supabase-production-readonly": {
+      "type": "http",
+      "url": "https://mcp.supabase.com/mcp?project_ref=rxiuuzrkcuolvjtogxez&read_only=true&features=database,docs"
+    },
+    "supabase-local": {
+      "type": "http",
+      "url": "http://127.0.0.1:57321/mcp"
+    }
+  }
+}

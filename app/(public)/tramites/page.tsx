@@ -74,7 +74,7 @@ const TramitesPage = () => {
     return (
       <Container maxWidth="lg" sx={{ py: { xs: 4, md: 6 } }}>
         <Skeleton variant="text" width="40%" height={60} sx={{ mb: 4 }} />
-        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' }, gap: 4 }}>
+        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'minmax(0, 1fr)', md: 'repeat(2, minmax(0, 1fr))' }, gap: 4 }}>
           {Array.from(new Array(4)).map((_, index) => (
             <Box key={index}>
               <Skeleton variant="rectangular" height={300} sx={{ borderRadius: 3 }} />
@@ -102,9 +102,9 @@ const TramitesPage = () => {
               La información de trámites no está disponible en este momento.
             </Alert>
           ) : (
-            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' }, gap: 4 }}>
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'minmax(0, 1fr)', md: 'repeat(2, minmax(0, 1fr))' }, gap: 4 }}>
               {tramites.map((tramite) => (
-                <Box key={tramite.id}>
+                <Box key={tramite.id} sx={{ minWidth: 0 }}>
                   <Card
                     sx={{
                       height: '100%',
@@ -117,9 +117,9 @@ const TramitesPage = () => {
                       },
                     }}
                   >
-                    <CardContent sx={{ p: 3, flex: 1, display: 'flex', flexDirection: 'column' }}>
-                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
-                        <Typography variant="h5" gutterBottom sx={{ fontWeight: 600, color: '#1A5F8B' }}>
+                    <CardContent sx={{ p: { xs: 2, sm: 3 }, minWidth: 0, flex: 1, display: 'flex', flexDirection: 'column' }}>
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 1, minWidth: 0, mb: 1 }}>
+                        <Typography variant="h5" gutterBottom sx={{ minWidth: 0, overflowWrap: 'anywhere', fontWeight: 600, color: '#1A5F8B' }}>
                           {tramite.title}
                         </Typography>
                         <Chip
@@ -128,6 +128,7 @@ const TramitesPage = () => {
                           size="small"
                           variant="outlined"
                           color={tramite.content_type === 'pdf' ? 'error' : 'info'}
+                          sx={{ flexShrink: 0 }}
                         />
                       </Box>
 
@@ -159,7 +160,7 @@ const TramitesPage = () => {
                             Información de Contacto
                           </Typography>
                           {tramite.contact_info.phone && (
-                            <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', minWidth: 0, mb: 1 }}>
                               <PhoneIcon sx={{ fontSize: 18, mr: 1, color: 'text.secondary' }} />
                               <Typography variant="body2">
                                 <a href={`tel:${tramite.contact_info.phone}`} style={{ color: 'inherit', textDecoration: 'none' }}>
@@ -169,9 +170,9 @@ const TramitesPage = () => {
                             </Box>
                           )}
                           {tramite.contact_info.email && (
-                            <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', minWidth: 0, mb: 1 }}>
                               <EmailIcon sx={{ fontSize: 18, mr: 1, color: 'text.secondary' }} />
-                              <Typography variant="body2">
+                              <Typography variant="body2" sx={{ minWidth: 0, overflowWrap: 'anywhere' }}>
                                 <a href={`mailto:${tramite.contact_info.email}`} style={{ color: 'inherit', textDecoration: 'none' }}>
                                   {tramite.contact_info.email}
                                 </a>

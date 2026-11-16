@@ -85,7 +85,7 @@ const CulturaPage = () => {
       <Box>
         <PageHero title="Área de Cultura y Deporte" subtitle="Eventos, talleres, propuestas culturales y actividades deportivas para la comunidad." backgroundImage="/pages-hero/cultura-y-deporte-hero.webp" overlayColor="rgba(181,42,28,0.88)" overlayColorEnd="rgba(212,85,74,0.72)" />
         <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
-          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' }, gap: 4 }}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'minmax(0, 1fr)', md: 'repeat(2, minmax(0, 1fr))' }, gap: 4 }}>
             {Array.from(new Array(4)).map((_, index) => (
               <Card key={index} sx={{ height: '100%' }}>
                 <Skeleton variant="rectangular" height={180} animation="wave" />
@@ -122,6 +122,7 @@ const CulturaPage = () => {
         <AnimatedSection animation="fadeInUp">
           <Container maxWidth="lg" sx={{ pt: { xs: 4, md: 6 }, pb: 0 }}>
             <Box
+              className="rich-text-content"
               dangerouslySetInnerHTML={{ __html: sanitizeHtml(resena.content) }}
               sx={{
                 '& h1, & h2, & h3': { mt: 2, mb: 1, fontWeight: 600 },
@@ -141,9 +142,9 @@ const CulturaPage = () => {
               La información de servicios de cultura y deporte no está disponible en este momento.
             </Alert>
           ) : (
-            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' }, gap: 4 }}>
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'minmax(0, 1fr)', md: 'repeat(2, minmax(0, 1fr))' }, gap: 4 }}>
               {services.map((service) => (
-                <Box key={service.id}>
+                <Box key={service.id} sx={{ minWidth: 0 }}>
                   <Card sx={{ height: '100%' }}>
                     {service.image_url && (
                       <CardMedia
@@ -154,7 +155,7 @@ const CulturaPage = () => {
                         sx={{ objectFit: 'cover' }}
                       />
                     )}
-                    <CardContent sx={{ p: 3 }}>
+                    <CardContent sx={{ p: { xs: 2, sm: 3 }, minWidth: 0 }}>
                       <Typography variant="h5" gutterBottom sx={{ fontWeight: 600, color: '#B52A1C' }}>
                         {service.title}
                       </Typography>

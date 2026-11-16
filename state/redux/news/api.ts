@@ -13,7 +13,8 @@ export const getNewsApi = async (
   let query = supabase
     .from('news')
     .select('*, attachments:news_attachments(*)', { count: 'exact' })
-    .order('published_at', { ascending: false });
+    .order('published_at', { ascending: false, nullsFirst: false })
+    .order('created_at', { ascending: false });
 
   // Aplicar filtros
   if (filters?.category) {
@@ -59,7 +60,8 @@ export const getPublishedNewsApi = async (
     .from('news')
     .select('*, attachments:news_attachments(*)', { count: 'exact' })
     .eq('status', 'published')
-    .order('published_at', { ascending: false });
+    .order('published_at', { ascending: false, nullsFirst: false })
+    .order('created_at', { ascending: false });
 
   if (category) {
     query = query.eq('category', category);
@@ -89,7 +91,8 @@ export const getFeaturedNewsApi = async (limit: number = 4) => {
     .select('*')
     .eq('status', 'published')
     .eq('is_featured', true)
-    .order('published_at', { ascending: false })
+    .order('published_at', { ascending: false, nullsFirst: false })
+    .order('created_at', { ascending: false })
     .limit(limit);
 
   if (error) throw error;

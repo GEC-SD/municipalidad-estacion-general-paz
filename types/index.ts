@@ -10,3 +10,4 @@ export * from './regulations';
 export * from './contact';
 export * from './events';
 export * from './tramites';
+export * from './financialDocuments';

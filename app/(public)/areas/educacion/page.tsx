@@ -85,7 +85,7 @@ const EducacionPage = () => {
       <Box>
         <PageHero title="Área de Educación" subtitle="Programas educativos y actividades de formación para la comunidad" backgroundImage="/pages-hero/educacion-hero.webp" overlayColor="rgba(26,95,139,0.88)" overlayColorEnd="rgba(67,160,71,0.72)" />
         <Container maxWidth="lg" sx={{ py: { xs: 6, md: 8 } }}>
-          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' }, gap: 4 }}>
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'minmax(0, 1fr)', md: 'repeat(2, minmax(0, 1fr))' }, gap: 4 }}>
             {Array.from(new Array(4)).map((_, index) => (
               <Card key={index} sx={{ height: '100%' }}>
                 <Skeleton variant="rectangular" height={180} animation="wave" />
@@ -122,6 +122,7 @@ const EducacionPage = () => {
         <AnimatedSection animation="fadeInUp">
           <Container maxWidth="lg" sx={{ pt: { xs: 4, md: 6 }, pb: 0 }}>
             <Box
+              className="rich-text-content"
               dangerouslySetInnerHTML={{ __html: sanitizeHtml(resena.content) }}
               sx={{
                 '& h1, & h2, & h3': { mt: 2, mb: 1, fontWeight: 600 },
@@ -142,9 +143,9 @@ const EducacionPage = () => {
               momento.
             </Alert>
           ) : (
-            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: 'repeat(2, 1fr)' }, gap: 4 }}>
+            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'minmax(0, 1fr)', md: 'repeat(2, minmax(0, 1fr))' }, gap: 4 }}>
               {services.map((service) => (
-                <Box key={service.id}>
+                <Box key={service.id} sx={{ minWidth: 0 }}>
                   <Card sx={{ height: '100%' }}>
                     {service.image_url && (
                       <CardMedia
@@ -155,7 +156,7 @@ const EducacionPage = () => {
                         sx={{ objectFit: 'cover' }}
                       />
                     )}
-                    <CardContent sx={{ p: 3 }}>
+                    <CardContent sx={{ p: { xs: 2, sm: 3 }, minWidth: 0 }}>
                       <Typography
                         variant="h5"
                         gutterBottom

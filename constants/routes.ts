@@ -76,6 +76,9 @@ export const ADMIN_ROUTES = {
   ADMIN_TRANSPARENCIA_NUEVA: '/admin/transparencia/nueva',
   ADMIN_TRANSPARENCIA_EDITAR: (id: string) => `/admin/transparencia/editar/${id}`,
 
+  // Presupuestos y balances
+  ADMIN_PRESUPUESTOS_BALANCES: '/admin/presupuestos-balances',
+
   // Eventos
   ADMIN_EVENTOS: '/admin/eventos',
   ADMIN_EVENTOS_NUEVO: '/admin/eventos/nuevo',

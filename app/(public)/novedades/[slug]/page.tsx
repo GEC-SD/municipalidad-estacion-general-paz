@@ -46,64 +46,87 @@ const ImageGallery = ({ images, title }: { images: string[]; title: string }) =>
   if (images.length === 1) {
     return (
       <Box
-        component="img"
-        src={images[0]}
-        alt={title}
         sx={{
           width: '100%',
-          height: 'auto',
+          aspectRatio: { xs: '4 / 3', sm: '16 / 9' },
           maxHeight: 500,
-          objectFit: 'cover',
+          overflow: 'hidden',
           borderRadius: 2,
           mb: 3,
         }}
-      />
+      >
+        <Box
+          component="img"
+          src={images[0]}
+          alt={title}
+          sx={{
+            display: 'block',
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            objectPosition: 'center',
+          }}
+        />
+      </Box>
     );
   }
 
   return (
-    <Box sx={{ position: 'relative', mb: 3 }}>
+    <Box sx={{ mb: 3 }}>
       <Box
-        component="img"
-        src={images[current]}
-        alt={`${title} - Imagen ${current + 1}`}
         sx={{
+          position: 'relative',
           width: '100%',
-          height: 'auto',
+          aspectRatio: { xs: '4 / 3', sm: '16 / 9' },
           maxHeight: 500,
-          objectFit: 'cover',
+          overflow: 'hidden',
           borderRadius: 2,
         }}
-      />
-      {/* Navigation arrows */}
-      <IconButton
-        onClick={() => setCurrent((prev) => (prev === 0 ? images.length - 1 : prev - 1))}
-        sx={{
-          position: 'absolute',
-          left: 8,
-          top: '50%',
-          transform: 'translateY(-50%)',
-          backgroundColor: 'rgba(0,0,0,0.5)',
-          color: 'white',
-          '&:hover': { backgroundColor: 'rgba(0,0,0,0.7)' },
-        }}
       >
-        <ChevronLeftIcon />
-      </IconButton>
-      <IconButton
-        onClick={() => setCurrent((prev) => (prev === images.length - 1 ? 0 : prev + 1))}
-        sx={{
-          position: 'absolute',
-          right: 8,
-          top: '50%',
-          transform: 'translateY(-50%)',
-          backgroundColor: 'rgba(0,0,0,0.5)',
-          color: 'white',
-          '&:hover': { backgroundColor: 'rgba(0,0,0,0.7)' },
-        }}
-      >
-        <ChevronRightIcon />
-      </IconButton>
+        <Box
+          component="img"
+          src={images[current]}
+          alt={`${title} - Imagen ${current + 1}`}
+          sx={{
+            display: 'block',
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            objectPosition: 'center',
+          }}
+        />
+        {/* Navigation arrows */}
+        <IconButton
+          aria-label="Imagen anterior"
+          onClick={() => setCurrent((prev) => (prev === 0 ? images.length - 1 : prev - 1))}
+          sx={{
+            position: 'absolute',
+            left: 8,
+            top: '50%',
+            transform: 'translateY(-50%)',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            color: 'white',
+            '&:hover': { backgroundColor: 'rgba(0,0,0,0.7)' },
+          }}
+        >
+          <ChevronLeftIcon />
+        </IconButton>
+        <IconButton
+          aria-label="Imagen siguiente"
+          onClick={() => setCurrent((prev) => (prev === images.length - 1 ? 0 : prev + 1))}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: '50%',
+            transform: 'translateY(-50%)',
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            color: 'white',
+            '&:hover': { backgroundColor: 'rgba(0,0,0,0.7)' },
+          }}
+        >
+          <ChevronRightIcon />
+        </IconButton>
+      </Box>
       {/* Dots indicator */}
       <Box
         sx={{
@@ -237,7 +260,7 @@ const NewsDetailPage = () => {
       </Button>
 
       {/* News Content */}
-      <Paper sx={{ p: { xs: 3, md: 4 } }}>
+      <Paper sx={{ p: { xs: 2, sm: 3, md: 4 }, minWidth: 0, overflow: 'hidden' }}>
         {/* Category */}
         {currentNews.category && (
           <Chip
@@ -258,6 +281,7 @@ const NewsDetailPage = () => {
           sx={{
             fontWeight: 700,
             fontSize: { xs: '1.75rem', md: '2.5rem' },
+            overflowWrap: 'anywhere',
           }}
         >
           {currentNews.title}
@@ -305,7 +329,13 @@ const NewsDetailPage = () => {
               href={currentNews.social_url.match(/^https?:\/\//) ? currentNews.social_url : `https://${currentNews.social_url}`}
               target="_blank"
               rel="noopener noreferrer"
-              sx={{ textTransform: 'none' }}
+              sx={{
+                textTransform: 'none',
+                maxWidth: '100%',
+                whiteSpace: 'normal',
+                textAlign: 'left',
+                overflowWrap: 'anywhere',
+              }}
             >
               Ver publicación en redes sociales
             </Button>
